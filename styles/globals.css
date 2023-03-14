@@ -39,6 +39,13 @@
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
 }
+@font-face {
+  font-family: 'Mutka';
+  src: url('../assets//Mukta/Mukta-Light.ttf');
+  src: url('../assets//Mukta/Mukta-Medium.ttf');
+  font-weight: 400;
+  font-style: normal;
+  }
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -83,16 +90,18 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  font-family: 'Mukta';
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  background-color: white;
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)); */
 }
 
 a {
