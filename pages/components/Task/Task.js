@@ -6,6 +6,12 @@ import 'reactjs-popup/dist/index.css';
 
 const Task = () => {
 
+    // get the data from the user ID.
+    
+    // populate the list of tasks
+    // completed tasks
+    // deleted/ archived tasks
+
     useEffect(() => {
         // console.log(dummyTask)
       }, [])

@@ -17,6 +17,12 @@ import edit from './pencil-square.svg'
 import cross from './x-lg.svg'
 import pin from './geo-alt.svg'
 import clock from './clock.svg'
+import envelope from './envelope.svg'
+import bell from './bell.svg'
+import exit from './box-arrow-right.svg'
+import search from './search.svg'
+import filter from './funnel.svg'
+import help from './question-circle.svg'
 // export default dashboard
 export { 
     dashboard,
@@ -36,5 +42,11 @@ export {
     edit,
     cross,
     pin,
-    clock
+    clock,
+    bell,
+    envelope,
+    exit,
+    search,
+    filter,
+    help
 }

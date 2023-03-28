@@ -17,71 +17,142 @@ const Navbar = () => {
         display:'block',
         position: "relative",
         backgroundColor: "white",
-        top:76,
         height:"100%",
         margin:'auto'
     }}>
         <p style={{ color:'black'}}>Menu</p>
         <div className="container">
-            <div>
+            <div style={{
+                display:'flex',
+                flexDirection:'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                marginBlockEnd:20
+            }}>
                 <Image
                     src={dashboard}
                     alt="dashboard"
                     className="menu-icon"
-                    width={25}
-                    height={25}
+                    width={20}
+                    height={20}
                 />
-                <p className="fs-6 text-body">Dashboard</p>
+                <p style={{
+                    fontSize:14,
+                    color:'black',
+                    fontWeight:'400',
+                    marginInlineStart:15,
+                    marginBottom:0
+                }}>Dashboard</p>
             </div>
-            <div className="menu-item selected">
+            <div style={{
+                display:'flex',
+                flexDirection:'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                marginBlockEnd:20
+            }}>
                 <Image
                     src={schedule}
                     alt="dashboard"
                     className="menu-icon"
-                    width={25}
-                    height={25}
+                    width={20}
+                    height={20}
                 />
-                <p className="fs-6 text-body">Schedule</p>
+                <p style={{
+                    fontSize:14,
+                    color:'black',
+                    fontWeight:'400',
+                    marginInlineStart:15,
+                    marginBottom:0
+                }}>Schedule</p>
             </div>
-            <div className="menu-item selected">
+            <div style={{
+                display:'flex',
+                flexDirection:'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                marginBlockEnd:20
+            }}>
                 <Image
                     src={tasks}
                     alt="dashboard"
                     className="menu-icon"
-                    width={25}
-                    height={25}
+                    width={20}
+                    height={20}
                 />
-                <p className="fs-6 text-body">Tasks</p>
+                <p style={{
+                    fontSize:14,
+                    color:'black',
+                    fontWeight:'400',
+                    marginInlineStart:15,
+                    marginBottom:0
+                }}>Tasks</p>
             </div>
-            <div className="menu-item selected">
+            <div style={{
+                display:'flex',
+                flexDirection:'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                marginBlockEnd:20
+            }}>
                 <Image
                     src={patient}
                     alt="dashboard"
                     className="menu-icon"
-                    width={25}
-                    height={25}
+                    width={20}
+                    height={20}
                 />
-                <p className="fs-6 text-body">Patients</p>
+                <p style={{
+                    fontSize:14,
+                    color:'black',
+                    fontWeight:'400',
+                    marginInlineStart:15,
+                    marginBottom:0
+                }}>Patients</p>
             </div>
-            <div className="menu-item selected">
+            <div style={{
+                display:'flex',
+                flexDirection:'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                marginBlockEnd:20
+            }}>
                 <Image
                     src={messages}
                     alt="dashboard"
                     className="menu-icon"
-                    width={25}
-                    height={25}
+                    width={20}
+                    height={20}
                 />
-                <p className="fs-6 text-body">Messages</p>
+                <p style={{
+                    fontSize:14,
+                    color:'black',
+                    fontWeight:'400',
+                    marginInlineStart:15,
+                    marginBottom:0
+                }}>Messages</p>
             </div>
-            <div className="d-inline">
+            <div style={{
+                display:'flex',
+                flexDirection:'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                marginBlockEnd:20
+            }}>
                 <Image
                     src={settings}
                     alt="dashboard"
                     className="menu-icon"
-                    width={25}
-                    height={25}
+                    width={20}
+                    height={20}
                 />
-                <p className="fs-6 text-body">Analytics</p>
+                <p style={{
+                    fontSize:14,
+                    color:'black',
+                    fontWeight:'400',
+                    marginInlineStart:15,
+                    marginBottom:0
+                }}>Analytics</p>
             </div>
         </div>
         <div>

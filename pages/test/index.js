@@ -1,7 +1,9 @@
 import React from 'react'
 import Appointment from '../components/Appointment/Appointment'
+import Consultation from '../components/Consultation/Consultation'
 import Register from '../components/Registration/Register'
 import UpcomingSchedule from '../components/Schedule/UpcomingSchedule'
+import Task from '../components/Task/Task'
 
 
 const Test = () => {

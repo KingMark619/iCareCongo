@@ -6,7 +6,7 @@
     grid-template-areas: 
     'Header Header Header'
     'Nav Cont Cont'
-    'Nav Footer Footer'
+
     ;
     grid-template-rows: 1fr 5fr 1fr;
     grid-template-columns: 1fr 5fr;
@@ -14,15 +14,14 @@
 .header,
 .content,
 .nav,
-.sidebar,
-.footer {
+.sidebar {
     background-color: white;
     color: #fff;
     /* padding:20px; */
 }
 .header {
    grid-area: Header;
-   position: fixed;
+   position: sticky;
    top: 0;
    right: 0;
    width: 100%;
@@ -30,17 +29,16 @@
 }
 .content {
     grid-area: Cont;
-    margin-top:80px;
-    
+    background-color: #e0e0e0
 }
 .nav {
     grid-area: Nav;
     
     
 }
-.footer {
+/* .footer {
     grid-area: Footer;
-}
+} */
 
 
 
