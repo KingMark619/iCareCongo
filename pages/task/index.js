@@ -3,6 +3,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import Layout from '../components/Layout/Layout'
 
 const Task = () => {
 
@@ -181,5 +182,7 @@ const Task = () => {
     </div>
   )
 }
+
+
 
 export default Task

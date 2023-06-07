@@ -6,8 +6,7 @@ import Navbar from './components/Navbar/Navbar'
 import Layout from './components/Layout/Layout'
 import { Mukta } from '@next/font/google'
 import localFont from '@next/font/local'
-
-import { createClient } from "next-sanity";
+import Card from './components/StatCard/Card'
 
 // const mukta = Mukta({
 //   subsets:['latin'],
@@ -18,17 +17,8 @@ const mukta = localFont({
   src:'../assets/Mukta/Mukta-Light.ttf'
 })
 
-const client = createClient({
-  projectId: 'n3nue3rt',
-  dataset:'production',
-  apiVersion:'2023-03-10',
-  useCdn: true,
-  // token:process.env.NEXT_PUBLIC_SANITY_TOKEN
-})
+export default function Home() {
 
-
-export default function Home({data}) {
-  console.log(data)
   return (
     <>
       <Head>
@@ -38,19 +28,10 @@ export default function Home({data}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={mukta.className}>
-        <Layout/>
+        <p>Dashboard here</p>
       </main>
     </>
   )
 }
 
-
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const query = `*[_type == "doctor"]`
-
-  const data = await client.fetch(query);
-  // Pass data to the page via props
-  return { props: { data } }
-}
 

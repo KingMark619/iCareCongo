@@ -1,16 +1,23 @@
 import { filter, help, plus, profile, search } from '@/assets/icons'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 import styles from './Patient.module.css'
+import { useStateContext } from '@/pages/context/StateContext'
+import Link from "next/link"
+import Layout from '../components/Layout/Layout'
 
 const Patient = () => {
+    const { patients } = useStateContext()
+    
+    const [patientList, setPatientList] = useState([])
+    
+    useEffect(() => {
+            setPatientList(patients)
+            console.log(patients)
+    },[patients])
+    
 
 const Row = ({patient}) => {
-    const status =[
-        'recovered',
-        'surgery',
-        'treatment'
-    ]
     return(
             <div style={{
                 display:'flex',
@@ -23,18 +30,18 @@ const Row = ({patient}) => {
             }}>
                 <p style={{
                 flex:2,
-                color:'gray',
+                color:'black',
                 fontSize:14,
                 fontWeight:'400',
                 marginBottom:0
-                }}>Kasongo Kyungu</p>
+                }}>{`${patient?.firstName} ${patient?.lastName}`}</p>
                 <p style={{
                 flex:1,
-                color:'gray',
+                color:'black',
                 fontSize:14,
                 fontWeight:'400',
                 marginBottom:0
-                }}>Malaria</p>
+                }}>{patient?.medHistory}</p>
                 
                   <p style={{
                     flex:1,
@@ -47,19 +54,19 @@ const Row = ({patient}) => {
                     fontSize:14,
                     fontWeight:'400',
                     marginBottom:0
-                    }}>Options</p>  
+                    }}>{patient?.status}</p>  
                
                 
                 <p style={{
                 flex:1,
-                color:'gray',
+                color:'black',
                 fontSize:14,
                 fontWeight:'400',
                 marginBottom:0
                 }}>20/10/2022</p>
                 <p style={{
                 flex:1,
-                color:'gray',
+                color:'black',
                 fontSize:14,
                 fontWeight:'400',
                 marginBottom:0
@@ -105,12 +112,14 @@ const Row = ({patient}) => {
                     justifyContent:'center',
                     alignItems:'center'
                 }}>
+                <Link href="/test">
                   <Image 
                     src={plus}
                     width={20}
                     height={20}
                     alt="add"
-                    />  
+                  />  
+                </Link>
                 </div>
                 <div style={{
                     border:'0.5px solid lightgray',
@@ -166,9 +175,7 @@ const Row = ({patient}) => {
         <div style={{
             width:'100%',
             padding:10,
-            marginTop:10,
             backgroundColor:'white',
-            border:'0.5px solid blue',
             display:'flex',
             flexDirection:'column',
             justifyContent:'space-between',
@@ -224,27 +231,17 @@ const Row = ({patient}) => {
                 }}>Options</p>
             </div>
             {/* list */}
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
-            <Row/>
+            {patients?.map((item,index)=>{      
+               return <Row patient={item} key={index}/>
+            })}
+              
+            
+            
         </div>
     </>
   )
 }
+
+
 
 export default Patient

@@ -64,6 +64,21 @@ export default {
         title: 'Body Mass Index'
       },
       {
+        name: 'bo',
+        type: 'number',
+        title: 'Blood Oxygen'
+      },
+      {
+        name: 'pulse',
+        type: 'number',
+        title: 'Pulse'
+      },
+      {
+        name: 'temperature',
+        type: 'number',
+        title: 'Temperature'
+      },
+      {
         name: 'allergies',
         type: 'string',
         title: 'Allergies'
@@ -72,6 +87,27 @@ export default {
         name: 'medHistory',
         type: 'string',
         title: 'Medical History'
+      },
+      {
+        name: 'genCondition',
+        type: 'string',
+        title: 'General Condition'
+      },
+      {
+        name: 'status',
+        type: 'string',
+        title: 'Status',
+        options: {
+            list: [
+              { title: 'Surgery', value: 'surgery' },
+              { title: 'Treatment', value: 'treatment' },
+              { title: 'Awaiting Doctor', value: 'awaiting' },
+              { title: 'Post Op',  value: 'post-op' },
+              { title: 'Recover',  value: 'recover' },
+            ],
+             // <-- predefined values
+            //layout: 'radio' // <-- defaults to 'dropdown'
+          }
       },
       
     ]

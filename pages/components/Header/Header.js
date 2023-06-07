@@ -7,7 +7,7 @@ import { bell, envelope, exit, profile } from '@/assets/icons'
 const Header = () => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ borderBottom:' 0.5px solid #828282'}}>
         <div className="container-fluid">
           <div style={{
             display:'flex',

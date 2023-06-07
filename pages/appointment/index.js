@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { clock, cross, pin, profile } from '@/assets/icons'
+import Layout from '../components/Layout/Layout'
 
 
 const Appointment = () => {
@@ -454,5 +455,6 @@ const Appointment = () => {
     
   )
 }
+
 
 export default Appointment

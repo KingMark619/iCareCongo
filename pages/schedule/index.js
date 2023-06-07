@@ -2,6 +2,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { arrowRight, edit, plus, profile, trash } from '@/assets/icons'
+import Layout from '../components/Layout/Layout'
 
 const UpcomingSchedule = () => {
 
@@ -168,6 +169,7 @@ const ActiveRow = ({status, item}) => {
                             src={trash}
                             width={15}
                             height={15}
+                            alt="trash"
                         />
                     </div>
                     <div style={{
@@ -183,6 +185,7 @@ const ActiveRow = ({status, item}) => {
                             src={profile}
                             width={18}
                             height={18}
+                            alt="profile"
                         />
                     </div>
                     <div style={{
@@ -198,6 +201,7 @@ const ActiveRow = ({status, item}) => {
                             src={edit}
                             width={15}
                             height={15}
+                            alt="edit"
                         />
                     </div>
                 </div>
@@ -321,5 +325,7 @@ const ActiveRow = ({status, item}) => {
         </div>
   )
 }
+
+
 
 export default UpcomingSchedule
