@@ -13,54 +13,28 @@ const handleCallback = (childData) =>{
     setIndex(childData)
     console.log(index)
 }
-const navItems=[
-//   {
-//       id:0,
-//       name:'Dashboard',
-//       component: <Card/>
-//   },
-//   {
-//       id:1,
-//       name:'Schedule',
-//       component: <Appointment/>
-//   },
-//   {
-//       id:2,
-//       name:'Tasks',
-//       component: <Task/>
-//   },
-//   {
-//       id:3,
-//       name:'Patients',
-//       component: <Patient/>
-//   },
-//   {
-//       id:4,
-//       name:'Messages',
-//       component: <Register/>
-//   },
-//   {
-//       id:5,
-//       name:'Analytics',
-//       component: <Patient/>
-//   },
-]
+
   return (
     <>
     <Header/>
     <div style={{
       display:'flex',
       flexDirection:'row',
+      height:'90vh'
     }}>
       <Navbar/>
       <div style={{
         backgroundColor:'#F9F9F9',
         width:'100%',
-        borderLeft:'0.5px solid lightgray'
+        borderLeft:'0.5px solid lightgray',
+        overflow:'scroll',
+        
       }}>
         <main style={{
           width:'auto',
           height:'100%',
+          paddingTop: '1rem',
+          paddingBottom: '1rem'
         }}>{children}</main>
       </div>
       

@@ -1,26 +1,17 @@
+'use client'
+
 import React,{useState} from 'react'
 import Layout from '../components/Layout/Layout'
 import {useForm} from 'react-hook-form'
 import Divider from '../components/Divider/Divider'
 
-
 const Register = () => {
     const {register, handleSubmit} = useForm()
     const [data, setData] = useState()
 
-
-    // const [firstName, setFirstName] =useState('')
-    // const [address, setAddress] = useState('')
-    // const [phone, setPhone] = useState()
-    // const [birthday, setBirthday] = useState('')
-    // const [specification, setSpecification] = useState('')
     const [weight,setWeight] = useState(0)
     const [height, setHeight] = useState(0)
     const [bmi, setBMI] = useState(0)
-    // const [gender, setGender] = useState('')
-    // const [appointment, setAppointment] = useState(false)
-    // const [purpose, setPurpose] = useState('')
-
 
     const checkData = () => {
         const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
@@ -50,30 +41,26 @@ const Register = () => {
         }
     }
     const  submit = async (data)=>{
-        setData(data)
+        // setData(data)
         console.log(data)
-        
-        // await fetch("/api/patient",{
-        //     method: 'POST',
-        //     body: JSON.stringify(data)
-        // })
-        // .then(()=>{
-        //     console.log(data)
-        // })
-        // .catch(err => {
-        //     console.log(err)
-        // })
-        // check all fields
-        
-        // return errors 
-
-    }
+        try {
+            const response = await fetch('/api/patient', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            console.log(result)
+          } catch (error) {
+            console.error('Error submitting data:', error);
+          }
+        };
 
   return (
     <>
-        <div style={{
-            width: '100%',
-            height: '100%',
+        <div className="card m-2 p-2" style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -103,55 +90,55 @@ const Register = () => {
                                 }}>Patient Information</p>
                         </div>
                         {/* Form Bellow */}
-                        <div class="row">
-                            <div class="col">
+                        <div className="row">
+                            <div className="col">
                                 {/* <!-- Name input --> */}
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example3">First name</label>
-                                <input type="text" id="form8Example3" class="form-control"{...register('firstName')} />
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example3">First name</label>
+                                <input type="text" id="form8Example3" className="form-control"{...register('firstName')} />
                                 
                                 </div>
                             </div>
-                            <div class="col">
+                            <div className="col">
                                 {/* <!-- Name input --> */}
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example4">Last name</label>
-                                <input type="text" id="form8Example4" class="form-control" {...register('lastName')} />
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example4">Last name</label>
+                                <input type="text" id="form8Example4" className="form-control" {...register('lastName')} />
                                 
                                 </div>
                             </div>
-                            <div class="col">
+                            <div className="col">
                                 {/* <!-- Email input --> */}
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example5">Email address</label>
-                                <input type="email" id="form8Example5" class="form-control" {...register('email')} />
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example5">Email address</label>
+                                <input type="email" id="form8Example5" className="form-control" {...register('email')} />
                                 
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col">
+                        <div className="row">
+                            <div className="col">
                                 {/* <!-- Age input --> */}
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example3">Age</label>
-                                <input type="number" id="form8Example3" class="form-control" {...register('age')} />
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example3">Age</label>
+                                <input type="number" id="form8Example3" className="form-control" {...register('age')} />
                                 
                                 </div>
                             </div>
-                            <div class="col">
+                            <div className="col">
                                 {/* <!-- Phone input --> */}
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example4">Phone</label>
-                                <input type="text" id="form8Example4" class="form-control" {...register('phone')} />
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example4">Phone</label>
+                                <input type="text" id="form8Example4" className="form-control" {...register('phone')} />
                                 
                                 </div>
                             </div>
-                            <div class="col">
+                            <div className="col">
                                 {/* <!-- Emergency input --> */}
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example5">Emergency contact</label>
-                                <input type="phone" id="form8Example5" class="form-control" {...register('emergencyContact')} />
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example5">Emergency contact</label>
+                                <input type="phone" id="form8Example5" className="form-control" {...register('emergencyContact')} />
                                 
                                 </div>
                             </div>
@@ -171,65 +158,65 @@ const Register = () => {
                                 }}>Vitals and Other</p>
                         </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example3">BP</label>
-                                <input type="number" id="form8Example3" class="form-control" {...register('bloodPressure')} />
+                        <div className="row">
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example3">BP</label>
+                                <input type="number" id="form8Example3" className="form-control" {...register('bloodPressure')} />
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example4">Pulse</label>
-                                <input type="number" id="form8Example4" class="form-control" {...register('pulse')} />
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example4">Pulse</label>
+                                <input type="number" id="form8Example4" className="form-control" {...register('pulse')} />
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example5">Temperature</label>
-                                <input type="number" id="form8Example5" class="form-control" {...register('temperature')} />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example3">Height (cm)</label>
-                                <input type="number" id="form8Example3" class="form-control" {...register('height')} />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example4">Weight (kg)</label>
-                                <input type="number" id="form8Example4" class="form-control" {...register('weight')}  />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example5">BMI</label>
-                                <input type="text" id="form8Example5" class="form-control" {...register('bmi')} value={bmi} /> 
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example5">Temperature</label>
+                                <input type="number" id="form8Example5" className="form-control" {...register('temperature')} />
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example3">Blood Oxygen</label>
-                                <input type="number" id="form8Example3" class="form-control" {...register('bloodOxygen')} />
+                        <div className="row">
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example3">Height (cm)</label>
+                                <input type="number" id="form8Example3" className="form-control" {...register('height')} />
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example4">General Conditions</label>
-                                <input type="text" id="form8Example4" class="form-control" {...register('generalCondition')}/>
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example4">Weight (kg)</label>
+                                <input type="number" id="form8Example4" className="form-control" {...register('weight')}  />
                                 </div>
                             </div>
-                            {/* <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example5">BMI</label>
-                                <input type="text" id="form8Example5" class="form-control" /> 
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example5">BMI</label>
+                                <input type="text" id="form8Example5" className="form-control" {...register('bmi')} value={bmi} /> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example3">Blood Oxygen</label>
+                                <input type="number" id="form8Example3" className="form-control" {...register('bloodOxygen')} />
+                                </div>
+                            </div>
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example4">General Conditions</label>
+                                <input type="text" id="form8Example4" className="form-control" {...register('generalCondition')}/>
+                                </div>
+                            </div>
+                            {/* <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example5">BMI</label>
+                                <input type="text" id="form8Example5" className="form-control" /> 
                                 </div>
                             </div> */}
                         </div>
@@ -248,11 +235,11 @@ const Register = () => {
                                 }}>Consultation and other</p>
                         </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example3">Department</label>
-                                <select class="form-select" aria-label="Default select example" {...register('department')}>
+                        <div className="row">
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example3">Department</label>
+                                <select className="form-select" aria-label="Default select example" {...register('department')}>
                                     <option value="Pediatry">Pediatry</option>
                                     <option value="Outpatient">Outpatient Medicine</option>
                                     <option value="Gynecology">Gynecology</option>
@@ -261,31 +248,31 @@ const Register = () => {
                                 </select>
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example4">Doctor</label>
-                                <input type="text" id="form8Example4" class="form-control" {...register('doctor')} />
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example4">Doctor</label>
+                                <input type="text" id="form8Example4" className="form-control" {...register('doctor')} />
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example5">Status</label>
-                                <input type="text" id="form8Example5" class="form-control" {...register('status')} /> 
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example5">Status</label>
+                                <input type="text" id="form8Example5" className="form-control" {...register('status')} /> 
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example3">Medications</label>
-                                <input type="text" id="form8Example3" class="form-control" {...register('medication')} />
+                        <div className="row">
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example3">Medications</label>
+                                <input type="text" id="form8Example3" className="form-control" {...register('medication')} />
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                <label class="form-label" for="form8Example4">Appointment</label>
-                                <input type="datetime-local" id="form8Example4" class="form-control" {...register('appointment')} />
+                            <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example4">Appointment</label>
+                                <input type="datetime-local" id="form8Example4" className="form-control" {...register('appointment')} />
                                 </div>
                             </div>
                             

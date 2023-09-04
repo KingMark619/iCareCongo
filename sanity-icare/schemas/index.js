@@ -4,6 +4,7 @@ import patient from "./patient"
 import appointment from "./appointment"
 import task from "./task"
 import user from "./user"
+import drug from "./drug"
 
 export const schemaTypes = [
     doctor,
@@ -11,5 +12,6 @@ export const schemaTypes = [
     patient,
     appointment,
     task,
-    user
+    user,
+    drug
 ]

@@ -34,17 +34,22 @@ export default {
         title: 'Phone Number'
       },
       {
+        name: 'age',
+        type: 'number',
+        title: 'Age'
+      },
+      {
         name: 'emergencyName',
         type: 'string',
         title: 'Emergency Contact'
       },
       {
-        name: 'emergencyPhone',
+        name: 'emergencyContact',
         type: 'number',
         title: 'Emergency Contact Number'
       },
       {
-        name: 'bp',
+        name: 'bloodPressure',
         type: 'string',
         title: 'Blood Presure'
       },
@@ -64,7 +69,7 @@ export default {
         title: 'Body Mass Index'
       },
       {
-        name: 'bo',
+        name: 'bloodOxygen',
         type: 'number',
         title: 'Blood Oxygen'
       },
@@ -79,6 +84,21 @@ export default {
         title: 'Temperature'
       },
       {
+        name: 'department',
+        type: 'string',
+        title: 'Department'
+      },
+      {
+        name: 'doctor',
+        type: 'string',
+        title: 'Doctor In Charge'
+      },
+      {
+        name: 'appointment',
+        type: 'string',
+        title: 'Appointment'
+      },
+      {
         name: 'allergies',
         type: 'string',
         title: 'Allergies'
@@ -89,7 +109,12 @@ export default {
         title: 'Medical History'
       },
       {
-        name: 'genCondition',
+        name: 'medication',
+        type: 'string',
+        title: 'Medication'
+      },
+      {
+        name: 'generalCondition',
         type: 'string',
         title: 'General Condition'
       },

@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
-import Navbar from './components/Navbar/Navbar'
-import Layout from './components/Layout/Layout'
 import { Mukta } from '@next/font/google'
 import localFont from '@next/font/local'
-import Card from './components/StatCard/Card'
+import Card from './components/Card/Card'
+import Task from './task'
+import Appointment from './appointment'
+import UpcomingSchedule from './schedule'
 
 // const mukta = Mukta({
 //   subsets:['latin'],
@@ -28,7 +28,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={mukta.className}>
-        <p>Dashboard here</p>
+        <Card/>
+        <div style={{
+          display: 'flex',
+          flexDirection:'row',
+          justifyContent:'space-between',
+          alignItems:'start'
+        }}>
+          <Task/>
+          <UpcomingSchedule/>
+        </div>
+        
       </main>
     </>
   )

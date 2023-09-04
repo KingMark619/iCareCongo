@@ -20,6 +20,7 @@ const Context = createContext()
     const [appointments, setAppointments] = useState()
     const [tasks, setTasks] = useState()
     const [users, setUsers] = useState()
+    const [loggedUser, setloggedUser] = useState()
 
     useEffect(()=>{
       console.log('loading data...')
@@ -45,7 +46,7 @@ const Context = createContext()
 
        client.fetch(userQuery)
        .then((response) => {setUsers(response)})
-       .catch((error) => {console.error('Cant load Tasks')})
+       .catch((error) => {console.error('Cant load Tasks')})  
     },[])
 
   return (

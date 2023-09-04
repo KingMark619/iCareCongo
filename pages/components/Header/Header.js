@@ -1,10 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
 import Image from 'next/image'
-import styles from './Header.module.css'
 import logo from '../../../assets/logo/Logo.svg'
 import { bell, envelope, exit, profile } from '@/assets/icons'
+import Link from 'next/link'
+
+// import NextAuth, {NextAuthOptions} from 'next/auth'
+// import { NextApiRequest, NextApiResponse } from 'next';
+// import { SanityAdapter, SanityCredentials } from 'next-auth-sanity';
+// import { client } from '@/client'
+
 
 const Header = () => {
+  const [day, setDay] = useState('')
+  const [month, setMonth] = useState('')
+  const [year, setYear] = useState('')
+
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+  ]
+  useEffect(() => {
+    const date = new Date()
+    setDay(date.getDate())
+    setMonth(date.getMonth())
+    setYear(date.getFullYear())
+  },[])
+
+   
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ borderBottom:' 0.5px solid #828282'}}>
@@ -16,10 +38,12 @@ const Header = () => {
             alignItems:'center',
             width:'100%'
           }}>
-            <a style={{flex:1}} className="navbar-brand" href="#">
+            <Link style={{flex:1}} className="navbar-brand" href="/">
+           
               <Image src={logo} alt="Logo" width="50" height="50" className="d-inline-block align-text-top"/>
               iCare
-            </a>
+            
+            </Link>
             <div style={{flex:2}} >
               <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
@@ -65,7 +89,7 @@ const Header = () => {
                 fontWeight:'400',
                 color:'black',
                 marginBottom:0
-            }}>12 Febuary 2022</p>
+            }}>{day} {months[month]} {year}</p>
               </div>
               <Image
                 src={envelope}
@@ -85,6 +109,7 @@ const Header = () => {
                   marginInlineEnd:10
                 }}
               />
+              <Link href="/login">
               <Image
                 src={exit}
                 alt="exit"
@@ -93,13 +118,10 @@ const Header = () => {
                 style={{
                   marginInlineEnd:10
                 }}
-              />
-              
+              />  
+              </Link>  
             </div>
           </div>
-          
-          
-          
         </div>
       </nav>
     </>

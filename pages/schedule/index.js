@@ -17,7 +17,6 @@ const Row = ({status,item}) => {
             flexDirection:'row',
             justifyContent: 'space-around',
             alignItems: 'center',
-            maxWidth:'80%',
             minWidth:'60%',
             marginBottom:10,
             padding:5,
@@ -71,7 +70,6 @@ const ActiveRow = ({status, item}) => {
             borderRadius:8,
             marginBottom:10,
             border:'0.5px solid lightgray',
-            maxWidth:'80%',
             minWidth:'60%',
         }}>
             {/* top */}
@@ -206,17 +204,7 @@ const ActiveRow = ({status, item}) => {
                     </div>
                 </div>
                 <div>
-                    <button style={{
-                        background:'blue',
-                        width:150,
-                        height:45,
-                        fontSize:12,
-                        fontWeight:500,
-                        letterSpacing:0.3,
-                        color:'white',
-                        border:'none',
-                        borderRadius:8
-                    }}>Begin Appointment</button>
+                    <button className='btn btn-primary'>Begin Appointment</button>
                 </div>
                 
             </div>
@@ -225,11 +213,7 @@ const ActiveRow = ({status, item}) => {
     )
 }
   return (
-    <div style={{
-        backgroundColor: 'white',
-        padding:10,
-        width:"50%"
-    }}>
+    <div className='card p-4 mx-2 my-4' style={{width:'50%'}}>
         <div style={{
             display:'flex',
             justifyContent:"space-between",

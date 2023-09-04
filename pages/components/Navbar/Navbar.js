@@ -27,7 +27,7 @@ const Navbar = ({parentCallback}) => {
             id:1,
             name:'Schedule',
             icon: schedule,
-            link:'/schedule'
+            link:'/calendar'
         },
         {
             id:2,
@@ -54,7 +54,7 @@ const Navbar = ({parentCallback}) => {
             link:'/settings'
         },
     ]
-    const handleSelection = (event,index) => {
+    const handleSelection = (index) => {
         setSelected(index)
     }
     // parentCallback(selected)
@@ -73,7 +73,8 @@ const Navbar = ({parentCallback}) => {
             { navItems.map((item, index)=>{
                 return (
                     <Link key={item.id}  href={item.link}>
-                <div 
+                <div
+                    onClick={() => handleSelection(index)} 
                     style={{
                         display:'flex',
                         flexDirection:'row',
@@ -97,7 +98,7 @@ const Navbar = ({parentCallback}) => {
                         color:selected===index?'#2f80ed':'black',
                         fontWeight:'400',
                         marginInlineStart:15,
-                        marginBottom:0
+                        marginBottom:0,
                     }}>{item.name}</p>
                 </div>
                 </Link>

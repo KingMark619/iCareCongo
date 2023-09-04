@@ -1,7 +1,7 @@
 export default {
     name: 'doctor',
     type: 'document',
-      title: 'Doctors',
+    title: 'Doctors',
     fields: [
         {
             name: 'id',
