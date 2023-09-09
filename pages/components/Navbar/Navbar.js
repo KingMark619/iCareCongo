@@ -45,7 +45,7 @@ const Navbar = ({parentCallback}) => {
             id:4,
             name:'Messages',
             icon: messages,
-            link:'/messages'
+            link:'/message'
         },
         {
             id:5,

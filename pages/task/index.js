@@ -22,12 +22,11 @@ const {token } = useAuth()
     // deleted/ archived tasks
 
     useEffect(() => {
-        console.log(tasks)
         setTask(tasks)
       }, [])
   
   const handleNewTask = (e) => {
-      console.log(e)
+      // console.log(e)
   }
 
   return (

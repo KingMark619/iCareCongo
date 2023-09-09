@@ -39,6 +39,17 @@ export default {
         title: 'Age'
       },
       {
+        name: 'sex',
+        type: 'string',
+        title: 'Sex',
+        options: {
+          list: [
+            { title: 'Male', value: 'male' },
+            { title: 'Female', value: 'female' },
+          ],
+        }
+      },
+      {
         name: 'emergencyName',
         type: 'string',
         title: 'Emergency Contact'

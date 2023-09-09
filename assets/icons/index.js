@@ -23,6 +23,9 @@ import exit from './box-arrow-right.svg'
 import search from './search.svg'
 import filter from './funnel.svg'
 import help from './question-circle.svg'
+import sun1 from './sun1.png'
+import sun2 from './sun2.png'
+import moon from './moon.png'
 // export default dashboard
 export { 
     dashboard,
@@ -48,5 +51,8 @@ export {
     exit,
     search,
     filter,
-    help
+    help,
+    sun1,
+    sun2,
+    moon
 }
