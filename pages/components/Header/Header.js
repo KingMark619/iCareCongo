@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image'
-import logo from '../../../assets/logo/Logo.svg'
+import logo from '../../../assets/logo/blue.png'
 import { bell, envelope, exit, profile } from '@/assets/icons'
 import Link from 'next/link'
+import { useAuth } from '../../context/AuthContext';
 
 // import NextAuth, {NextAuthOptions} from 'next/auth'
 // import { NextApiRequest, NextApiResponse } from 'next';
@@ -12,6 +13,7 @@ import Link from 'next/link'
 
 
 const Header = () => {
+  const { activeUser,setAuthenticated, setActiveUser } = useAuth();
   const [day, setDay] = useState('')
   const [month, setMonth] = useState('')
   const [year, setYear] = useState('')
@@ -26,10 +28,15 @@ const Header = () => {
     setYear(date.getFullYear())
   },[])
 
+  const logout = () => {
+      setAuthenticated(false)
+      setActiveUser()
+  }
+
    
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ borderBottom:' 0.5px solid #828282'}}>
+      <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{ borderBottom:' 0.5px solid #828282', paddingTop:0,paddingBottom:0 }}>
         <div className="container-fluid">
           <div style={{
             display:'flex',
@@ -38,12 +45,38 @@ const Header = () => {
             alignItems:'center',
             width:'100%'
           }}>
-            <Link style={{flex:1}} className="navbar-brand" href="/">
-           
-              <Image src={logo} alt="Logo" width="50" height="50" className="d-inline-block align-text-top"/>
-              iCare
-            
+            <Link className="navbar-brand" href="/">
+              <div style={{
+                  flex:1,
+                  display:'flex',
+                  flexDirection:'row',
+                  justifyContent:'space-between',
+                  alignItems:'center'
+                }}>
+                  <Image src={logo} alt="Logo" width="70" height="70" style={{borderRadius:100, border:'0.5px solid #2c70f4', padding:2}}/>
+                  <div style={{
+                    display:'flex',
+                    flexDirection:'column',
+                    justifyContent:'center',
+                    alignItems:'start',
+                    paddingLeft:10
+                  }}>
+                    <p style={{
+                      marginBottom:0,
+                      color:'#2f80ed',
+                      fontSize:18,
+                      fontWeight:'400'
+                      }}>iCare Congo</p>
+                      <p style={{
+                      marginBottom:0,
+                      color:'red',
+                      fontSize:15,
+                      fontWeight:'400'
+                      }}>Health the modern way</p>
+                </div>
+              </div>
             </Link>
+            
             <div style={{flex:2}} >
               <form className="d-flex" role="search">
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
@@ -62,13 +95,14 @@ const Header = () => {
                 fontWeight:'400',
                 color:'black',
                 marginBottom:0
-            }}>Kevin Kasongo</p>
+            }}>{activeUser?.firstName} {activeUser?.lastName}</p>
               <p style={{
                 fontSize:14,
                 fontWeight:'bold',
                 color:'black',
-                marginBottom:0
-            }}>General Doctor</p>
+                marginBottom:0,
+                textTransform:'capitalize'
+            }}>{activeUser?.role}</p>
             </div>
             {/* icon and date */}
             <div style={{
@@ -109,17 +143,17 @@ const Header = () => {
                   marginInlineEnd:10
                 }}
               />
-              <Link href="/login">
-              <Image
-                src={exit}
-                alt="exit"
-                width={20}
-                height={20}
-                style={{
-                  marginInlineEnd:10
-                }}
-              />  
-              </Link>  
+              <div onClick={logout}>
+                <Image
+                  src={exit}
+                  alt="exit"
+                  width={20}
+                  height={20}
+                  style={{
+                    marginInlineEnd:10
+                  }}
+                />  
+              </div>  
             </div>
           </div>
         </div>

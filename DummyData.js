@@ -8,6 +8,21 @@ const user= {
     ],
     profile:'',
 }
+export const exams = [
+    'CT Scan', 'Magnetic resonance imaging',
+    'Nuclear medicine',
+    "Fluoroscopy",
+    "Angiography",
+    "Ultrasonography",
+    "Breast MRI",
+    "Computed tomography angiography",
+    "Mammography",
+    "Bone scan",
+    "Chest radiograph",
+    "Medical diagnosis",
+    "Barium enema",
+    "Cardiac magnetic resonance imaging"
+]
 const medecine = [
     {
         name:'Aspirin',

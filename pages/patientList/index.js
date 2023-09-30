@@ -11,10 +11,14 @@ const Patient = () => {
     
     const [patientList, setPatientList] = useState([])
     const [date, setDate] = useState([])
+    const [totalPatients, setTotalPatients] = useState(0)
     
     useEffect(() => {
             setPatientList(patients)
+            const total = patientList?.length
+            setTotalPatients(total)
             // upload()
+            
     },[patients])
     const setAppointment = (appointment) => {
         
@@ -126,12 +130,14 @@ const  Row =  ({patient}) => {
             justifyContent:'space-between',
             alignItems:'center',
         }}>
-                <p style={{
+                {/* <p style={{
                 color:'black',
                 fontSize:14,
                 fontWeight:'400',
                 marginBottom:0
-                }}>Total Patients (475)</p>        
+                }}> All patients</p>   */}
+                <h6>All patients</h6>     
+                {/* Total Patients ({totalPatients})  */}
             <div style={{
                 display:'flex',
                 flexDirection:'row',

@@ -1,3 +1,4 @@
+'use client'
 import { arrowRight, dots, plus } from '@/assets/icons'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
@@ -11,23 +12,27 @@ import { useStateContext } from '../context/StateContext';
 
 
 const Task = () => {
-const {token } = useAuth()
+// const {token } = useAuth()
     const [selected,setSelected] = 'true'
     // get the data from the user ID.
     
     // populate the list of tasks
-    const [task, setTask] = useState([])
+    const [task, setTask] = useState()
+    const [newTask, setNewTask] = useState()
     const { tasks } = useStateContext()
     // completed tasks
     // deleted/ archived tasks
 
     useEffect(() => {
         setTask(tasks)
-      }, [])
+        console.log(task)
+      }, [task])
   
-  const handleNewTask = (e) => {
-      // console.log(e)
-  }
+      const handleNewTask = async (e) => {
+        e.preventDefault();
+        console.log(newTask)
+    
+    }
 
   return (
     <div className="gradient-custom" style={{width:'50%'}}>
@@ -36,13 +41,17 @@ const {token } = useAuth()
       <div>
         <div className="card">
           <div className="card-body p-4">
-            <form onSubmit={handleNewTask()} className="mb-4" style={{
+            <form onSubmit={handleNewTask} className="mb-4" style={{
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'start'
             }}>
               <div className="form-outline flex-fill">
-                <input type="text" id="form2" className="form-control" />
+                <input 
+                  type="text" 
+                  id="form2"
+                  className="form-control" 
+                  onChange={(e) => setNewTask(e.target.value)} />
                 <label className="form-label" htmlFor="form2">New task...</label>
               </div>
               <button type="submit" className="btn btn-primary ms-2">Add</button>
@@ -71,7 +80,7 @@ const {token } = useAuth()
               <div className="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel"
                 aria-labelledby="ex1-tab-1">
                 <ul className="list-group mb-0">
-                  {tasks?.map((task,i) =>(
+                  {task?.map((task,i) =>(
                     <li key={i} className="list-group-item d-flex align-items-center border-0 mb-2 rounded"
                     style={{backgroundColor: '#f4f6f7'}}>
                     <input className="form-check-input me-2" type="checkbox" value="" aria-label="..." />

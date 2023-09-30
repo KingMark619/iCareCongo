@@ -3,6 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import { arrowRight, edit, plus, profile, trash } from '@/assets/icons'
 import Layout from '../components/Layout/Layout'
+import Link from 'next/link'
 
 const UpcomingSchedule = () => {
 
@@ -92,7 +93,7 @@ const ActiveRow = ({status, item}) => {
                     fontWeight:'400',
                     fontSize:12,
                     marginBottom:0
-                }}>Kyungu wa Ndondo</p>
+                }}>Kyungu Kasongo</p>
             </div>
             <div style={{
                 display: 'flex',
@@ -204,7 +205,7 @@ const ActiveRow = ({status, item}) => {
                     </div>
                 </div>
                 <div>
-                    <button className='btn btn-primary'>Begin Appointment</button>
+                    <Link href='/consultation' className='btn btn-primary'>Begin Appointment</Link>
                 </div>
                 
             </div>
@@ -277,11 +278,13 @@ const ActiveRow = ({status, item}) => {
                     justifyContent:"flex-end",
                     alignItems: 'flex-start'
                 }}>
+                    <Link href='./calendar'>
                     <p style={{
                         color: 'blue',
                         fontWeight:'500',
                         fontSize:12
                     }}>View all</p>
+                    </Link>
                     <div style={{
                         display:'flex',
                         justifyContent: 'center',

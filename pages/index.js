@@ -4,9 +4,12 @@ import { Inter } from '@next/font/google'
 import { Mukta } from '@next/font/google'
 import localFont from '@next/font/local'
 import Card from './components/Card/Card'
+// import Card as Cardi from './components/StatCard'
 import Task from './task'
 import Appointment from './appointment'
 import UpcomingSchedule from './schedule'
+import { useEffect } from 'react'
+import StatCard from './components/StatCard/Card'
 
 // const mukta = Mukta({
 //   subsets:['latin'],
@@ -18,7 +21,7 @@ const mukta = localFont({
 })
 
 export default function Home() {
-
+  
   return (
     <>
       <Head>
@@ -28,7 +31,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={mukta.className}>
-        <Card/>
+      <StatCard/>
+        {/* <Card/> */}
         <div style={{
           display: 'flex',
           flexDirection:'row',
@@ -38,6 +42,7 @@ export default function Home() {
           <Task/>
           <UpcomingSchedule/>
         </div>
+        
         
       </main>
     </>

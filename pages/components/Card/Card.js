@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import Chart from 'react-google-charts'
 import { sun1,sun2, moon } from '@/assets/icons';
+import { useAuthContext } from '@/pages/context/AuthContext';
 
 
 const Card = () => {
@@ -94,7 +95,7 @@ const loadQuote = async () => {
                 height={40}
               />
             </div>
-            <p className="card-text">{quote}</p>
+            <p className="card-text">{quote?quote:"Medicine is not only a science; it is also an art.It does not consist of compounding pills and plasters; it deals with the very processes of life, which must be understood before they may be guided. - Paracelsus"}</p>
             {/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
           </div>
         </div>

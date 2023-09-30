@@ -2,65 +2,6 @@
 
 import { client } from "@/client"
 
-// export default async function patient(req, res) {
-//     const {
-//       firstName,
-//       lastName,
-//       age,
-//       appointment,
-//       bloodOxygen,
-//       bloodPressure,
-//       bmi,
-//       department,
-//       doctor,
-//       email,
-//       emergencyContact,
-//       generalCondition,
-//       height,
-//       medication,
-//       phone,
-//       pulse,
-//       status,
-//       temperature,
-//       weight,
-//       } = req.body
-    
-//     try{
-//       await client.create({
-//         _type:'patient',
-//         post:{
-//           // _type:'reference',
-//           _ref: _id
-//         },
-//         firstName,
-//         lastName,
-//         age,
-//         appointment,
-//         bloodOxygen,
-//         bloodPressure,
-//         bmi,
-//         department,
-//         doctor,
-//         email,
-//         emergencyContact,
-//         generalCondition,
-//         height,
-//         medication,
-//         phone,
-//         pulse,
-//         status,
-//         temperature,
-//         weight,
-//       })
-//     } catch(err){
-//       return res.status(500).json({message:"couldnt submit", err})
-//     }
-//     console.log("patient submitted")
-//     return res.status(200).json({message:"success"})
-//   }
-  
-
-// pages/api/example.js
 export default function handler(req, res) {
   // Handle the HTTP request
   if (req.method === 'GET') {

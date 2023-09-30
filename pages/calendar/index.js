@@ -153,7 +153,7 @@ export default function CustomCalendar() {
   }
   return (
     <>
-    {isClient?<div><p>hey</p></div>:
+    {isClient?<div><p>.</p></div>:
     <div style={styles.container}>
       <BigCalendar
         selectable

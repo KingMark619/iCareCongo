@@ -26,6 +26,13 @@ import help from './question-circle.svg'
 import sun1 from './sun1.png'
 import sun2 from './sun2.png'
 import moon from './moon.png'
+import person from './person.svg'
+import face from './face-smile-regular.svg'
+import send from './paper-plane-solid.svg'
+import attachment from './paperclip-solid.svg'
+import clock3d from './clock3d.png'
+import patientNew from './newpatient.png'
+import patientFolder from './allpatient.png'
 // export default dashboard
 export { 
     dashboard,
@@ -54,5 +61,12 @@ export {
     help,
     sun1,
     sun2,
-    moon
+    moon,
+    person,
+    face,
+    attachment,
+    send,
+    clock3d,
+    patientNew,
+    patientFolder
 }

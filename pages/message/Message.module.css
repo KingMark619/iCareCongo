@@ -1,8 +1,8 @@
-#chat3 .form-control {
+#chat3 .formControl {
     border-color: transparent;
   }
   
-  #chat3 .form-control:focus {
+  #chat3 .formControl:focus {
     border-color: transparent;
     box-shadow: inset 0px 0px 0px 1px transparent;
   }

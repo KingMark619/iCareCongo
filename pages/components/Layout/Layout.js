@@ -1,59 +1,58 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 
 import Header from '../Header/Header'
 import Navbar from '../Navbar/Navbar'
 
 import styles from './Layout.module.css'
+import { useAuthContext } from '@/pages/context/AuthContext'
+import LoginPage from '@/pages/login'
+
+import { useAuth } from '../../context/AuthContext';
 
 const Layout = ({children}) => {
- const [index, setIndex] = useState()
+  const {setToken,setAuthenticated,setActiveUser,authenticated,activeUser } = useAuth()
+  // const { authenticated } = useAuthContext()
+  const [index, setIndex] = useState()
 
-const handleCallback = (childData) =>{
-    setIndex(childData)
-    console.log(index)
-}
+  const handleCallback = (childData) =>{
+      setIndex(childData)
+      console.log(index)
+  }
+  useEffect(() =>{
+    console.log(activeUser)
+  },[authenticated])
 
   return (
     <>
+    {authenticated?
+    <div>
     <Header/>
-    <div style={{
-      display:'flex',
-      flexDirection:'row',
-      height:'90vh'
-    }}>
-      <Navbar/>
       <div style={{
-        backgroundColor:'#F9F9F9',
-        width:'100%',
-        borderLeft:'0.5px solid lightgray',
-        overflow:'scroll',
-        
+        display:'flex',
+        flexDirection:'row',
+        height:'90vh'
       }}>
-        <main style={{
-          width:'auto',
-          height:'100%',
-          paddingTop: '1rem',
-          paddingBottom: '1rem'
-        }}>{children}</main>
+        <Navbar/>
+        <div style={{
+          backgroundColor:'#F9F9F9',
+          width:'100%',
+          borderLeft:'0.5px solid lightgray',
+          overflow:'scroll',
+          
+        }}>
+          <main style={{
+            width:'auto',
+            height:'100%',
+            paddingTop: '1rem',
+            paddingBottom: '1rem'
+          }}>{children}</main>
+        </div>   
       </div>
-      
-    </div>
+      </div>  : <LoginPage/>}
     
-    {/* Footer */}
-    </>
     
-    // <div>
-    // <div className={styles.container}>
-    //     <div className={styles.header}><Header/></div>
-    //     <div className={styles.content}>
-    //         {/* {navItems[index]?.component} */}
-    //         <Cont/>
-    //     </div>
-    //     <div className={styles.nav}><Navbar parentCallback = {handleCallback}/></div>
-    // </div>
-    // </div>
-    
+    </>   
   )
 }
 
