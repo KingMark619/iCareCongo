@@ -3,6 +3,7 @@ import Image from 'next/image'
 import React from 'react'
 import styles from './message.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 
 const index = () => {
   return (
@@ -34,7 +35,7 @@ const index = () => {
                   <div data-mdb-perfect-scrollbar="true" style={{position: "relative", height: "400px"}}>
                     <ul className="list-unstyled mb-0">
                       <li className="p-2 border-bottom">
-                        <a href="#!" className="d-flex justify-content-between">
+                        <Link href="/" className="d-flex justify-content-between">
                           <div className="d-flex flex-row">
                             <div>
                               <Image
@@ -54,10 +55,10 @@ const index = () => {
                             <p className="small text-muted mb-1">Just now</p>
                             <span className="badge bg-danger rounded-pill float-end">3</span>
                           </div>
-                        </a>
+                        </Link>
                       </li>
                       <li className="p-2 border-bottom">
-                        <a href="#!" className="d-flex justify-content-between">
+                        <Link href="/" className="d-flex justify-content-between">
                           <div className="d-flex flex-row">
                             <div>
                               <Image
@@ -77,10 +78,10 @@ const index = () => {
                             <p className="small text-muted mb-1">5 mins ago</p>
                             <span className="badge bg-danger rounded-pill float-end">2</span>
                           </div>
-                        </a>
+                        </Link>
                       </li>
                       <li className="p-2 border-bottom">
-                        <a href="#!" className="d-flex justify-content-between">
+                        <Link href="/" className="d-flex justify-content-between">
                           <div className="d-flex flex-row">
                             <div>
                               <Image
@@ -100,10 +101,10 @@ const index = () => {
                           <div className="pt-1">
                             <p className="small text-muted mb-1">Yesterday</p>
                           </div>
-                        </a>
+                        </Link>
                       </li>
                       <li className="p-2 border-bottom">
-                        <a href="#!" className="d-flex justify-content-between">
+                        <Link href="/" className="d-flex justify-content-between">
                           <div className="d-flex flex-row">
                             <div>
                               <Image
@@ -123,10 +124,10 @@ const index = () => {
                           <div className="pt-1">
                             <p className="small text-muted mb-1">Yesterday</p>
                           </div>
-                        </a>
+                        </Link>
                       </li>
                       <li className="p-2 border-bottom">
-                        <a href="#!" className="d-flex justify-content-between">
+                        <Link href="/" className="d-flex justify-content-between">
                           <div className="d-flex flex-row">
                             <div>
                             <Image
@@ -146,10 +147,10 @@ const index = () => {
                           <div className="pt-1">
                             <p className="small text-muted mb-1">Yesterday</p>
                           </div>
-                        </a>
+                        </Link>
                       </li>
                       <li className="p-2">
-                        <a href="#!" className="d-flex justify-content-between">
+                        <Link href="/" className="d-flex justify-content-between">
                           <div className="d-flex flex-row">
                             <div>
                                 <Image
@@ -169,7 +170,7 @@ const index = () => {
                           <div className="pt-1">
                             <p className="small text-muted mb-1">Yesterday</p>
                           </div>
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>
@@ -339,30 +340,30 @@ const index = () => {
                     alignItems: 'center',
                     width:'15%'
                   }}>
-                  <a>
+                  <Link href="/">
                     <Image
                         src={face}
                         alt="avatar"
                         width={15}
                         height={"100%"}
                     />
-                  </a>
-                  <a>
+                  </Link>
+                  <Link href="/">
                     <Image
                         src={attachment}
                         alt="avatar"
                         width={15}
                         height={"100%"}
                     />
-                  </a>
-                  <a>
+                  </Link>
+                  <Link href="/">
                     <Image
                         src={send}
                         alt="avatar"
                         width={15}
                         height={"100%"}
                     />
-                  </a>
+                  </Link>
                   </div>  
                 </div>
               </div>
@@ -422,7 +423,7 @@ export default index
 //                     >
 //                       <MDBTypography listUnStyled className="mb-0">
 //                         <li className="p-2 border-bottom">
-//                           <a
+//                           <Link
 //                             href="#!"
 //                             className="d-flex justify-content-between"
 //                           >
@@ -449,10 +450,10 @@ export default index
 //                                 3
 //                               </span>
 //                             </div>
-//                           </a>
+//                           </Link>
 //                         </li>
 //                         <li className="p-2 border-bottom">
-//                           <a
+//                           <Link
 //                             href="#!"
 //                             className="d-flex justify-content-between"
 //                           >
@@ -481,10 +482,10 @@ export default index
 //                                 2
 //                               </span>
 //                             </div>
-//                           </a>
+//                           </Link>
 //                         </li>
 //                         <li className="p-2 border-bottom">
-//                           <a
+//                           <Link
 //                             href="#!"
 //                             className="d-flex justify-content-between"
 //                           >
@@ -508,10 +509,10 @@ export default index
 //                             <div className="pt-1">
 //                               <p className="small text-muted mb-1">Yesterday</p>
 //                             </div>
-//                           </a>
+//                           </Link>
 //                         </li>
 //                         <li className="p-2 border-bottom">
-//                           <a
+//                           <Link
 //                             href="#!"
 //                             className="d-flex justify-content-between"
 //                           >
@@ -535,10 +536,10 @@ export default index
 //                             <div className="pt-1">
 //                               <p className="small text-muted mb-1">Yesterday</p>
 //                             </div>
-//                           </a>
+//                           </Link>
 //                         </li>
 //                         <li className="p-2 border-bottom">
-//                           <a
+//                           <Link
 //                             href="#!"
 //                             className="d-flex justify-content-between"
 //                           >
@@ -562,10 +563,10 @@ export default index
 //                             <div className="pt-1">
 //                               <p className="small text-muted mb-1">Yesterday</p>
 //                             </div>
-//                           </a>
+//                           </Link>
 //                         </li>
 //                         <li className="p-2">
-//                           <a
+//                           <Link
 //                             href="#!"
 //                             className="d-flex justify-content-between"
 //                           >
@@ -589,7 +590,7 @@ export default index
 //                             <div className="pt-1">
 //                               <p className="small text-muted mb-1">Yesterday</p>
 //                             </div>
-//                           </a>
+//                           </Link>
 //                         </li>
 //                       </MDBTypography>
 //                     </MDBScrollbar>
@@ -772,15 +773,15 @@ export default index
 //                       id="exampleFormControlInput2"
 //                       placeholder="Type message"
 //                     />
-//                     <a className="ms-1 text-muted" href="#!">
+//                     <Link className="ms-1 text-muted" href="#!">
 //                       <MDBIcon fas icon="paperclip" />
-//                     </a>
-//                     <a className="ms-3 text-muted" href="#!">
+//                     </Link>
+//                     <Link className="ms-3 text-muted" href="#!">
 //                       <MDBIcon fas icon="smile" />
-//                     </a>
-//                     <a className="ms-3" href="#!">
+//                     </Link>
+//                     <Link className="ms-3" href="#!">
 //                       <MDBIcon fas icon="paper-plane" />
-//                     </a>
+//                     </Link>
 //                   </div>
 //                 </MDBCol>
 //               </MDBRow>

@@ -5,6 +5,8 @@ import logo from '../../../assets/logo/blue.png'
 import { bell, envelope, exit, profile } from '@/assets/icons'
 import Link from 'next/link'
 import { useAuth } from '../../context/AuthContext';
+import { app } from '@/firebase/clientApp'
+import { getAuth } from 'firebase/auth'
 
 // import NextAuth, {NextAuthOptions} from 'next/auth'
 // import { NextApiRequest, NextApiResponse } from 'next';
@@ -13,10 +15,13 @@ import { useAuth } from '../../context/AuthContext';
 
 
 const Header = () => {
+  const auth = getAuth(app)
+
   const { activeUser,setAuthenticated, setActiveUser } = useAuth();
   const [day, setDay] = useState('')
   const [month, setMonth] = useState('')
   const [year, setYear] = useState('')
+  const [role, setRole] = useState('')
 
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
@@ -26,11 +31,11 @@ const Header = () => {
     setDay(date.getDate())
     setMonth(date.getMonth())
     setYear(date.getFullYear())
+    // setRole(activeUser?.role)
   },[])
 
   const logout = () => {
-      setAuthenticated(false)
-      setActiveUser()
+      
   }
 
    
@@ -95,7 +100,7 @@ const Header = () => {
                 fontWeight:'400',
                 color:'black',
                 marginBottom:0
-            }}>{activeUser?.firstName} {activeUser?.lastName}</p>
+            }}>{activeUser?.firstNname} {activeUser?.lastName}</p>
               <p style={{
                 fontSize:14,
                 fontWeight:'bold',

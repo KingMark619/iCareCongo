@@ -11,8 +11,21 @@ import logo from '../../assets/logo/blue.png'
 import backgrd from '../../assets/background/abstract.jpg'
 import Image from 'next/image';
 import {useForm} from 'react-hook-form'
+import { initFirebase, initFirestore } from '@/firebase/clientApp';
+
+import { createUserWithEmailAndPassword,getAuth , signInWithEmailAndPassword, browserSessionPersistence, setPersistence} from "firebase/auth";
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { doc, getDoc } from 'firebase/firestore';
+import Link from 'next/link';
 
 export default function LoginPage() {
+  
+  const app = initFirebase()
+  const db = initFirestore()
+  const auth = getAuth(app)
+  // user is defined, and loading is boolean for user state
+  const [user, loading ] = useAuthState(auth)
+
   const {register, handleSubmit} = useForm()
   const { data: session } = useSession()
   
@@ -23,20 +36,79 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
  
   const [error, setError] = useState('');
-  const [loading,setLoading] = useState(false);
+  const [loader,setLoader] = useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    // console.log(auth)
+    // console.log(loading)
+    // console.log(user)
+  },[])
+
+
+  const launchFire = () => {
+    
+    // createUserWithEmailAndPassword(auth, email, password)
+    //   .then((userCredential) => {
+    //     // Signed up 
+    //     const user = userCredential.user;
+    //     console.log(user)
+    //     // ...
+    //   })
+    //   .catch((error) => {
+    //     console.error(error)
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     // ..
+    //   });
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        pullUserData(user)
+        // ...
+        setPersistence(auth, browserSessionPersistence)
+          .then(() => {
+            console.log(user)
+            return user
+            // return signInWithEmailAndPassword(auth, email, password);
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            console.error(error)
+          });
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+    
+  }
+  const pullUserData = async (user) => {
+    const id = user?.uid
+    const docRef = doc(db, "users", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      setActiveUser(docSnap.data())
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
 
   const submit = async (e) => {
     if(email !== '' && password !== '') {
       const user = users.find(user => user.email === email && user.password === password)
       if(user){
         // if there is a user, set auth status and pass user to the entire app
-         setLoading(true)
+         setLoader(true)
          setActiveUser(user)
          // delay for loading animation
          setTimeout(() => {
-            setLoading(false)
+            setLoader(false)
             setAuthenticated(true)
             router.push('/')
          },2000)
@@ -161,7 +233,7 @@ export default function LoginPage() {
                 </div>
               </div>
     </div>
-    <form onSubmit={handleSubmit(submit)} style={{
+    <form onSubmit={handleSubmit(launchFire)} style={{
       display:'flex',
       flexDirection:'column',
       justifyContent: 'center',
@@ -178,7 +250,7 @@ export default function LoginPage() {
       onChange={(e) => setEmail(e.target.value)}
     />
   </div>
-  { loading?
+  { loader?
     <div className="spinner-border text-primary" role="status">
       <span className="sr-only"></span>
     </div> : <></>
@@ -209,7 +281,7 @@ export default function LoginPage() {
 
     <div className="col d-flex justify-content-center">
       {/* <!-- Simple link --> */}
-      <a href="#!">Forgot password?</a>
+      <Link href="/">Forgot password?</Link>
       {error && <p>{error}</p>}
     </div>
   </div>

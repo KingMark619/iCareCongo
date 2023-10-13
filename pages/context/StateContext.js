@@ -48,6 +48,11 @@ const Context = createContext()
        .then((response) => {setUsers(response)})
        .catch((error) => {console.error('Cant load Tasks')})  
     },[])
+    const loadPatients = () => {
+      client.fetch(patientQuery)
+      .then((response) => {setPatients(response)})
+      .catch((error) => {console.error('Cant load Patients')})
+    }
 
   return (
     <Context.Provider
@@ -57,7 +62,8 @@ const Context = createContext()
             nurses,
             appointments,
             tasks,
-            users
+            users,
+            loadPatients
         }}
     >
         {children}

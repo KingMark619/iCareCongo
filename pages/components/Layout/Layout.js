@@ -1,31 +1,56 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect,useState } from 'react'
 
 import Header from '../Header/Header'
 import Navbar from '../Navbar/Navbar'
 
-import styles from './Layout.module.css'
-import { useAuthContext } from '@/pages/context/AuthContext'
 import LoginPage from '@/pages/login'
 
 import { useAuth } from '../../context/AuthContext';
+import { app, initFirestore } from '@/firebase/clientApp'
+import { getAuth } from 'firebase/auth'
+import { collection, addDoc, doc, setDoc, getDoc } from 'firebase/firestore'
+
 
 const Layout = ({children}) => {
-  const {setToken,setAuthenticated,setActiveUser,authenticated,activeUser } = useAuth()
-  // const { authenticated } = useAuthContext()
+  const db = initFirestore()
+
+  const auth = getAuth(app)
+
+  const {setToken,setAuthenticated,setActiveUser,activeUser } = useAuth()
+  const  authenticated  = true
+
   const [index, setIndex] = useState()
 
   const handleCallback = (childData) =>{
       setIndex(childData)
       console.log(index)
   }
+  const addToDb = async () => {
+    // Profiles.map((profile,index) =>{
+    //    setDoc(doc(db, "users", profile.id), profile)
+    // })
+    
+    
+    // try {
+    //   const docRef = await addDoc(collection(db, "users"), {
+    //     first: "Ada",
+    //     last: "Lovelace",
+    //     born: 1815
+    //   });
+    //   console.log("Document written with ID: ", docRef.id);
+    // } catch (e) {
+    //   console.error("Error adding document: ", e);
+    // }
+  }
+  
   useEffect(() =>{
-    console.log(activeUser)
-  },[authenticated])
+    console.log(auth.currentUser)
+    // addToDb()  
+  },[auth])
 
   return (
     <>
-    {authenticated?
+    {auth.currentUser?
     <div>
     <Header/>
       <div style={{
@@ -39,7 +64,6 @@ const Layout = ({children}) => {
           width:'100%',
           borderLeft:'0.5px solid lightgray',
           overflow:'scroll',
-          
         }}>
           <main style={{
             width:'auto',

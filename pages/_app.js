@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }) {
       <StateContext>
         <AuthProvider>
           <Layout>
-            <Component {...pageProps} />
+            <Component {...pageProps}/>
           </Layout>
           <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />

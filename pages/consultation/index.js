@@ -1,35 +1,153 @@
 'use client'
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import Divider from '../components/Divider/Divider'
 import {useForm} from 'react-hook-form'
 import Image from 'next/image'
 import logo from '../../assets/logo/blue.png'
 import Link from 'next/link'
-import { exams } from '@/DummyData'
+import { drugsAndMedicine, exams,labs } from '@/DummyData'
 
 const index = () => {
-    const {register, handleSubmit} = useForm()
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
-    const [isOpen, setIsOpen] = useState(false);
+    
 
+    const {register, handleSubmit} = useForm()
+    const [labSearchTerm, setLabSearchTerm] = useState(null);
+    const [labSearchResults, setLabSearchResults] = useState([]);
+
+    const [pharmaSearchTerm, setPharmaSearchTerm] = useState('');
+    const [pharmaSearchResults, setPharmaSearchResults] = useState([])
+
+    const [isOpenLab, setIsOpenLab] = useState(false);
+    const [isOpenPharma, setIsOpenPharma] = useState(false)
+
+    const [labResults, setLabResults] = useState([]);
+    const [medResults, setMedResults] = useState([]);
+
+    useEffect(() =>{
+        console.log('update dom')
+    },[medResults])
     // Function to handle input change
-  const handleInputChange = (e) => {
+  const handleSearchInputChange = (e) => {
+    console.log(isOpenLab)
     const term = e.target.value;
-    setSearchTerm(term);
+    setLabSearchTerm(term);
 
     // Perform the search and update the results
     const results = exams.filter((item) =>
       item.toLowerCase().includes(term.toLowerCase())
     );
-    setSearchResults(results);
-    if(searchTerm !== ''){
-        setIsOpen(true);
+    setLabSearchResults(results);
+
+    if(labSearchTerm !== null){
+        setIsOpenLab(true);
     } else {
-        setIsOpen(false)
+        setIsOpenLab(!isOpenLab)
     }
     
-  };
+  }
+  const handlePharmaSearchInputChange = (e) => {
+    
+    const term = e.target.value;
+    setPharmaSearchTerm(term);
+
+    // Perform the search and update the results
+    const results = drugsAndMedicine.filter((item) =>
+      item.toLowerCase().includes(term.toLowerCase())
+    );
+    setPharmaSearchResults(results);
+
+    if(pharmaSearchTerm !== null){
+        setIsOpenPharma(true);
+    } else {
+        setIsOpenPharma(!isOpenPharma)
+    }
+    
+  }
+  const addMedItem = (result) => {
+    if (!medResults.includes(result)){
+        setMedResults([...medResults,result]);
+        console.log(medResults)
+    } else {
+        alert(`${result} already added`)
+        // dont add the exam 
+    }
+  }
+
+  const addLabItem = (result) => {
+    if(!labResults.includes(result)){
+        setLabResults([...labResults,result]);
+        console.log(labResults)
+    }else {
+        alert(`${result} already added`)
+        // dont add the drug 
+    }
+  }
+
+  const deleteMedItem = (result) => {
+    const updatedMeds = [...medResults]
+    const indexToRemove = medResults.indexOf(result)
+
+    if( indexToRemove !== -1 ){
+        updatedMeds.splice(indexToRemove, 1)
+        setMedResults(updatedMeds)
+    }
+  }
+
+  const deleteLabItem = (result) => {
+    const updatedLabs = [...labResults]
+    const indexToRemove = labResults.indexOf(result)
+
+    if( indexToRemove !== -1 ){
+        updatedLabs.splice(indexToRemove, 1)
+        setLabResults(updatedLabs)
+    }
+  }
+  const handleDelete = (item,type) => {
+    console.log('deleting')
+    if (type === 'lab'){
+        deleteLabItem(item)
+    } else if (type === 'med'){
+        deleteMedItem(item)
+    }
+  }
+
+  const ResultCard = (item,type) => {
+    return(
+        <div className="card p-2 m-2" style={{ 
+            display: 'flex',
+            flexDirection:'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width:'18%',
+            maxHeight:60,
+            overflow:'hidden'
+        }}>
+            <p style={{
+                fontSize:15,
+                fontWeight:'300',
+                marginBottom:0,
+                color:'black',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,  // Limit to 2 lines
+                WebkitBoxOrient: 'vertical',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+            }} >{item?.item}</p>
+            <button 
+                onClick={()=>handleDelete(item?.item,type)}
+                className="btn btn-outline-danger" 
+                type='button'
+                style={{
+                    width:30,
+                    height:30,
+                    display:'flex',
+                    flexDirection:'column',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+            }}>x</button>
+        </div>
+    )
+  }
 
   return (
     <>
@@ -140,12 +258,12 @@ const index = () => {
                         paddingLeft: 50,
                         marginBottom: 10,
                     }}>
-                    <textarea  readOnly={true} style={{
+                    <textarea defaultValue={'some text from nurse'}  readOnly={true} style={{
                         border:'0.5px solid lightgray',
                         padding:5,
                         width:'80%',
                         height:'200px'
-                    }}>fhejf</textarea>
+                    }}></textarea>
                 </div>
                 <Divider/>
                 <div style={{
@@ -172,25 +290,49 @@ const index = () => {
                                 style={{
                                     width:'50%'
                                 }}
-                                value={searchTerm}
-                                onChange={handleInputChange}
+                                value={labSearchTerm}
+                                onChange={handleSearchInputChange}
                             />
-                            <button className="btn btn-outline-success" type="submit">+</button>
+                            <button className="btn btn-outline-success" type='button'>+</button>
                         </div>
                         
-                    {isOpen && (
+                    {isOpenLab === true? (
                         <ul>
-                        <div >
-                        {searchResults.map((result, index) => (
-                            <div style={{
+                        <div className="card p-2" style={{
+                            display: 'flex',
+                            flexDirection:'row',
+                            flexWrap:'wrap',
+                            width:'90%',
+                            height:'auto',
+                            overflow:'scroll'
+                        }}>
+                            <button 
+                                onClick={()=>(setIsOpenLab(false))}
+                                className="btn btn-outline-danger" 
+                                type='button'
+                                style={{
+                                    width:25,
+                                    height:25,
+                                    display:'flex',
+                                    flexDirection:'column',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    position:'absolute',
+                                    top:5,
+                                    right:5,
+                                    fontSize:10
+                            }}>x</button>
+                        {labSearchResults.map((result, index) => (
+                            <div 
+                                key={index} 
+                                className='m-2'
+                                style={{
                                 display:'flex',
                                 flexDirection:'row',
                                 justifyContent:'space-between',
                                 alignItems:'center',
                                 width:'30%',
-                                marginLeft:60,
                                 padding:'10px 0',
-                                
                                 borderBottom:'0.5px solid lightgray',
                             }}>
                             <p style={{
@@ -199,12 +341,122 @@ const index = () => {
                                 marginBottom:0,
                                 color:'black'
                             }} key={index}>{result}</p>
-                            <button className="btn btn-outline-success" type="submit">+</button>
+                            <div className="btn btn-outline-success" onClick={()=>addMedItem(result)}>+</div>
+                            </div>
+                        ))}
+                        </div>
+                        </ul>
+                    ):''}
+                </div>
+                {/* results */}
+                <div style={{
+                    display:'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexWrap:'wrap'
+                }}>
+                    {medResults!== undefined ?medResults.map((result,index)=>{
+                   return( <ResultCard item={result} key={index} type={'med'}/>)
+                }):''}
+                    
+                </div>
+                
+                <Divider/>
+                <div style={{
+                        paddingLeft: 20,
+                        marginBottom: 10
+                    }}>
+                    <p style={{
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'black'
+                    }}>Pharmacy</p>
+                </div>
+                <div style={{
+                        paddingLeft: 20,
+                        marginBottom: 10
+                    }}>
+                        <div className="d-flex" style={{paddingLeft:30,marginBottom:10}}>
+                            <input 
+                                className="form-control me-2"
+                                type="search" 
+                                placeholder="Search" 
+                                aria-label="Search"
+                                style={{
+                                    width:'50%'
+                                }}
+                                value={pharmaSearchTerm}
+                                onChange={handlePharmaSearchInputChange}
+                            />
+                            <button className="btn btn-outline-success" type='button'>+</button>
+                        </div>
+                        
+                    {isOpenPharma && (
+                        <ul>
+                        <div className="card p-2" style={{
+                            display: 'flex',
+                            flexDirection:'row',
+                            flexWrap:'wrap',
+                            width:'90%',
+                            height:'auto',
+                            overflow:'scroll'
+                        }} >
+                            <button 
+                                onClick={()=>(setIsOpenPharma(false))}
+                                className="btn btn-outline-danger" 
+                                type='button'
+                                style={{
+                                    width:25,
+                                    height:25,
+                                    display:'flex',
+                                    flexDirection:'column',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    position:'absolute',
+                                    top:5,
+                                    right:5,
+                                    fontSize:10
+                            }}>x</button>
+                        {pharmaSearchResults.map((result, index) => (
+                            <div 
+                                key={index} 
+                                className='m-2'
+                                style={{
+                                display:'flex',
+                                flexDirection:'row',
+                                justifyContent:'space-between',
+                                alignItems:'center',
+                                width:'30%',
+                                padding:'10px 0',
+                                borderBottom:'0.5px solid lightgray',
+                                }}>
+                                <p style={{
+                                    fontSize:15,
+                                    fontWeight:'300',
+                                    marginBottom:0,
+                                    color:'black'
+                                }} key={index}>{result}</p>
+                                <div className="btn btn-outline-success" onClick={()=>addLabItem(result)}>+</div>
                             </div>
                         ))}
                         </div>
                         </ul>
                     )}
+                </div>
+                {/* results */}
+                <div style={{
+                    display:'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexWrap:'wrap'
+                }}>
+                    {labResults!== undefined ?labResults.map((result,index)=>{
+                   return( <ResultCard item={result} key={index} type={'lab'}/>)
+                }):''}
+                    
                 </div>
                 
                 <Divider/>
@@ -223,12 +475,12 @@ const index = () => {
                         paddingLeft: 50,
                         marginBottom: 10,
                     }}>
-                    <textarea style={{
+                    <textarea defaultValue={'some observation by the doctor goes here'} style={{
                         border:'0.5px solid lightgray',
                         padding:5,
                         width:'80%',
                         height:'200px'
-                    }}>some observation by the doctor goes here</textarea>
+                    }}></textarea>
                 </div>
                 
                 {/* button row */}

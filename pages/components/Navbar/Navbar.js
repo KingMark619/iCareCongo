@@ -12,10 +12,14 @@ import {
 } from '../../../assets/icons'
 import './Navbar.module.css'
 import Link from 'next/link';
+import { useAuth } from '@/pages/context/AuthContext';
 
 const Navbar = ({parentCallback}) => {
+    const { activeUser } = useAuth();
     const [active, setActive] = useState(false)
     const [selected, setSelected] = useState(0)
+    // const [role,setRole] = useState(activeUser?.role)
+
     const navItems=[
         {
             id:0,

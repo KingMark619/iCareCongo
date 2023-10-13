@@ -106,7 +106,7 @@ export default {
       },
       {
         name: 'appointment',
-        type: 'string',
+        type: 'datetime',
         title: 'Appointment'
       },
       {

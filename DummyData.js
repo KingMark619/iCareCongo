@@ -1,13 +1,60 @@
-const user= {
-    id:1,
-    name:'King Mark',
-    speciality:'Outpatient Clinic',
-    schedule:[
-        // add date and time and available
-        // use date() 
-    ],
-    profile:'',
-}
+export const Profiles = [
+    {
+        id:'wX124AS9CZPpdS6yCHIJ9HrtIQW2',
+        firstNname:'Mark',
+        lastName:'King',
+        email:'marcokayumba@icloud.com',
+        phone:'123-456-7890',
+        speciality:'Outpatient Clinic',
+        department:'Internal Medicine',
+        role:'Management',
+        profile:'',
+    },
+    {
+        id:"OTH05eGtXsRzGka7rB7gCoY1a342",
+        firstNname:'Steve',
+        lastName:'Ngoy',
+        email:'steve@icloud.com',
+        phone:'123-456-7890',
+        speciality:'Gynecology',
+        department:'Internal Medicine',
+        role:'Doctor',
+        profile:'',
+    },
+    {
+        id:'kM8r9ksyhqORKIvgEr3dRYd7mln2',
+        firstNname:'Durance',
+        lastName:'Lady',
+        email:'durance@icloud.com',
+        phone:'123-456-7890',
+        speciality:'Outpatient Clinic',
+        department:'Internal Medicine',
+        role:'Nurse',
+        profile:'',
+    },
+    {
+        id:'2zXPBJnwbGYswEdcxeBY40PlRZ23',
+        firstNname:'Myriam',
+        lastName:'Kayumba',
+        email:'myriam@icloud.com',
+        phone:'123-456-7890',
+        speciality:'Outpatient Clinic',
+        department:'Pharmacy',
+        role:'Pharmacy',
+        profile:'',
+    },
+    {
+        id:'p8c7AgwgeihicJQkAzSpxbF789p2',
+        firstNname:'Didier',
+        lastName:'Didier',
+        email:'didier@icloud.com',
+        phone:'123-456-7890',
+        speciality:'Outpatient Clinic',
+        department:'Internal Medicine',
+        role:'Triage',
+        profile:'',
+    }
+]
 export const exams = [
     'CT Scan', 'Magnetic resonance imaging',
     'Nuclear medicine',
@@ -23,24 +70,40 @@ export const exams = [
     "Barium enema",
     "Cardiac magnetic resonance imaging"
 ]
-const medecine = [
-    {
-        name:'Aspirin',
-        dosage:'1000mg'
-    },
-    {
-        name:'Doliprane',
-        dosage:'500mg'
-    },
-    {
-        name:'Ceter',
-        dosage:'100mg'
-    },
-    {
-        name:'Teracyn',
-        dosage:'50mg'
-    },
-]
+export const drugsAndMedicine = [
+    'Aspirin',
+    'Acetaminophen',
+    'Amoxicillin',
+    'Albuterol',
+    'Atorvastatin',
+    'Benadryl',
+    'Ciprofloxacin',
+    'Codeine',
+    'Doxycycline',
+    'Esomeprazole',
+    'Fluoxetine',
+    'Gabapentin',
+    'Hydrochlorothiazide',
+    'Ibuprofen',
+    'Lisinopril',
+    'Metformin',
+    'Naproxen',
+    'Omeprazole',
+    'Prednisone',
+    'Quetiapine',
+    'Ranitidine',
+    'Sertraline',
+    'Tetracycline',
+    'Ursodiol',
+    'Venlafaxine',
+    'Warfarin',
+    'Xanax',
+    'Yasmin',
+    'Zolpidem'
+  ];
+  
+  // To use this array, you can access and manipulate the drug and medicine names as needed.
+  
 const tasks = [
     {
         id:0,

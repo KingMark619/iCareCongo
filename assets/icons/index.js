@@ -33,6 +33,7 @@ import attachment from './paperclip-solid.svg'
 import clock3d from './clock3d.png'
 import patientNew from './newpatient.png'
 import patientFolder from './allpatient.png'
+import reload from './refresh.svg'
 // export default dashboard
 export { 
     dashboard,
@@ -68,5 +69,6 @@ export {
     send,
     clock3d,
     patientNew,
-    patientFolder
+    patientFolder,
+    reload
 }

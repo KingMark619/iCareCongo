@@ -8,8 +8,11 @@ import Card from './components/Card/Card'
 import Task from './task'
 import Appointment from './appointment'
 import UpcomingSchedule from './schedule'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import StatCard from './components/StatCard/Card'
+import { useAuth } from './context/AuthContext'
+import Patient from './patientList'
+import AppointmentList from './components/AppointmentList/AppointmentList'
 
 // const mukta = Mukta({
 //   subsets:['latin'],
@@ -21,7 +24,11 @@ const mukta = localFont({
 })
 
 export default function Home() {
-  
+  const {activeUser } = useAuth()
+  const [role, setRole ] = useState(activeUser?.role)
+  useEffect(()=>{
+    console.log(role)
+  },[activeUser])
   return (
     <>
       <Head>
@@ -33,17 +40,12 @@ export default function Home() {
       <main className={mukta.className}>
       <StatCard/>
         {/* <Card/> */}
-        <div style={{
-          display: 'flex',
-          flexDirection:'row',
-          justifyContent:'space-between',
-          alignItems:'start'
-        }}>
-          <Task/>
-          <UpcomingSchedule/>
+        <div>
+          
+          <Patient/>
+          {/* <Task/>
+          <UpcomingSchedule/> */}
         </div>
-        
-        
       </main>
     </>
   )

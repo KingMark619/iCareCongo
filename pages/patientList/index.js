@@ -1,14 +1,15 @@
-import { filter, help, plus, profile, search } from '@/assets/icons'
+import { filter, help, plus, reload, search } from '@/assets/icons'
 import Image from 'next/image'
 import React, { useEffect,useState } from 'react'
 import styles from './Patient.module.css'
 import { useStateContext } from '@/pages/context/StateContext'
 import Link from "next/link"
 import Layout from '../components/Layout/Layout'
+import { useRouter } from 'next/router'
 
 const Patient = () => {
-    const { patients } = useStateContext()
-    
+    const router = useRouter()
+    const { patients,loadPatients } = useStateContext()
     const [patientList, setPatientList] = useState([])
     const [date, setDate] = useState([])
     const [totalPatients, setTotalPatients] = useState(0)
@@ -40,6 +41,12 @@ const  upload = () => {
     .catch(err => {
         console.log(err)
     })
+}
+const reloadContent = () => {
+    loadPatients()
+    // setPatientList(patients)
+    
+    console.log('setting lsit')
 }
 const  Row =  ({patient}) => {
     // const regexPattern = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})$/;
@@ -135,8 +142,8 @@ const  Row =  ({patient}) => {
                 fontSize:14,
                 fontWeight:'400',
                 marginBottom:0
-                }}> All patients</p>   */}
-                <h6>All patients</h6>     
+                }}> All patients</p> */}
+                <h6>Patient list</h6>     
                 {/* Total Patients ({totalPatients})  */}
             <div style={{
                 display:'flex',
@@ -205,11 +212,12 @@ const  Row =  ({patient}) => {
                     alignItems:'center'
                 }}>
                   <Image 
-                    src={help}
+                    src={reload}
                     width={20}
                     height={20}
                     alt="help"
-                    />  
+                    onClick={()=>(reloadContent())}
+                   />  
                 </div>
             </div>
         </div>
@@ -227,7 +235,12 @@ const  Row =  ({patient}) => {
             </thead>
             <tbody>
                 {patients?.map((patient,index)=>{
-                    return <tr key={index}>
+                    return <tr key={index} onDoubleClick={()=>(
+                            router.push({
+                                pathname: '../patientFile',
+                                query: patient
+                            }, '../patientFile')
+                        )}>
                         <th scope="row">{index + 1}</th>
                         <td>{patient?.firstName} {patient?.lastName}</td>
                         <td>{patient?.medHistory}</td>

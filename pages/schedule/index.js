@@ -225,7 +225,7 @@ const ActiveRow = ({status, item}) => {
                 fontSize:18,
                 fontWeight: '500'
             }}>Upcoming schedule</p>
-            <a>
+            <Link href="/">
                 <div style={{
                     display:'flex',
                     flexDirection: 'row',
@@ -259,7 +259,7 @@ const ActiveRow = ({status, item}) => {
                     />
                     </div>
                 </div>
-            </a>
+            </Link>
         </div>
         {/* schedule bellow */}
         <div>
@@ -271,7 +271,7 @@ const ActiveRow = ({status, item}) => {
         {/* bottom row */}
         <div>
             
-            <a>
+            <Link href="/">
                 <div style={{
                     display:'flex',
                     flexDirection: 'row',
@@ -307,7 +307,7 @@ const ActiveRow = ({status, item}) => {
                     />
                     </div>
                 </div>
-            </a>
+            </Link>
         </div>
         </div>
   )

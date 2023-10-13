@@ -20,18 +20,38 @@ const Task = () => {
     const [task, setTask] = useState()
     const [newTask, setNewTask] = useState()
     const { tasks } = useStateContext()
+    const { activeUser } = useAuth()
+    
     // completed tasks
     // deleted/ archived tasks
 
     useEffect(() => {
         setTask(tasks)
-        console.log(task)
-      }, [task])
+      }, [])
   
       const handleNewTask = async (e) => {
-        e.preventDefault();
-        console.log(newTask)
-    
+        e.preventDefault()
+        setTask(...tasks,newTask)
+        console.log('hello from task')
+        // get current user ID, if available
+
+          // const data = {
+          //   title: newTask,
+          //   userId: activeUser?._id
+          // }
+          // try {
+          //     const response = await fetch('/api/patient', {
+          //       method: 'POST',
+          //       headers: {
+          //         'Content-Type': 'application/json',
+          //       },
+          //       body: JSON.stringify(data),
+          //     });
+          //     const result = await response.json();
+          //     console.log(result)
+          //   } catch (error) {
+          //     console.error('Error submitting data:', error);
+          //   }
     }
 
   return (
@@ -59,7 +79,7 @@ const Task = () => {
 
             {/* <!-- Tabs navs --> */}
             
-            <ul className="nav nav-tabs mb-4 pb-2" id="ex1" role="tablist">
+            {/* <ul className="nav nav-tabs mb-4 pb-2" id="ex1" role="tablist">
               <li className="nav-item" role="presentation">
                 <a className="nav-link active" id="ex1-tab-1" data-mdb-toggle="tab" href="#ex1-tabs-1" role="tab"
                   aria-controls="ex1-tabs-1" aria-selected="true">All</a>
@@ -72,7 +92,7 @@ const Task = () => {
                 <a className="nav-link" id="ex1-tab-3" data-mdb-toggle="tab" href="#ex1-tabs-3" role="tab"
                   aria-controls="ex1-tabs-3" aria-selected="false">Completed</a>
               </li>
-            </ul>
+            </ul> */}
             {/* <!-- Tabs navs --> */}
 
             {/* <!-- Tabs content --> */}
@@ -80,7 +100,7 @@ const Task = () => {
               <div className="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel"
                 aria-labelledby="ex1-tab-1">
                 <ul className="list-group mb-0">
-                  {task?.map((task,i) =>(
+                  {tasks?.map((task,i) =>(
                     <li key={i} className="list-group-item d-flex align-items-center border-0 mb-2 rounded"
                     style={{backgroundColor: '#f4f6f7'}}>
                     <input className="form-check-input me-2" type="checkbox" value="" aria-label="..." />

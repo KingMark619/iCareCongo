@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const Task = () => {
@@ -17,7 +18,7 @@ const Task = () => {
                 fontSize:18,
                 fontWeight: '500'
             }}>Tasks</p>
-            <a>
+            <Link href="/">
                 <div style={{
                     display:'flex',
                     flexDirection: 'row',
@@ -51,7 +52,7 @@ const Task = () => {
                     />
                     </div>
                 </div>
-            </a>
+            </Link>
         </div>
         {/* item */}
             <div style={{
@@ -124,7 +125,7 @@ const Task = () => {
             {/* Bottom row */}
             <div>
             
-            <a>
+            <Link href="/">
                 <div style={{
                     display:'flex',
                     flexDirection: 'row',
@@ -158,7 +159,7 @@ const Task = () => {
                     />
                     </div>
                 </div>
-            </a>
+            </Link>
         </div>
         
     </div>
