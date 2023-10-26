@@ -13,6 +13,7 @@ import StatCard from './components/StatCard/Card'
 import { useAuth } from './context/AuthContext'
 import Patient from './patientList'
 import AppointmentList from './components/AppointmentList/AppointmentList'
+import Cookies from 'js-cookie'
 
 // const mukta = Mukta({
 //   subsets:['latin'],
@@ -25,10 +26,12 @@ const mukta = localFont({
 
 export default function Home() {
   const {activeUser } = useAuth()
-  const [role, setRole ] = useState(activeUser?.role)
+  const [role, setRole ] = useState()
+  const localUser = Cookies.get('cookie')
   useEffect(()=>{
-    console.log(role)
-  },[activeUser])
+    setRole(activeUser?.role)
+    console.log(activeUser)
+  },[])
   return (
     <>
       <Head>
@@ -38,13 +41,22 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={mukta.className}>
-      <StatCard/>
+        <StatCard/>
         {/* <Card/> */}
         <div>
           
           <Patient/>
-          {/* <Task/>
-          <UpcomingSchedule/> */}
+          {/* {role==='Management'?<Task/>:
+          <UpcomingSchedule/>} */}
+        </div>
+        <div style={{
+          display:'flex',
+          flexDirection:'row',
+          justifyContent:'center',
+          alignItems:'start'
+        }}>
+          <UpcomingSchedule/>
+          <Task/>
         </div>
       </main>
     </>

@@ -17,6 +17,7 @@ import { createUserWithEmailAndPassword,getAuth , signInWithEmailAndPassword, br
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { doc, getDoc } from 'firebase/firestore';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 export default function LoginPage() {
   
@@ -68,23 +69,18 @@ export default function LoginPage() {
         // Signed in 
         const user = userCredential.user;
         pullUserData(user)
-        // ...
-        setPersistence(auth, browserSessionPersistence)
-          .then(() => {
-            console.log(user)
-            return user
-            // return signInWithEmailAndPassword(auth, email, password);
-          })
-          .catch((error) => {
-            // Handle Errors here.
-            console.error(error)
-          });
+        
+  
       })
       .catch((error) => {
         console.log(error)
       });
     
   }
+  // const setSession = (user) => {
+  //   const localUser = user
+  //   Cookies.set('user',JSON.stringify(localUser))
+  // }
   const pullUserData = async (user) => {
     const id = user?.uid
     const docRef = doc(db, "users", id);
@@ -93,8 +89,10 @@ export default function LoginPage() {
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
       setActiveUser(docSnap.data())
+      // set Cookies 
+      Cookies.set('cookie', JSON.stringify(docSnap.data()))
+      setAuthenticated(true)
     } else {
-      // docSnap.data() will be undefined in this case
       console.log("No such document!");
     }
   }

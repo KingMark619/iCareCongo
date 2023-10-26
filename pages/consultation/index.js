@@ -11,7 +11,7 @@ const index = () => {
     
 
     const {register, handleSubmit} = useForm()
-    const [labSearchTerm, setLabSearchTerm] = useState(null);
+    const [labSearchTerm, setLabSearchTerm] = useState('');
     const [labSearchResults, setLabSearchResults] = useState([]);
 
     const [pharmaSearchTerm, setPharmaSearchTerm] = useState('');
@@ -24,12 +24,11 @@ const index = () => {
     const [medResults, setMedResults] = useState([]);
 
     useEffect(() =>{
-        console.log('update dom')
-    },[medResults])
+    },[])
     // Function to handle input change
-  const handleSearchInputChange = (e) => {
-    console.log(isOpenLab)
-    const term = e.target.value;
+  const handleLabSearchInputChange = (value) => {
+
+    const term = value;
     setLabSearchTerm(term);
 
     // Perform the search and update the results
@@ -45,9 +44,9 @@ const index = () => {
     }
     
   }
-  const handlePharmaSearchInputChange = (e) => {
+  const handlePharmaSearchInputChange = (value) => {
     
-    const term = e.target.value;
+    const term = value;
     setPharmaSearchTerm(term);
 
     // Perform the search and update the results
@@ -66,7 +65,6 @@ const index = () => {
   const addMedItem = (result) => {
     if (!medResults.includes(result)){
         setMedResults([...medResults,result]);
-        console.log(medResults)
     } else {
         alert(`${result} already added`)
         // dont add the exam 
@@ -76,7 +74,6 @@ const index = () => {
   const addLabItem = (result) => {
     if(!labResults.includes(result)){
         setLabResults([...labResults,result]);
-        console.log(labResults)
     }else {
         alert(`${result} already added`)
         // dont add the drug 
@@ -103,7 +100,7 @@ const index = () => {
     }
   }
   const handleDelete = (item,type) => {
-    console.log('deleting')
+    
     if (type === 'lab'){
         deleteLabItem(item)
     } else if (type === 'med'){
@@ -111,7 +108,7 @@ const index = () => {
     }
   }
 
-  const ResultCard = (item,type) => {
+  const ResultMedCard = (item) => {
     return(
         <div className="card p-2 m-2" style={{ 
             display: 'flex',
@@ -134,7 +131,45 @@ const index = () => {
                 overflow: 'hidden',
             }} >{item?.item}</p>
             <button 
-                onClick={()=>handleDelete(item?.item,type)}
+                onClick={() =>deleteMedItem(item?.item)}
+                className="btn btn-outline-danger" 
+                type='button'
+                style={{
+                    width:30,
+                    height:30,
+                    display:'flex',
+                    flexDirection:'column',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+            }}>x</button>
+        </div>
+    )
+  }
+  const ResultLabCard = (item) => {
+    
+    return(
+        <div className="card p-2 m-2" style={{ 
+            display: 'flex',
+            flexDirection:'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width:'18%',
+            maxHeight:60,
+            overflow:'hidden'
+        }}>
+            <p style={{
+                fontSize:15,
+                fontWeight:'300',
+                marginBottom:0,
+                color:'black',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,  // Limit to 2 lines
+                WebkitBoxOrient: 'vertical',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+            }} >{item?.item}</p>
+            <button 
+                onClick={() =>deleteLabItem(item?.item)}
                 className="btn btn-outline-danger" 
                 type='button'
                 style={{
@@ -291,7 +326,7 @@ const index = () => {
                                     width:'50%'
                                 }}
                                 value={labSearchTerm}
-                                onChange={handleSearchInputChange}
+                                onChange={e => handleLabSearchInputChange(e.target.value)}
                             />
                             <button className="btn btn-outline-success" type='button'>+</button>
                         </div>
@@ -357,7 +392,7 @@ const index = () => {
                     flexWrap:'wrap'
                 }}>
                     {medResults!== undefined ?medResults.map((result,index)=>{
-                   return( <ResultCard item={result} key={index} type={'med'}/>)
+                   return( <ResultMedCard item={result} key={index}/>)
                 }):''}
                     
                 </div>
@@ -388,7 +423,7 @@ const index = () => {
                                     width:'50%'
                                 }}
                                 value={pharmaSearchTerm}
-                                onChange={handlePharmaSearchInputChange}
+                                onChange={e =>handlePharmaSearchInputChange(e.target.value)}
                             />
                             <button className="btn btn-outline-success" type='button'>+</button>
                         </div>
@@ -454,7 +489,7 @@ const index = () => {
                     flexWrap:'wrap'
                 }}>
                     {labResults!== undefined ?labResults.map((result,index)=>{
-                   return( <ResultCard item={result} key={index} type={'lab'}/>)
+                   return( <ResultLabCard item={result} key={index}/>)
                 }):''}
                     
                 </div>

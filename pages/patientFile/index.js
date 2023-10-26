@@ -128,7 +128,7 @@ const index = (props) => {
                         border:'0.5px solid lightgray',
                         padding:5,
                         width:'80%',
-                        height:'200px'
+                        height:'150px'
                     }}></textarea>
                 </div>
                 <Divider/>

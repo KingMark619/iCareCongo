@@ -4,8 +4,17 @@ import React,{useState} from 'react'
 import Layout from '../components/Layout/Layout'
 import {useForm} from 'react-hook-form'
 import Divider from '../components/Divider/Divider'
+import { app, initFirestore } from '@/firebase/clientApp'
+import { getAuth } from 'firebase/auth'
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore'
+import { useRouter } from 'next/router'
 
 const Register = () => {
+    const db = initFirestore()
+    const auth = getAuth(app)
+
+    const router = useRouter()
+
     const {register, handleSubmit} = useForm()
     const [data, setData] = useState()
 
@@ -40,23 +49,34 @@ const Register = () => {
            setBMI(bmi)
         }
     }
-    const  submit = async (data)=>{
-        // setData(data)
-        console.log(data)
+    const submit = async (data) => {
         try {
-            const response = await fetch('/api/patient', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(data),
-            });
-            const result = await response.json();
-            console.log(result)
-          } catch (error) {
-            console.error('Error submitting data:', error);
-          }
-        };
+            await addDoc(collection(db, "patients",), {
+            ...data
+          });
+          alert('patient added successfully')
+          router.push('/')
+        } catch (err) {
+            // console.log(err)
+        }
+    }
+    // const  submit = async (data)=>{
+    //     // setData(data)
+    //     console.log(data)
+    //     try {
+    //         const response = await fetch('/api/patient', {
+    //           method: 'POST',
+    //           headers: {
+    //             'Content-Type': 'application/json',
+    //           },
+    //           body: JSON.stringify(data),
+    //         });
+    //         const result = await response.json();
+    //         console.log(result)
+    //       } catch (error) {
+    //         console.error('Error submitting data:', error);
+    //       }
+    //     };
 
   return (
     <>

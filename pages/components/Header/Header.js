@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useAuth } from '../../context/AuthContext';
 import { app } from '@/firebase/clientApp'
 import { getAuth } from 'firebase/auth'
+import Cookies from 'js-cookie'
 
 // import NextAuth, {NextAuthOptions} from 'next/auth'
 // import { NextApiRequest, NextApiResponse } from 'next';
@@ -16,7 +17,6 @@ import { getAuth } from 'firebase/auth'
 
 const Header = () => {
   const auth = getAuth(app)
-
   const { activeUser,setAuthenticated, setActiveUser } = useAuth();
   const [day, setDay] = useState('')
   const [month, setMonth] = useState('')
@@ -31,13 +31,15 @@ const Header = () => {
     setDay(date.getDate())
     setMonth(date.getMonth())
     setYear(date.getFullYear())
-    // setRole(activeUser?.role)
-  },[])
+    setRole(activeUser?.role)
+    // console.log(activeUser)
+  },[activeUser])
 
   const logout = () => {
-      
+    Cookies.remove('cookie');
+    setActiveUser(undefined)
+    setAuthenticated(false)
   }
-
    
   return (
     <>

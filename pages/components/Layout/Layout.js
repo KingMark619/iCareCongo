@@ -9,6 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 import { app, initFirestore } from '@/firebase/clientApp'
 import { getAuth } from 'firebase/auth'
 import { collection, addDoc, doc, setDoc, getDoc } from 'firebase/firestore'
+import Cookies from 'js-cookie';
 
 
 const Layout = ({children}) => {
@@ -16,8 +17,8 @@ const Layout = ({children}) => {
 
   const auth = getAuth(app)
 
-  const {setToken,setAuthenticated,setActiveUser,activeUser } = useAuth()
-  const  authenticated  = true
+  const {setAuthenticated,setActiveUser,activeUser, authenticated } = useAuth()
+  const  [loggedInUser,setLoggedInUser] = useState() 
 
   const [index, setIndex] = useState()
 
@@ -44,13 +45,25 @@ const Layout = ({children}) => {
   }
   
   useEffect(() =>{
-    console.log(auth.currentUser)
+    // console.log(auth.currentUser)
+    const user = Cookies.get('cookie');
+    if (user) {
+      
+      const userData = JSON.parse(user)
+      // console.log(userData)
+      setAuthenticated(true);
+      setActiveUser(userData)
+      // User is authenticated
+    } else {
+      setLoggedInUser(false)
+      // User is not authenticated
+    }
     // addToDb()  
-  },[auth])
+  },[authenticated])
 
   return (
     <>
-    {auth.currentUser?
+    {authenticated?
     <div>
     <Header/>
       <div style={{
@@ -74,8 +87,6 @@ const Layout = ({children}) => {
         </div>   
       </div>
       </div>  : <LoginPage/>}
-    
-    
     </>   
   )
 }

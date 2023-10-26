@@ -24,9 +24,9 @@ const Context = createContext()
 
     useEffect(()=>{
       console.log('loading data...')
-       client.fetch(patientQuery)
-       .then((response) => {setPatients(response)})
-       .catch((error) => {console.error('Cant load Patients')})
+      //  client.fetch(patientQuery)
+      //  .then((response) => {setPatients(response)})
+      //  .catch((error) => {console.error('Cant load Patients')})
 
        client.fetch(doctorQuery)
        .then((response) => {setDoctors(response)})
@@ -49,9 +49,9 @@ const Context = createContext()
        .catch((error) => {console.error('Cant load Tasks')})  
     },[])
     const loadPatients = () => {
-      client.fetch(patientQuery)
-      .then((response) => {setPatients(response)})
-      .catch((error) => {console.error('Cant load Patients')})
+      // client.fetch(patientQuery)
+      // .then((response) => {setPatients(response)})
+      // .catch((error) => {console.error('Cant load Patients')})
     }
 
   return (
@@ -63,7 +63,8 @@ const Context = createContext()
             appointments,
             tasks,
             users,
-            loadPatients
+            loadPatients,
+            setPatients
         }}
     >
         {children}

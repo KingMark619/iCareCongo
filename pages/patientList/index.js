@@ -6,123 +6,127 @@ import { useStateContext } from '@/pages/context/StateContext'
 import Link from "next/link"
 import Layout from '../components/Layout/Layout'
 import { useRouter } from 'next/router'
+import { collection, doc, setDoc, getDocs } from "firebase/firestore";
+import { app, initFirestore } from '@/firebase/clientApp'
+import { getAuth } from 'firebase/auth'
 
 const Patient = () => {
+    const db = initFirestore()
+    const auth = getAuth(app)
+
     const router = useRouter()
-    const { patients,loadPatients } = useStateContext()
+
+    const { patients,loadPatients, setPatients } = useStateContext()
     const [patientList, setPatientList] = useState([])
     const [date, setDate] = useState([])
     const [totalPatients, setTotalPatients] = useState(0)
     
     useEffect(() => {
-            setPatientList(patients)
-            const total = patientList?.length
-            setTotalPatients(total)
-            // upload()
+        // load patients from firestore
+        getPatientList()
+        // setPatientList(patients)
+        const total = patientList?.length
+        setTotalPatients(total)
             
-    },[patients])
+    },[patientList])
+
+    const getPatientList = async () => {
+        let patientArray = []
+        const querySnapshot = await getDocs(collection(db, "patients"));
+        querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+            patientArray.push(doc.data());
+        // console.log(doc.id, " => ", doc.data());
+        });
+        setPatientList(patientArray)
+        // set the array to the context for entire app use
+        setPatients(patientArray)
+
+    }
     const setAppointment = (appointment) => {
         
     }
     
-const  upload = () => {
-    const data = {
-        name:'drug',
-        commercial:'drug commercial'
+    const reloadContent = () => {
+        loadPatients()
+        // setPatientList(patients)
     }
-     fetch("/api/drug",{
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json'}
-    })
-    .then(()=>{
-        console.log(data)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-}
-const reloadContent = () => {
-    loadPatients()
-    // setPatientList(patients)
-    
-    console.log('setting lsit')
-}
-const  Row =  ({patient}) => {
-    // const regexPattern = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})$/;
-    // const match =  patient?.appointment.search(regexPattern);
-    // console.log(match)
+    const  Row =  ({patient}) => {
+        // const regexPattern = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})$/;
+        // const match =  patient?.appointment.search(regexPattern);
+        // console.log(match)
 
-    // if (match) {
-    // const date = match[1]; // 2023-06-30
-    // const time = match[2]; // 15:46:00
+        // if (match) {
+        // const date = match[1]; // 2023-06-30
+        // const time = match[2]; // 15:46:00
 
-    // console.log('Date:', date);
-    // console.log('Time:', time);
-    // } else {
-    // console.log('Invalid timestamp format');
-    // }
-    return(
-            <div style={{
-                display:'flex',
-                flexDirection:'row',
-                justifyContent:'space-between',
-                alignItems:'center',
-                width:'100%',
-                paddingBlockStart:10,
-                marginBottom:10
-            }}>
-                <p style={{
-                flex:2,
-                color:'black',
-                fontSize:14,
-                fontWeight:'400',
-                marginBottom:0
-                }}>{`${patient?.firstName} ${patient?.lastName}`}</p>
-                <p style={{
-                flex:1,
-                color:'black',
-                fontSize:14,
-                fontWeight:'400',
-                marginBottom:0
-                }}>{patient?.medHistory}</p>
+        // console.log('Date:', date);
+        // console.log('Time:', time);
+        // } else {
+        // console.log('Invalid timestamp format');
+        // }
+        return(
                 <div style={{
                     display:'flex',
                     flexDirection:'row',
-                    justifyContent: 'start',
-                    alignItems:'start',
-                    flex:1
+                    justifyContent:'space-between',
+                    alignItems:'center',
+                    width:'100%',
+                    paddingBlockStart:10,
+                    marginBottom:10
                 }}>
                     <p style={{
-                        color:'black',
-                        fontSize:14,
-                        fontWeight:'400',
-                    }}>{patient?.status}</p>
+                    flex:2,
+                    color:'black',
+                    fontSize:14,
+                    fontWeight:'400',
+                    marginBottom:0
+                    }}>{`${patient?.firstName} ${patient?.lastName}`}</p>
+                    <p style={{
+                    flex:1,
+                    color:'black',
+                    fontSize:14,
+                    fontWeight:'400',
+                    marginBottom:0
+                    }}>{patient?.medHistory}</p>
                     <div style={{
-                        width:20,
-                        height: 20,
-                        backgroundColor:'green',
-                        borderRadius:'50%',
-                        marginLeft: '1rem'
-                    }}/>
-                </div>        
-                <p style={{
-                flex:1,
-                color:'black',
-                fontSize:14,
-                fontWeight:'400',
-                marginBottom:0
-                }}>{setAppointment(patient?.appointment)}</p>
-                <p style={{
-                flex:1,
-                color:'black',
-                fontSize:14,
-                fontWeight:'400',
-                marginBottom:0
-                }}>. . .</p>         
-            </div>
-    )
-}
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent: 'start',
+                        alignItems:'start',
+                        flex:1
+                    }}>
+                        <p style={{
+                            color:'black',
+                            fontSize:14,
+                            fontWeight:'400',
+                        }}>{patient?.status}</p>
+                        <div style={{
+                            width:20,
+                            height: 20,
+                            backgroundColor:'green',
+                            borderRadius:'50%',
+                            marginLeft: '1rem'
+                        }}/>
+                    </div>        
+                    <p style={{
+                    flex:1,
+                    color:'black',
+                    fontSize:14,
+                    fontWeight:'400',
+                    marginBottom:0
+                    }}>{setAppointment(patient?.appointment)}</p>
+                    <p style={{
+                    flex:1,
+                    color:'black',
+                    fontSize:14,
+                    fontWeight:'400',
+                    marginBottom:0
+                    }}>. . .</p>         
+                </div>
+        )
+    }
+
   return (
     <div className="card p-2 m-2">
         <div style={{
@@ -234,7 +238,7 @@ const  Row =  ({patient}) => {
                 </tr>
             </thead>
             <tbody>
-                {patients?.map((patient,index)=>{
+                {patientList?.map((patient,index)=>{
                     return <tr key={index} onDoubleClick={()=>(
                             router.push({
                                 pathname: '../patientFile',
