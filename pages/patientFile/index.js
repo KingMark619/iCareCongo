@@ -13,7 +13,7 @@ const index = (props) => {
     const router = useRouter()
     const [patient,setPatient] = useState()
     useEffect(()=>{
-        console.log(router.query)
+        // console.log(router.query)
         setPatient(router.query)
     },[])
   return (

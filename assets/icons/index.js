@@ -1,18 +1,27 @@
 
-import dashboard from './dashboard.svg'
+import dashboard from './dashboard.png'
+import dashboardSelect from './dashboard-select.png'
+import schedule from './schedule.png'
+import scheduleSelect from './schedule-select.png'
+import tasks from './task.png'
+import tasksSelect from './task-select.png'
+import patient from './patient.png'
+import patientSelect from './patient-select.png'
+import profile from './user.png'
+import profileSelect from './user-select.png'
+
 import messages from './messages.svg'
-import patient from './patient.svg'
-import schedule from './schedule.svg'
+
 import settings from './setting.svg'
 import support from './support.svg'
-import tasks from './tasks.svg'
+
 import arrowUp from './arrow-up.svg'
 import arrowDown from './arrow-down.svg'
 import dots from './three-dots.svg'
 import plus from './plus-lg.svg'
 import arrowRight from './arrow-right-short.svg'
 import trash from './trash3.svg'
-import profile from './person.svg'
+
 import edit from './pencil-square.svg'
 import cross from './x-lg.svg'
 import pin from './geo-alt.svg'
@@ -34,22 +43,29 @@ import clock3d from './clock3d.png'
 import patientNew from './newpatient.png'
 import patientFolder from './allpatient.png'
 import reload from './refresh.svg'
+import userBig from './user-100.png'
 // export default dashboard
 export { 
     dashboard,
-    messages,
-    patient,
+    dashboardSelect,
     schedule,
+    scheduleSelect,
+    tasks,
+    tasksSelect,
+    patient,
+    patientSelect,
+    profile,
+    profileSelect,
+    userBig,
+    messages,
     settings,
     support,
-    tasks,
     arrowUp,
     arrowDown,
     arrowRight,
     dots,
     plus,
     trash,
-    profile,
     edit,
     cross,
     pin,

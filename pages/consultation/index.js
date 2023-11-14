@@ -5,12 +5,29 @@ import {useForm} from 'react-hook-form'
 import Image from 'next/image'
 import logo from '../../assets/logo/blue.png'
 import Link from 'next/link'
-import { drugsAndMedicine, exams,labs } from '@/DummyData'
+import { drugsAndMedicine, exams } from '@/DummyData'
+import { useRouter } from 'next/router'
+import { app, initFirestore } from '@/firebase/clientApp'
+import { getAuth } from 'firebase/auth'
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore'
+import { useAuth } from '../context/AuthContext'
+import Bill from '../bill'
+
 
 const index = () => {
-    
+    const { activeUser } = useAuth()
+
+    const router = useRouter()
+    const [patient,setPatient] = useState()
+
+    const db = initFirestore()
+    const auth = getAuth(app)
+
+    const [disabled,setDisabled] = useState(true)
 
     const {register, handleSubmit} = useForm()
+    const [doctorId,setDoctorId] = useState()
+
     const [labSearchTerm, setLabSearchTerm] = useState('');
     const [labSearchResults, setLabSearchResults] = useState([]);
 
@@ -22,10 +39,18 @@ const index = () => {
 
     const [labResults, setLabResults] = useState([]);
     const [medResults, setMedResults] = useState([]);
+    
+    const [currentHistory,setCurrentHistory] = useState(patient?.anamnesisMorbi)
+    const [lifeHistory, setLifeHistory] = useState(patient?.anamnesisVitae);
 
-    useEffect(() =>{
+    useEffect(()=>{
+        console.log(router.query)
+        setPatient(router.query)
+        setDoctorId(activeUser?.id)
+        setMedResults(router.query.medResults)
+        setLabResults(router.query.labResults)
     },[])
-    // Function to handle input change
+     // Function to handle input change
   const handleLabSearchInputChange = (value) => {
 
     const term = value;
@@ -131,6 +156,7 @@ const index = () => {
                 overflow: 'hidden',
             }} >{item?.item}</p>
             <button 
+                disabled={disabled}
                 onClick={() =>deleteMedItem(item?.item)}
                 className="btn btn-outline-danger" 
                 type='button'
@@ -169,6 +195,7 @@ const index = () => {
                 overflow: 'hidden',
             }} >{item?.item}</p>
             <button 
+                disabled={disabled}
                 onClick={() =>deleteLabItem(item?.item)}
                 className="btn btn-outline-danger" 
                 type='button'
@@ -184,6 +211,133 @@ const index = () => {
     )
   }
 
+  const submit = async (data) => {
+    console.log(data)
+    const patientRef = doc(db, 'patients', patient?.id);
+    try {
+        await setDoc(patientRef, { 
+            ...data,labResults,medResults,doctorId
+        }, { merge: true });
+      alert('submitted successfully')
+    //   router.push('/')
+    } catch (err) {
+        console.log(err)
+    }
+  }
+
+  const Bill = () => {
+    const patient = router.query
+    return(
+        <div className="card p-3" style={{width:'50%'}}>
+            <div className="row" 
+            style={{
+                display:'flex',
+                flexDirection:'row',
+                justifyContent:'space-between',
+                alignItems:'center'
+            }}>
+                {/* logo */}
+                <div style={{
+                        // flex:1,
+                        width:'50%',
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'start',
+                        alignItems:'center'
+                        }}>
+                    <Image 
+                    src={logo} 
+                    alt="Logo" 
+                    width="30" 
+                    height="30" 
+                    style={{
+                        borderRadius:100, 
+                        border:'0.5px solid #2c70f4', 
+                        padding:2
+                    }}/>
+                    <div style={{
+                        display:'flex',
+                        flexDirection:'column',
+                        justifyContent:'center',
+                        alignItems:'start',
+                        paddingLeft:10
+                    }}>
+                        <p style={{
+                        marginBottom:0,
+                        color:'#2f80ed',
+                        fontSize:15,
+                        fontWeight:'400'
+                        }}>iCare Congo</p>
+                        <p style={{
+                        marginBottom:0,
+                        color:'red',
+                        fontSize:12,
+                        fontWeight:'400'
+                        }}>Health the modern way</p>
+                    </div>
+                </div>
+                 {/* title */}
+                 <div style={{
+                    display:'flex',
+                    flexDirection:'row',
+                    justifyContent:'center',
+                    alignItems:'center',
+                    width:'50%'
+                    }}>
+                   <p style={{fontSize:18,marginBottom:0, fontWeight:500}}>INVOICE</p> 
+                 </div>
+                 
+            </div>
+            <Divider/>
+            <div className="row">
+                <p style={{fontSize:12, marginBottom:0}}>Invoice Number: 3224</p>
+                <p style={{fontSize:12, marginBottom:0}}>Date: 02/02/02</p>
+            </div>
+            <Divider/>
+            <div className="row">
+                <p style={{fontSize:12, marginBottom:0}}>Patient: {patient?.firstName} {patient?.lastName}</p>
+                <p style={{fontSize:12, marginBottom:0}}>Phone: {patient?.phone}</p>
+            </div>
+            <Divider/>
+            <div className="row">
+                {patient?.labResults?.map((item,index)=>{
+                    return (
+                        <div key={index} style={{
+                            display: 'flex',
+                            flexDirection:"row",
+                            justifyContent:"space-between",
+                            alignItems:"center"
+                        }}>
+                            <p style={{fontSize:12, marginBottom:0}}>{item}</p>
+                            <p style={{fontSize:12, marginBottom:0}}>3.00 $</p>
+                        </div>
+                    )
+                })}
+                
+            </div>
+            <Divider/>
+            <div className="row">
+                <div style={{
+                    display: 'flex',
+                    flexDirection:"row",
+                    justifyContent:"space-between",
+                    alignItems:"center"
+                }}>
+                    <p style={{fontSize:14, marginBottom:0}}>Total</p>
+                    <p style={{
+                        border:'0.5px solid #2c70f4',
+                        borderRadius:8,
+                        padding: '5px 10px',
+                        backgroundColor:'#2c70f4',
+                        color:'#fff',
+                        fontSize:14,
+                        marginBottom:0
+                    }}>55.00 $</p>
+                </div>
+            </div>
+        </div>
+    )
+  }
   return (
     <>
     <div className="card m-2 p-2" style={{
@@ -192,14 +346,14 @@ const index = () => {
         alignItems: 'center',
     }}>
         {/* content below */}
-        
         <div style={{
             width: '100%',
             height: '100%',
             backgroundColor: 'white'
         }}>
+            <Bill patient={patient}/>
                 {/* form */}
-            <form style={{padding:10}}>
+            <form style={{padding:10}} onSubmit={handleSubmit(submit)}>
                 {/* first row */}
                 <div style={{
                     display: 'flex',
@@ -262,22 +416,22 @@ const index = () => {
                             marginBottom:0,
                             fontSize:12,
                             fontWeight:'400'
-                        }}>Name: Kasongo Somethign</p>
+                        }}>Name: {patient?.firstName} {patient?.lastName}</p>
                         <p style={{
                             marginBottom:0,
                             fontSize:12,
                             fontWeight:'400'
-                        }}>Age: 28</p>
+                        }}>Age: {patient?.age}</p>
                         <p style={{
                             marginBottom:0,
                             fontSize:12,
                             fontWeight:'400'
-                        }}>Sex: Female</p>
+                        }}>Sex: {patient?.sex}</p>
                     </div>
                 </div>
                 </div>
                 <Divider/>
-                {/* Note from triage */}
+                {/* Medical history Life */}
                 <div style={{
                         paddingLeft: 20,
                         marginBottom: 10
@@ -287,20 +441,59 @@ const index = () => {
                         fontWeight:'300',
                         marginBottom:0,
                         color:'black'
-                    }}>Note & Observation</p>
+                    }}>Medical History ( Anamnesis vitae ) </p>
                 </div>
                 <div style={{
                         paddingLeft: 50,
                         marginBottom: 10,
                     }}>
-                    <textarea defaultValue={'some text from nurse'}  readOnly={true} style={{
-                        border:'0.5px solid lightgray',
-                        padding:5,
-                        width:'80%',
-                        height:'200px'
+                    <textarea
+                        // disabled={disabled}
+                        readOnly={disabled}
+                        defaultValue={patient?.anamnesisVitae} 
+                        value={lifeHistory}
+                        onChange={(e)=>{setLifeHistory(e.target.value)}}
+                        {...register('anamnesisVitae')}
+                        style={{
+                            border:'0.5px solid lightgray',
+                            padding:5,
+                            width:'80%',
+                            height:'120px'
                     }}></textarea>
                 </div>
                 <Divider/>
+                {/* Medical history now */}
+                <div style={{
+                        paddingLeft: 20,
+                        marginBottom: 10
+                    }}>
+                    <p style={{
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'black'
+                    }}>Current History ( Anamnesis morbi )</p>
+                </div>
+                <div style={{
+                        paddingLeft: 50,
+                        marginBottom: 10,
+                    }}>
+                    <textarea 
+                        // disabled={disabled}
+                        readOnly={disabled}
+                        defaultValue={patient?.anamnesisMorbi} 
+                        value={currentHistory} 
+                        onChange={(e) => {setCurrentHistory(e.target.value)}}
+                        {...register('anamnesisMorbi')} 
+                        style={{
+                            border:'0.5px solid lightgray',
+                            padding:5,
+                            width:'80%',
+                            height:'120px'
+                    }}></textarea>
+                </div>
+                <Divider/>
+                {/* lab and imaging */}
                 <div style={{
                         paddingLeft: 20,
                         marginBottom: 10
@@ -398,6 +591,8 @@ const index = () => {
                 </div>
                 
                 <Divider/>
+                
+                {/* Pharmacy */}
                 <div style={{
                         paddingLeft: 20,
                         marginBottom: 10
@@ -495,6 +690,7 @@ const index = () => {
                 </div>
                 
                 <Divider/>
+                {/* Doctor's notes */}
                 <div style={{
                         paddingLeft: 20,
                         marginBottom: 10
@@ -510,7 +706,12 @@ const index = () => {
                         paddingLeft: 50,
                         marginBottom: 10,
                     }}>
-                    <textarea defaultValue={'some observation by the doctor goes here'} style={{
+                    <textarea 
+                        {...register('doctorNote')}
+                        // disabled={disabled}
+                        readOnly={disabled}
+                        defaultValue={'Note and observation'} 
+                        style={{
                         border:'0.5px solid lightgray',
                         padding:5,
                         width:'80%',
@@ -519,7 +720,7 @@ const index = () => {
                 </div>
                 
                 {/* button row */}
-                        <div style={{
+                <div style={{
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'flex-end',
@@ -536,22 +737,31 @@ const index = () => {
                                 border:'none',
                                 marginInlineEnd:15,
                                 backgroundColor:'#FFFFFF',
-                            }} onClick={()=>{}}>Cancel</button>
+                                border:'0.5px solid lightgray',
+                                borderRadius:4,
+                            }} onClick={(e)=>{
+                                // router.back()
+                                setDisabled(!disabled)
+                                e.preventDefault()
+                            }}>{disabled?'Edit':'Cancel'}</button>
 
-                            <input type="submit" style={{
+                            <input 
+                                disabled={disabled}
+                                type="submit" 
+                                style={{
                                 width:'auto',
                                 height:40,
-                                color:'#0000AC',
+                                color:disabled?'lightgray':'#0000AC',
                                 fontSize:12,
                                 padding:10,
                                 fontWeight:'400',
                                 backgroundColor:'white',
-                                border:'0.5px solid #0000AC',
+                                border:disabled?'0.5px solid lightgray':'0.5px solid #0000AC',
                                 borderRadius:4,
                                 marginInlineEnd:15,
                             }} />
-                        </div>
-                    </form>
+                </div>
+            </form>
         </div>
     </div>
 </>

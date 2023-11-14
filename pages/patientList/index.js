@@ -27,20 +27,25 @@ const Patient = () => {
         // setPatientList(patients)
         const total = patientList?.length
         setTotalPatients(total)
-            
-    },[patientList])
+        // console.log(patientList)
+    },[])
 
     const getPatientList = async () => {
         let patientArray = []
         const querySnapshot = await getDocs(collection(db, "patients"));
         querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-            patientArray.push(doc.data());
+            patientArray.push({
+                content: doc.data(),
+                id: doc.id
+            });
         // console.log(doc.id, " => ", doc.data());
         });
-        setPatientList(patientArray)
-        // set the array to the context for entire app use
         setPatients(patientArray)
+        // setPatientList(patientArray)
+        console.log(patients)
+        // set the array to the context for entire app use
+        
 
     }
     const setAppointment = (appointment) => {
@@ -48,7 +53,9 @@ const Patient = () => {
     }
     
     const reloadContent = () => {
-        loadPatients()
+        // loadPatients()
+        console.log('reloading')
+        router.push(router.asPath)
         // setPatientList(patients)
     }
     const  Row =  ({patient}) => {
@@ -165,7 +172,7 @@ const Patient = () => {
                     justifyContent:'center',
                     alignItems:'center'
                 }}>
-                <Link href="/test">
+                <Link href="/registration">
                   <Image 
                     src={plus}
                     width={20}
@@ -238,18 +245,20 @@ const Patient = () => {
                 </tr>
             </thead>
             <tbody>
-                {patientList?.map((patient,index)=>{
+                {patients?.map((patient,index)=>{
+                    const data = patient.content
+                    data["id"] = patient.id
                     return <tr key={index} onDoubleClick={()=>(
                             router.push({
-                                pathname: '../patientFile',
-                                query: patient
-                            }, '../patientFile')
+                                pathname: '../consultation',
+                                query: data,
+                            }, '../consultation')
                         )}>
                         <th scope="row">{index + 1}</th>
-                        <td>{patient?.firstName} {patient?.lastName}</td>
-                        <td>{patient?.medHistory}</td>
-                        <td>{patient?.status}</td>
-                        <td>{patient?.appointment? patient?.appointment : '- - - -'}</td>
+                        <td>{patient?.content?.firstName} {patient?.content?.lastName}</td>
+                        <td>{patient?.content?.medHistory}</td>
+                        <td>{patient?.content?.status}</td>
+                        <td>{patient?.content?.appointment? patient?.content?.appointment : '- - - -'}</td>
                         <td>...</td>
                     </tr>
                 })}

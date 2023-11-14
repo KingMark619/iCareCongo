@@ -124,7 +124,6 @@ const Register = () => {
                                 <div className="form-outline">
                                 <label className="form-label" htmlFor="form8Example4">Last name</label>
                                 <input type="text" id="form8Example4" className="form-control" {...register('lastName')} />
-                                
                                 </div>
                             </div>
                             <div className="col">
@@ -139,27 +138,27 @@ const Register = () => {
 
                         <div className="row">
                             <div className="col">
+                                {/* <!-- sex input --> */}
+                                <div className="form-outline">
+                                    <label className="form-label" htmlFor="form8Example5">Sex</label>
+                                    <select className="form-select" aria-label="Default select example" {...register('sex')}>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col">
                                 {/* <!-- Age input --> */}
                                 <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example3">Age</label>
-                                <input type="number" id="form8Example3" className="form-control" {...register('age')} />
-                                
+                                    <label className="form-label" htmlFor="form8Example3">Age</label>
+                                    <input type="number" id="form8Example3" className="form-control" {...register('age')} />
                                 </div>
                             </div>
                             <div className="col">
                                 {/* <!-- Phone input --> */}
                                 <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example4">Phone</label>
-                                <input type="text" id="form8Example4" className="form-control" {...register('phone')} />
-                                
-                                </div>
-                            </div>
-                            <div className="col">
-                                {/* <!-- Emergency input --> */}
-                                <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example5">Emergency contact</label>
-                                <input type="phone" id="form8Example5" className="form-control" {...register('emergencyContact')} />
-                                
+                                    <label className="form-label" htmlFor="form8Example4">Phone</label>
+                                    <input type="text" id="form8Example4" className="form-control" {...register('phone')} /> 
                                 </div>
                             </div>
                         </div>
@@ -242,7 +241,52 @@ const Register = () => {
                         </div>
 
                         <Divider/>
-                        
+                        {/* Symptoms */}
+                        <div style={{
+                            paddingLeft: 20,
+                            marginBottom: 10
+                        }}>
+                        <p style={{
+                                    fontSize:18,
+                                    fontWeight:'400',
+                                    marginBottom:0,
+                                    color:'black'
+                                }}>Symptoms and Conditions</p>
+                        </div>
+                        <div className='col'>
+                            <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example4">Patient status</label>
+                                <textarea type="text" className="form-control" {...register('symptoms')}/>
+                            </div>
+                        </div>
+                        <Divider/>
+                        {/* medical history */}
+                        <div style={{
+                            paddingLeft: 20,
+                            marginBottom: 10
+                        }}>
+                        <p style={{
+                                    fontSize:18,
+                                    fontWeight:'400',
+                                    marginBottom:0,
+                                    color:'black'
+                                }}>Medical History</p>
+                        </div>
+                        <div className="row">
+                            <div className='col'>
+                                <div className="form-outline">
+                                    <label className="form-label" htmlFor="form8Example4">Anamnesis vitae</label>
+                                    <textarea type="text" className="form-control" {...register('anamnesisVitae')}/>
+                                </div>
+                            </div>
+                            <div className='col'>
+                                <div className="form-outline">
+                                    <label className="form-label" htmlFor="form8Example4">Anamnesis morbi</label>
+                                    <textarea type="text" className="form-control" {...register('anamnesisMorbi')}/>
+                                </div>
+                            </div>
+                        </div>
+                        <Divider/>
                         <div style={{
                             paddingLeft: 20,
                             marginBottom: 10
@@ -271,22 +315,26 @@ const Register = () => {
                             <div className="col">
                                 <div className="form-outline">
                                 <label className="form-label" htmlFor="form8Example4">Doctor</label>
-                                <input type="text" id="form8Example4" className="form-control" {...register('doctor')} />
+                                <input disabled type="text" id="form8Example4" className="form-control" {...register('doctor')} />
                                 </div>
                             </div>
-                            <div className="col">
+                            {/* <div className="col">
                                 <div className="form-outline">
                                 <label className="form-label" htmlFor="form8Example5">Status</label>
                                 <input type="text" id="form8Example5" className="form-control" {...register('status')} /> 
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="row">
                             <div className="col">
                                 <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example3">Medications</label>
-                                <input type="text" id="form8Example3" className="form-control" {...register('medication')} />
+                                <label className="form-label" htmlFor="form8Example3">Status</label>
+                                <select className="form-select" aria-label="Default select example" {...register('status')}>
+                                    <option value="in">In(awaiting doctor)</option>
+                                    <option value="discharged">Discharged</option>
+                                    <option value="inpatient">Inpatient</option>
+                                </select>
                                 </div>
                             </div>
                             <div className="col">
@@ -317,7 +365,12 @@ const Register = () => {
                                     border:'none',
                                     marginInlineEnd:15,
                                     backgroundColor:'#FFFFFF',
-                                }} onClick={()=>{}}>Cancel</button>
+                                    border:'0.5px solid lightgray',
+                                    borderRadius:4,
+                                }} onClick={(e)=>{
+                                    e.preventDefault()
+                                    router.back()
+                                }}>Cancel</button>
 
                                 <input type="submit" style={{
                                     width:'auto',
@@ -331,8 +384,8 @@ const Register = () => {
                                     borderRadius:4,
                                     marginInlineEnd:15,
                                 }} />
-                            </div>
-                        </form>
+                    </div>
+                </form>
             </div>
         </div>
     </>

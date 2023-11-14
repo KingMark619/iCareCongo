@@ -8,7 +8,13 @@ import {
   schedule,
   settings,
   support,
-  tasks
+  profile,
+  tasks,
+  profileSelect,
+  dashboardSelect,
+  scheduleSelect,
+  tasksSelect,
+  patientSelect
 } from '../../../assets/icons'
 import './Navbar.module.css'
 import Link from 'next/link';
@@ -25,38 +31,49 @@ const Navbar = ({parentCallback}) => {
             id:0,
             name:'Dashboard',
             icon: dashboard,
+            selectedIcon:dashboardSelect,
             link:'/'
         },
         {
             id:1,
             name:'Schedule',
             icon: schedule,
+            selectedIcon:scheduleSelect,
             link:'/calendar'
         },
-        {
-            id:2,
-            name:'Tasks',
-            icon: tasks,
-            link:'/task'
-        },
+        // {
+        //     id:2,
+        //     name:'Tasks',
+        //     icon: tasks,
+        //     selectedIcon: tasksSelect,
+        //     link:'/task'
+        // },
         {
             id:3,
             name:'Patients',
             icon: patient,
+            selectedIcon:patientSelect,
             link:'/patientList'
         },
         {
             id:4,
-            name:'Messages',
-            icon: messages,
-            link:'/message'
-        },
-        {
-            id:5,
-            name:'Analytics',
-            icon: settings,
-            link:'/settings'
-        },
+            name:'My profile',
+            icon: profile,
+            selectedIcon:profileSelect,
+            link:'/profile'
+        }
+        // {
+        //     id:5,
+        //     name:'Messages',
+        //     icon: messages,
+        //     link:'/message'
+        // },
+        // {
+        //     id:6,
+        //     name:'Settings',
+        //     icon: settings,
+        //     link:'/settings'
+        // },
     ]
     const handleSelection = (index) => {
         setSelected(index)
@@ -90,7 +107,7 @@ const Navbar = ({parentCallback}) => {
                         borderLeft:selected===index?'3px solid #2f80ed':'none'
                     }}>
                     <Image
-                        src={item.icon}
+                        src={selected===index?item.selectedIcon:item.icon}
                         alt="dashboard"
                         className="menu-icon"
                         width={20}

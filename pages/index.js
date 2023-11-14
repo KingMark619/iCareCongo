@@ -30,7 +30,7 @@ export default function Home() {
   const localUser = Cookies.get('cookie')
   useEffect(()=>{
     setRole(activeUser?.role)
-    console.log(activeUser)
+    // console.log(activeUser)
   },[])
   return (
     <>
@@ -55,8 +55,7 @@ export default function Home() {
           justifyContent:'center',
           alignItems:'start'
         }}>
-          <UpcomingSchedule/>
-          <Task/>
+          
         </div>
       </main>
     </>
