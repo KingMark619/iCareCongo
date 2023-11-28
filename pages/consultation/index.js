@@ -338,6 +338,9 @@ const index = () => {
         </div>
     )
   }
+  const toggleDiv = () =>{
+    console.log("Toggle")
+  }
   return (
     <>
     <div className="card m-2 p-2" style={{
@@ -351,16 +354,17 @@ const index = () => {
             height: '100%',
             backgroundColor: 'white'
         }}>
-            <Bill patient={patient}/>
+            {/* <Bill patient={patient}/> */}
                 {/* form */}
             <form style={{padding:10}} onSubmit={handleSubmit(submit)}>
                 {/* first row */}
                 <div style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    justifyContent: 'space-between', 
+                    justifyContent: 'center', 
+                    alignContent:'center'
                 }}>
-                    {/* left side */}
+                    {/* Brand logo */}
                 <div>
                     <Link className="navbar-brand" href="/">
                     <div style={{
@@ -394,44 +398,122 @@ const index = () => {
                 </div>
                 </Link>
                 </div>
-                    {/* right side */}
-                <div>
-                    <div style={{
-                            marginBottom: 10
-                        }}>
-                            <p style={{
-                                fontSize:18,
-                                fontWeight:'400',
-                                marginBottom:0,
-                                color:'black'
-                            }}>Patient Information</p>
-                    </div>
+             
+                </div>
+                {/* Header text */}
+                <div style={{
+                    display:'flex',
+                    flexDirection:'column',
+                    justifyContent:'center',
+                    alignItems:'center',
+                    marginTop:20
+                }}>
+                    {/* <p style={{
+                        fontSize:22,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'black',
+                    }}>Jaynet Clinic</p> */}
+                    <p style={{
+                        marginTop:10,
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'black',
+                        textDecoration:'underline'
+                    }}>Patient File</p>
+                </div>
+                <Divider/>
+                {/* Patient information */}
+                <div style={{
+                        paddingLeft: 20,
+                        marginBottom: 10,
+                        display:'flex',
+                        flexDirection:'row',
+                    }}>
+                    <p style={{
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'black'
+                    }}>Patient Information </p>
+                    <div onClick={()=>toggleDiv()} style={{
+                        display:'flex',
+                        justifyContent:'center',
+                        alignItems:'center',
+                        width:25,
+                        height:25,
+                        color:'black',
+                        fontSize:15,
+                        padding:10,
+                        fontWeight:'400',
+                        border:'none',
+                        marginInlineStart:15,
+                        backgroundColor:'#FFFFFF',
+                        border:'0.5px solid lightgray',
+                        borderRadius:50,
+                    }}>^</div>
+                </div>
+                <div style={{
+                        paddingLeft: 50,
+                        marginBottom: 10,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems:'center',
+                        width:'65%'
+                    }}>
+                        {/* left side */}
                     <div style={{
                         display:'flex',
                         flexDirection:'column',
                         justifyContent:'space-between',
-                        alignItems:'self-end'
+                        alignItems:'start',
+                        width:'50%'
                     }}>
                         <p style={{
                             marginBottom:0,
-                            fontSize:12,
+                            fontSize:13,
                             fontWeight:'400'
-                        }}>Name: {patient?.firstName} {patient?.lastName}</p>
+                        }}>Name: KAYUMBA MWALA {patient?.firstName} {patient?.lastName}</p>
                         <p style={{
                             marginBottom:0,
-                            fontSize:12,
+                            fontSize:13,
                             fontWeight:'400'
-                        }}>Age: {patient?.age}</p>
+                        }}>Age: 28{patient?.age}</p>
                         <p style={{
                             marginBottom:0,
-                            fontSize:12,
+                            fontSize:13,
                             fontWeight:'400'
-                        }}>Sex: {patient?.sex}</p>
+                        }}>Gender: Male{patient?.sex}</p>
+                    </div>
+                    {/* right side */}
+                    <div style={{
+                        display:'flex',
+                        flexDirection:'column',
+                        justifyContent:'space-between',
+                        alignItems:'start',
+                        width:'50%'
+                    }}>
+                        <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400'
+                        }}>Phone: 123 456 7890 {patient?.firstName} {patient?.lastName}</p>
+                        <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400'
+                        }}>Address: Kundelungu{patient?.age}</p>
+                        {/* <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400'
+                        }}>Gender: Male{patient?.sex}</p> */}
                     </div>
                 </div>
-                </div>
                 <Divider/>
-                {/* Medical history Life */}
+                {/* Vitals and symptoms */}
                 <div style={{
                         paddingLeft: 20,
                         marginBottom: 10
@@ -441,12 +523,90 @@ const index = () => {
                         fontWeight:'300',
                         marginBottom:0,
                         color:'black'
-                    }}>Medical History ( Anamnesis vitae ) </p>
+                    }}>Vitals and symptoms</p>
+                </div>
+                <div style={{
+                        paddingLeft: 50,
+                        marginBottom: 10,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems:'center',
+                        width:'65%'
+                    }}>
+                        {/* left side */}
+                    <div style={{
+                        display:'flex',
+                        flexDirection:'column',
+                        justifyContent:'space-between',
+                        alignItems:'start',
+                        width:'50%'
+                    }}>
+                        <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400'
+                        }}>Blood Pressure: 120/80 {patient?.firstName} {patient?.lastName}</p>
+                        <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400'
+                        }}>Heart Rate: 65{patient?.age}</p>
+                        <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400'
+                        }}>Respiratory rate: 34{patient?.sex}</p>
+                         <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400'
+                        }}>Temperature: 35 Celcius{patient?.age}</p>
+                    </div>
+                    {/* right side */}
+                    <div style={{
+                        display:'flex',
+                        flexDirection:'column',
+                        justifyContent:'space-between',
+                        alignItems:'start',
+                        width:'50%'
+                    }}>
+                        <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400'
+                        }}>Symptoms: Headache, Vomiting, dizziness</p>
+                        <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400'
+                        }}>Patient Status: In urgent care</p>
+                       
+                    </div>
+                </div>
+                <Divider/>
+                {/* Medical history */}
+                <div style={{
+                        paddingLeft: 20,
+                        marginBottom: 10
+                    }}>
+                    <p style={{
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'black'
+                    }}>Medical History</p>
                 </div>
                 <div style={{
                         paddingLeft: 50,
                         marginBottom: 10,
                     }}>
+                        <p style={{
+                            fontSize:13,
+                            fontWeight:'400',
+                            marginBottom:10,
+                            color:'black'
+                        }}>Anamnesis vitae</p>
                     <textarea
                         // disabled={disabled}
                         readOnly={disabled}
@@ -460,24 +620,12 @@ const index = () => {
                             width:'80%',
                             height:'120px'
                     }}></textarea>
-                </div>
-                <Divider/>
-                {/* Medical history now */}
-                <div style={{
-                        paddingLeft: 20,
-                        marginBottom: 10
-                    }}>
-                    <p style={{
-                        fontSize:18,
-                        fontWeight:'300',
-                        marginBottom:0,
-                        color:'black'
-                    }}>Current History ( Anamnesis morbi )</p>
-                </div>
-                <div style={{
-                        paddingLeft: 50,
-                        marginBottom: 10,
-                    }}>
+                        <p style={{
+                            fontSize:13,
+                            fontWeight:'400',
+                            marginBottom:10,
+                            color:'black'
+                        }}>Anamnesis morbi</p>
                     <textarea 
                         // disabled={disabled}
                         readOnly={disabled}
@@ -491,6 +639,71 @@ const index = () => {
                             width:'80%',
                             height:'120px'
                     }}></textarea>
+                </div>
+                <Divider/>
+                {/* Lab and imaging */}
+                <div style={{
+                        paddingLeft: 20,
+                        marginBottom: 10
+                    }}>
+                    <p style={{
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'black'
+                    }}>Lab & Imaging</p>
+                </div>
+                <div style={{
+                        paddingLeft: 50,
+                        marginBottom: 10,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems:'center',
+                        width:'65%'
+                    }}>
+                        {/* left side */}
+                    <div style={{
+                        display:'flex',
+                        flexDirection:'column',
+                        justifyContent:'space-between',
+                        alignItems:'start',
+                        width:'50%'
+                    }}>
+                        <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400',
+                            textDecoration:'underline'
+                        }}>Requested</p>
+                        <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400',
+                        }}>X-Ray</p>
+                        
+                    </div>
+                    {/* right side */}
+                    <div style={{
+                        display:'flex',
+                        flexDirection:'column',
+                        justifyContent:'space-between',
+                        alignItems:'start',
+                        width:'50%'
+                    }}>
+                         <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400',
+                            textDecoration:'underline'
+                        }}>Result</p>
+                        <p style={{
+                            marginBottom:0,
+                            fontSize:13,
+                            fontWeight:'400',
+                        }}>Normal</p>
+                       
+                    </div>
                 </div>
                 <Divider/>
                 {/* lab and imaging */}
