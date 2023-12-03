@@ -44,6 +44,8 @@ import patientNew from './newpatient.png'
 import patientFolder from './allpatient.png'
 import reload from './refresh.svg'
 import userBig from './user-100.png'
+import colapse from './colapse.png'
+import deploy from './deploy.png'
 // export default dashboard
 export { 
     dashboard,
@@ -86,5 +88,7 @@ export {
     clock3d,
     patientNew,
     patientFolder,
-    reload
+    reload,
+    deploy,
+    colapse
 }

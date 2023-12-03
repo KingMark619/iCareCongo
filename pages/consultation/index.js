@@ -12,6 +12,8 @@ import { getAuth } from 'firebase/auth'
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore'
 import { useAuth } from '../context/AuthContext'
 import Bill from '../bill'
+import { colapse, deploy } from '@/assets/icons'
+import { CSSTransition } from 'react-transition-group'
 
 
 const index = () => {
@@ -42,6 +44,12 @@ const index = () => {
     
     const [currentHistory,setCurrentHistory] = useState(patient?.anamnesisMorbi)
     const [lifeHistory, setLifeHistory] = useState(patient?.anamnesisVitae);
+
+    const [isColapse1, setIsColapse1] = useState(false)
+    const [isColapse2, setIsColapse2] = useState(false)
+    const [isColapse3, setIsColapse3] = useState(false)
+    const [isColapse4, setIsColapse4] = useState(false)
+    const [isColapse5, setIsColapse5] = useState(false)
 
     useEffect(()=>{
         console.log(router.query)
@@ -155,6 +163,17 @@ const index = () => {
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
             }} >{item?.item}</p>
+            <input
+                // onChange={()=>()}
+                style={{
+                    padding:10,
+                    border:'0.5px solid #f7f7f7',
+                    fontSize:14,
+                    fontWeight:'400',
+                    marginBlockStart:10,
+                    width:'20%'
+                }}
+            />
             <button 
                 disabled={disabled}
                 onClick={() =>deleteMedItem(item?.item)}
@@ -338,8 +357,59 @@ const index = () => {
         </div>
     )
   }
-  const toggleDiv = () =>{
-    console.log("Toggle")
+  const toggleColapse = (index) =>{
+    // console.log("Toggle")
+    switch (index) {
+        case 1:
+            setIsColapse1(!isColapse1)
+            break;
+        case 2:
+            setIsColapse2(!isColapse2)
+            break;
+        case 3:
+            setIsColapse3(!isColapse3)
+            break;
+        case 4:
+            setIsColapse4(!isColapse4)
+            break;
+        case 5:
+            setIsColapse5(!isColapse5)
+            break;
+        default:
+            break
+    }
+    
+  }
+  const ResultRow = (result) => {
+    // result name, status and content
+    // coordonate with the lab and the way it is brought back into the system
+    // Sample data (replace this with your dynamic data)
+    const data = [
+        { requested: 'Item 1', results: 'Result A', description: 'Description A' },
+        { requested: 'Item 2', results: 'Result B', description: 'Description B' },
+        { requested: 'Item 3', results: 'Result C', description: 'Description C' },
+        // Add more rows as needed
+    ];
+    return(
+        <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingLeft:50,
+            width: '50%'
+        }}>
+            <p style={{
+                fontSize:13,
+                fontWeight: '600'
+            }}>X-Ray</p>
+            <p style={{
+                fontSize:13,
+                fontWeight: '600'
+            }}>Normal</p>
+        </div>
+    )
+
   }
   return (
     <>
@@ -426,369 +496,462 @@ const index = () => {
                 <Divider/>
                 {/* Patient information */}
                 <div style={{
-                        paddingLeft: 20,
-                        marginBottom: 10,
-                        display:'flex',
-                        flexDirection:'row',
-                    }}>
-                    <p style={{
-                        fontSize:18,
-                        fontWeight:'300',
-                        marginBottom:0,
-                        color:'black'
-                    }}>Patient Information </p>
-                    <div onClick={()=>toggleDiv()} style={{
-                        display:'flex',
-                        justifyContent:'center',
-                        alignItems:'center',
-                        width:25,
-                        height:25,
-                        color:'black',
-                        fontSize:15,
-                        padding:10,
-                        fontWeight:'400',
-                        border:'none',
-                        marginInlineStart:15,
-                        backgroundColor:'#FFFFFF',
-                        border:'0.5px solid lightgray',
-                        borderRadius:50,
-                    }}>^</div>
-                </div>
-                <div style={{
-                        paddingLeft: 50,
-                        marginBottom: 10,
-                        display:'flex',
-                        flexDirection:'row',
-                        justifyContent:'space-between',
-                        alignItems:'center',
-                        width:'65%'
-                    }}>
-                        {/* left side */}
+                    border:'0.5px solid lightgray',
+                    // borderRadius:8,
+                    padding:'10px 0',
+                    marginBlockEnd:20
+                }}>
                     <div style={{
-                        display:'flex',
-                        flexDirection:'column',
-                        justifyContent:'space-between',
-                        alignItems:'start',
-                        width:'50%'
-                    }}>
+                            paddingLeft: 20,
+                            // marginBottom: 10,
+                            display:'flex',
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            alignItems: 'center',
+                            paddingRight:20
+                        }}>
                         <p style={{
+                            fontSize:18,
+                            fontWeight:'300',
                             marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Name: KAYUMBA MWALA {patient?.firstName} {patient?.lastName}</p>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Age: 28{patient?.age}</p>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Gender: Male{patient?.sex}</p>
+                            color:'#2f80ed'
+                        }}>Patient Information </p>
+                        <Image
+                            src={!isColapse1?colapse:deploy}
+                            width={20}
+                            height={20}
+                            alt='Colapse'
+                            onClick={()=>toggleColapse(1)}
+                        />
                     </div>
-                    {/* right side */}
-                    <div style={{
-                        display:'flex',
-                        flexDirection:'column',
-                        justifyContent:'space-between',
-                        alignItems:'start',
-                        width:'50%'
-                    }}>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Phone: 123 456 7890 {patient?.firstName} {patient?.lastName}</p>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Address: Kundelungu{patient?.age}</p>
-                        {/* <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Gender: Male{patient?.sex}</p> */}
+                    <CSSTransition
+                        in={!isColapse1}
+                        timeout={300}
+                        classNames="fade"
+                        unmountOnExit
+                    >
+                        <div className='collapsibleContent' style={{
+                            paddingLeft: 50,
+                            marginTop: 10,
+                            display:'flex',
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            alignItems:'center',
+                            width:'100%'
+                        }}>
+                            {/* left side */}
+                        <div style={{
+                            display:'flex',
+                            flexDirection:'column',
+                            justifyContent:'space-between',
+                            alignItems:'start',
+                            width:'50%'
+                        }}>
+                            <p style={{
+                                marginBottom:0,
+                                fontSize:13,
+                                fontWeight:'400'
+                            }}>Name: KAYUMBA MWALA {patient?.firstName} {patient?.lastName}</p>
+                            <p style={{
+                                marginBottom:0,
+                                fontSize:13,
+                                fontWeight:'400'
+                            }}>Age: 28{patient?.age}</p>
+                            <p style={{
+                                marginBottom:0,
+                                fontSize:13,
+                                fontWeight:'400'
+                            }}>Gender: Male{patient?.sex}</p>
+                        </div>
+                        {/* right side */}
+                        <div style={{
+                            display:'flex',
+                            flexDirection:'column',
+                            justifyContent:'space-between',
+                            alignItems:'start',
+                            width:'50%'
+                        }}>
+                            <p style={{
+                                marginBottom:0,
+                                fontSize:13,
+                                fontWeight:'400'
+                            }}>Phone: 123 456 7890 {patient?.firstName} {patient?.lastName}</p>
+                            <p style={{
+                                marginBottom:0,
+                                fontSize:13,
+                                fontWeight:'400'
+                            }}>Address: Kundelungu{patient?.age}</p>
+                            {/* <p style={{
+                                marginBottom:0,
+                                fontSize:13,
+                                fontWeight:'400'
+                            }}>Gender: Male{patient?.sex}</p> */}
+                        </div>
                     </div>
-                </div>
-                <Divider/>
+                    </CSSTransition>
+                    
+                    
+                </div>              
                 {/* Vitals and symptoms */}
                 <div style={{
-                        paddingLeft: 20,
-                        marginBottom: 10
-                    }}>
-                    <p style={{
-                        fontSize:18,
-                        fontWeight:'300',
-                        marginBottom:0,
-                        color:'black'
-                    }}>Vitals and symptoms</p>
-                </div>
-                <div style={{
-                        paddingLeft: 50,
-                        marginBottom: 10,
-                        display:'flex',
-                        flexDirection:'row',
-                        justifyContent:'space-between',
-                        alignItems:'center',
-                        width:'65%'
-                    }}>
-                        {/* left side */}
+                    border:'0.5px solid lightgray',
+                    // borderRadius:8,
+                    padding:'10px 0',
+                    marginBlockEnd:20
+                }}>
                     <div style={{
-                        display:'flex',
-                        flexDirection:'column',
-                        justifyContent:'space-between',
-                        alignItems:'start',
-                        width:'50%'
-                    }}>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Blood Pressure: 120/80 {patient?.firstName} {patient?.lastName}</p>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Heart Rate: 65{patient?.age}</p>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Respiratory rate: 34{patient?.sex}</p>
-                         <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Temperature: 35 Celcius{patient?.age}</p>
-                    </div>
-                    {/* right side */}
-                    <div style={{
-                        display:'flex',
-                        flexDirection:'column',
-                        justifyContent:'space-between',
-                        alignItems:'start',
-                        width:'50%'
-                    }}>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Symptoms: Headache, Vomiting, dizziness</p>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400'
-                        }}>Patient Status: In urgent care</p>
-                       
-                    </div>
-                </div>
-                <Divider/>
-                {/* Medical history */}
-                <div style={{
-                        paddingLeft: 20,
-                        marginBottom: 10
-                    }}>
-                    <p style={{
-                        fontSize:18,
-                        fontWeight:'300',
-                        marginBottom:0,
-                        color:'black'
-                    }}>Medical History</p>
-                </div>
-                <div style={{
-                        paddingLeft: 50,
-                        marginBottom: 10,
-                    }}>
-                        <p style={{
-                            fontSize:13,
-                            fontWeight:'400',
-                            marginBottom:10,
-                            color:'black'
-                        }}>Anamnesis vitae</p>
-                    <textarea
-                        // disabled={disabled}
-                        readOnly={disabled}
-                        defaultValue={patient?.anamnesisVitae} 
-                        value={lifeHistory}
-                        onChange={(e)=>{setLifeHistory(e.target.value)}}
-                        {...register('anamnesisVitae')}
-                        style={{
-                            border:'0.5px solid lightgray',
-                            padding:5,
-                            width:'80%',
-                            height:'120px'
-                    }}></textarea>
-                        <p style={{
-                            fontSize:13,
-                            fontWeight:'400',
-                            marginBottom:10,
-                            color:'black'
-                        }}>Anamnesis morbi</p>
-                    <textarea 
-                        // disabled={disabled}
-                        readOnly={disabled}
-                        defaultValue={patient?.anamnesisMorbi} 
-                        value={currentHistory} 
-                        onChange={(e) => {setCurrentHistory(e.target.value)}}
-                        {...register('anamnesisMorbi')} 
-                        style={{
-                            border:'0.5px solid lightgray',
-                            padding:5,
-                            width:'80%',
-                            height:'120px'
-                    }}></textarea>
-                </div>
-                <Divider/>
-                {/* Lab and imaging */}
-                <div style={{
-                        paddingLeft: 20,
-                        marginBottom: 10
-                    }}>
-                    <p style={{
-                        fontSize:18,
-                        fontWeight:'300',
-                        marginBottom:0,
-                        color:'black'
-                    }}>Lab & Imaging</p>
-                </div>
-                <div style={{
-                        paddingLeft: 50,
-                        marginBottom: 10,
-                        display:'flex',
-                        flexDirection:'row',
-                        justifyContent:'space-between',
-                        alignItems:'center',
-                        width:'65%'
-                    }}>
-                        {/* left side */}
-                    <div style={{
-                        display:'flex',
-                        flexDirection:'column',
-                        justifyContent:'space-between',
-                        alignItems:'start',
-                        width:'50%'
-                    }}>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400',
-                            textDecoration:'underline'
-                        }}>Requested</p>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400',
-                        }}>X-Ray</p>
-                        
-                    </div>
-                    {/* right side */}
-                    <div style={{
-                        display:'flex',
-                        flexDirection:'column',
-                        justifyContent:'space-between',
-                        alignItems:'start',
-                        width:'50%'
-                    }}>
-                         <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400',
-                            textDecoration:'underline'
-                        }}>Result</p>
-                        <p style={{
-                            marginBottom:0,
-                            fontSize:13,
-                            fontWeight:'400',
-                        }}>Normal</p>
-                       
-                    </div>
-                </div>
-                <Divider/>
-                {/* lab and imaging */}
-                <div style={{
-                        paddingLeft: 20,
-                        marginBottom: 10
-                    }}>
-                    <p style={{
-                        fontSize:18,
-                        fontWeight:'300',
-                        marginBottom:0,
-                        color:'black'
-                    }}>Lab & Imaging</p>
-                </div>
-                <div style={{
-                        paddingLeft: 20,
-                        marginBottom: 10
-                    }}>
-                        <div className="d-flex" style={{paddingLeft:30,marginBottom:10}}>
-                            <input 
-                                className="form-control me-2"
-                                type="search" 
-                                placeholder="Search" 
-                                aria-label="Search"
-                                style={{
-                                    width:'50%'
-                                }}
-                                value={labSearchTerm}
-                                onChange={e => handleLabSearchInputChange(e.target.value)}
-                            />
-                            <button className="btn btn-outline-success" type='button'>+</button>
-                        </div>
-                        
-                    {isOpenLab === true? (
-                        <ul>
-                        <div className="card p-2" style={{
-                            display: 'flex',
-                            flexDirection:'row',
-                            flexWrap:'wrap',
-                            width:'90%',
-                            height:'auto',
-                            overflow:'scroll'
+                             paddingLeft: 20,
+                             // marginBottom: 10,
+                             display:'flex',
+                             flexDirection:'row',
+                             justifyContent:'space-between',
+                             alignItems: 'center',
+                             paddingRight:20
                         }}>
-                            <button 
-                                onClick={()=>(setIsOpenLab(false))}
-                                className="btn btn-outline-danger" 
-                                type='button'
-                                style={{
-                                    width:25,
-                                    height:25,
-                                    display:'flex',
-                                    flexDirection:'column',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    position:'absolute',
-                                    top:5,
-                                    right:5,
-                                    fontSize:10
-                            }}>x</button>
-                        {labSearchResults.map((result, index) => (
-                            <div 
-                                key={index} 
-                                className='m-2'
-                                style={{
+                        <p style={{
+                            fontSize:18,
+                            fontWeight:'300',
+                            marginBottom:0,
+                            color:'#2f80ed'
+                        }}>Vitals and symptoms</p>
+                        <Image
+                            src={!isColapse2?colapse:deploy}
+                            width={20}
+                            height={20}
+                            alt='Colapse'
+                            onClick={()=>toggleColapse(2)}
+                        />
+                    </div>
+                    <CSSTransition
+                        in={!isColapse2}
+                        timeout={300}
+                        classNames="fade"
+                        unmountOnExit
+                    >
+                        <div className="collapsibleContent" style={{
+                                paddingLeft: 50,
+                                marginBottom: 10,
                                 display:'flex',
                                 flexDirection:'row',
                                 justifyContent:'space-between',
                                 alignItems:'center',
-                                width:'30%',
-                                padding:'10px 0',
-                                borderBottom:'0.5px solid lightgray',
+                                width:'100%'
                             }}>
-                            <p style={{
-                                fontSize:15,
-                                fontWeight:'300',
-                                marginBottom:0,
-                                color:'black'
-                            }} key={index}>{result}</p>
-                            <div className="btn btn-outline-success" onClick={()=>addMedItem(result)}>+</div>
+                                {/* left side */}
+                            <div style={{
+                                display:'flex',
+                                flexDirection:'column',
+                                justifyContent:'space-between',
+                                alignItems:'start',
+                                width:'50%'
+                            }}>
+                                <p style={{
+                                    marginBottom:0,
+                                    fontSize:13,
+                                    fontWeight:'400'
+                                }}>Blood Pressure: 120/80 {patient?.firstName} {patient?.lastName}</p>
+                                <p style={{
+                                    marginBottom:0,
+                                    fontSize:13,
+                                    fontWeight:'400'
+                                }}>Heart Rate: 65{patient?.age}</p>
+                                <p style={{
+                                    marginBottom:0,
+                                    fontSize:13,
+                                    fontWeight:'400'
+                                }}>Respiratory rate: 34{patient?.sex}</p>
+                                <p style={{
+                                    marginBottom:0,
+                                    fontSize:13,
+                                    fontWeight:'400'
+                                }}>Temperature: 35 Celcius{patient?.age}</p>
                             </div>
-                        ))}
+                            {/* right side */}
+                            <div style={{
+                                display:'flex',
+                                flexDirection:'column',
+                                justifyContent:'space-between',
+                                alignItems:'start',
+                                width:'50%'
+                            }}>
+                                <p style={{
+                                    marginBottom:0,
+                                    fontSize:13,
+                                    fontWeight:'400'
+                                }}>Symptoms: Headache, Vomiting, dizziness</p>
+                                <p style={{
+                                    marginBottom:0,
+                                    fontSize:13,
+                                    fontWeight:'400'
+                                }}>Patient Status: In urgent care</p>
+                            
+                            </div>
                         </div>
-                        </ul>
-                    ):''}
+                    </CSSTransition>
                 </div>
+                
+                {/* Medical history */}
+                <div style={{
+                    border:'0.5px solid lightgray',
+                    // borderRadius:8,
+                    padding:'10px 0',
+                    marginBlockEnd:20
+                }}>
+                    <div style={{
+                        paddingLeft: 20,
+                        // marginBottom: 10,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems: 'center',
+                        paddingRight:20
+                    }}>
+                    <p style={{
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'#2f80ed'
+                    }}>Medical History</p>
+                    <Image
+                            src={!isColapse3?colapse:deploy}
+                            width={20}
+                            height={20}
+                            alt='Colapse'
+                            onClick={()=>toggleColapse(3)}
+                        />
+                    </div>
+                    <CSSTransition
+                        in={!isColapse3}
+                        timeout={300}
+                        classNames="fade"
+                        unmountOnExit
+                    >
+                    <div style={{
+                            paddingLeft: 50,
+                            marginBottom: 10,
+                        }}>
+                            <p style={{
+                                fontSize:13,
+                                fontWeight:'400',
+                                marginBottom:10,
+                                color:'black'
+                            }}>Anamnesis vitae</p>
+                        <textarea
+                            // disabled={disabled}
+                            readOnly={disabled}
+                            defaultValue={patient?.anamnesisVitae} 
+                            value={lifeHistory}
+                            onChange={(e)=>{setLifeHistory(e.target.value)}}
+                            {...register('anamnesisVitae')}
+                            style={{
+                                border:'0.5px solid lightgray',
+                                padding:5,
+                                width:'80%',
+                                height:'120px'
+                        }}></textarea>
+                            <p style={{
+                                fontSize:13,
+                                fontWeight:'400',
+                                marginBottom:10,
+                                color:'black'
+                            }}>Anamnesis morbi</p>
+                        <textarea 
+                            // disabled={disabled}
+                            readOnly={disabled}
+                            defaultValue={patient?.anamnesisMorbi} 
+                            value={currentHistory} 
+                            onChange={(e) => {setCurrentHistory(e.target.value)}}
+                            {...register('anamnesisMorbi')} 
+                            style={{
+                                border:'0.5px solid lightgray',
+                                padding:5,
+                                width:'80%',
+                                height:'120px'
+                        }}></textarea>
+                    </div>
+                    </CSSTransition>
+                </div>
+                
+                {/* Lab and imaging */}
+                <div style={{
+                    border:'0.5px solid lightgray',
+                    // borderRadius:8,
+                    padding:'10px 0',
+                    marginBlockEnd:20
+                }}>
+                    <div style={{
+                        paddingLeft: 20,
+                        // marginBottom: 10,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems: 'center',
+                        paddingRight:20
+                    }}>
+                    <p style={{
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'#2f80ed'
+                    }}>Lab & Imaging</p>
+                    <Image
+                            src={!isColapse4?colapse:deploy}
+                            width={20}
+                            height={20}
+                            alt='Colapse'
+                            onClick={()=>toggleColapse(4)}
+                        />
+                    </div>
+                    <CSSTransition
+                        in={!isColapse4}
+                        timeout={300}
+                        classNames="fade"
+                        unmountOnExit
+                    >
+                        <div>
+                        <div style={{
+                            paddingLeft: 50,
+                            marginBottom: 10,
+                            display:'flex',
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            alignItems:'center',
+                            width:'65%'
+                        }}>
+                            {/* title row */}
+                        <div style={{
+                            display:'flex',
+                            flexDirection:'row',
+                            justifyContent:'space-between',
+                            alignItems:'start',
+                            width:'75%'
+                        }}>
+                            <p style={{
+                                marginBottom:0,
+                                fontSize:13,
+                                fontWeight:'600',
+                                textDecoration:'underline'
+                            }}>Requested</p>
+                            <p style={{
+                                marginBottom:0,
+                                fontSize:13,
+                                fontWeight:'600',
+                                textDecoration:'underline'
+                            }}>Result</p> 
+                        </div>
+                        </div>
+                        <ResultRow/>
+                        </div>
+                    </CSSTransition>
+                </div>
+                <div>
+                    <p>hello</p>
+                    
+                </div>
+            
+                {/* lab and imaging */}
+
+                <div style={{
+                        paddingLeft: 20,
+                        // marginBottom: 10,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems: 'center',
+                        paddingRight:20
+                    }}>
+                    <p style={{
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'black'
+                    }}>Lab & Imaging</p>
+                    <Image
+                            src={!isColapse5?colapse:deploy}
+                            width={20}
+                            height={20}
+                            alt='Colapse'
+                            onClick={()=>toggleColapse(5)}
+                        />
+                </div>
+                <CSSTransition
+                        in={!isColapse5}
+                        timeout={300}
+                        classNames="fade"
+                        unmountOnExit
+                    >
+                    <div style={{
+                            paddingLeft: 20,
+                            marginBottom: 10
+                        }}>
+                            <div className="d-flex" style={{paddingLeft:30,marginBottom:10}}>
+                                <input 
+                                    className="form-control me-2"
+                                    type="search" 
+                                    placeholder="Search" 
+                                    aria-label="Search"
+                                    style={{
+                                        width:'50%'
+                                    }}
+                                    value={labSearchTerm}
+                                    onChange={e => handleLabSearchInputChange(e.target.value)}
+                                />
+                                <button className="btn btn-outline-success" type='button'>+</button>
+                            </div>
+                            
+                        {isOpenLab === true? (
+                            <ul>
+                            <div className="card p-2" style={{
+                                display: 'flex',
+                                flexDirection:'row',
+                                flexWrap:'wrap',
+                                width:'90%',
+                                height:'auto',
+                                overflow:'scroll'
+                            }}>
+                                <button 
+                                    onClick={()=>(setIsOpenLab(false))}
+                                    className="btn btn-outline-danger" 
+                                    type='button'
+                                    style={{
+                                        width:25,
+                                        height:25,
+                                        display:'flex',
+                                        flexDirection:'column',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        position:'absolute',
+                                        top:5,
+                                        right:5,
+                                        fontSize:10
+                                }}>x</button>
+                            {labSearchResults.map((result, index) => (
+                                <div 
+                                    key={index} 
+                                    className='m-2'
+                                    style={{
+                                    display:'flex',
+                                    flexDirection:'row',
+                                    justifyContent:'space-between',
+                                    alignItems:'center',
+                                    width:'30%',
+                                    padding:'10px 0',
+                                    borderBottom:'0.5px solid lightgray',
+                                }}>
+                                <p style={{
+                                    fontSize:15,
+                                    fontWeight:'300',
+                                    marginBottom:0,
+                                    color:'black'
+                                }} key={index}>{result}</p>
+                                <div className="btn btn-outline-success" onClick={()=>addMedItem(result)}>+</div>
+                                </div>
+                            ))}
+                            </div>
+                            </ul>
+                        ):''}
+                    </div>
+                </CSSTransition>
                 {/* results */}
                 <div style={{
                     display:'flex',
@@ -808,7 +971,12 @@ const index = () => {
                 {/* Pharmacy */}
                 <div style={{
                         paddingLeft: 20,
-                        marginBottom: 10
+                        // marginBottom: 10,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems: 'center',
+                        paddingRight:20
                     }}>
                     <p style={{
                         fontSize:18,
@@ -905,8 +1073,13 @@ const index = () => {
                 <Divider/>
                 {/* Doctor's notes */}
                 <div style={{
-                        paddingLeft: 20,
-                        marginBottom: 10
+                       paddingLeft: 20,
+                       // marginBottom: 10,
+                       display:'flex',
+                       flexDirection:'row',
+                       justifyContent:'space-between',
+                       alignItems: 'center',
+                       paddingRight:20
                     }}>
                     <p style={{
                         fontSize:18,
