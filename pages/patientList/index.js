@@ -17,18 +17,19 @@ const Patient = () => {
     const router = useRouter()
 
     const { patients,loadPatients, setPatients } = useStateContext()
-    const [patientList, setPatientList] = useState([])
+    const [patientList, setPatientList] = useState([]) // set local array for easy use
     const [date, setDate] = useState([])
-    const [totalPatients, setTotalPatients] = useState(0)
+    const [appointmentPatients, setAppointmentPatients] = useState() // appointment patient number for card
     const [searchOpen, setSearchOpen] = useState(false)
 
-    const [sortingType, setSortingType] = useState(true)
+    const [sortingType, setSortingType] = useState(true) // abc or time added based
+    const [sortedData, setSortedData] = useState([...patientList]); // displayed array in the table below
+
     useEffect(() => {
         // load patients from firestore
         getPatientList()
         // setPatientList(patients)
-        const total = patientList?.length
-        setTotalPatients(total)
+        
         // console.log(patientList)
     },[])
 
@@ -41,24 +42,35 @@ const Patient = () => {
                 content: doc.data(),
                 id: doc.id
             });
-        // console.log(doc.id, " => ", doc.data());
         });
         setPatients(patientArray)
+        setAppointment() // set the appointment array
         // setPatientList(patientArray)
         // console.log(patients)
-        // set the array to the context for entire app use
-        setSortedData(patientArray)
     }
     const setAppointment = (appointment) => {
-        
+        // calculate number of total appointment 
+        //filter all patients that have an appointment 
+        const filtered = patients?.filter(item => item.content.appointment !== undefined && item.content.appointment !== null && item.content.appointment !== '');
+        setAppointmentPatients(filtered);
+        // make list of total appointment patients
     }
-    const setSortedData = (data) => {
-        // console.log(...data)
-        // if (sortingType) {
-        //     return [...data].sort((a, b) => a.firstName.localeCompare(b.firstName));
-        //   } else if (sortingType === 'time-based') {
-        //     return [...patients].sort((a, b) => a.timestamp - b.timestamp);
-        //   }
+    const setSortData = (type) => {
+        // type is a variable toggle between true and false
+        // label and content changes on click
+        if (type){
+           const sorted = [...patients].sort((a, b) =>
+            a.content.firstName.localeCompare(b.content.firstName)
+            );
+            setSortedData(sorted);
+            setSortingType(false) 
+            // console.log(sorted)
+        } else {
+            setSortedData(patients)
+            setSortingType(true)
+        }
+        
+        
     }
     const reloadContent = () => {
         // loadPatients()
@@ -277,7 +289,8 @@ const Patient = () => {
                 </div>
                 
                 <div 
-                onClick={()=>setSortingType(!sortingType)}
+                // onClick={()=>setSortingType(!sortingType)}
+                onClick={()=>setSortData(sortingType)}
                 style={{
                     border:'0.5px solid lightgray',
                     borderRadius:8,
@@ -297,7 +310,7 @@ const Patient = () => {
                     <p style={{
                         fontSize:8,
                         margin:0,
-                    }}>{sortingType ? '':'A - Z'}</p>
+                    }}>{!sortingType ? '':'A - Z'}</p>
                 </div>
                 <div style={{
                     border:'0.5px solid lightgray',
@@ -332,7 +345,7 @@ const Patient = () => {
                 </tr>
             </thead>
             <tbody>
-                {patients?.map((patient,index)=>{
+                {sortedData?.map((patient,index)=>{
                     const data = patient.content
                     data["id"] = patient.id
                     return <tr key={index} onDoubleClick={()=>(
