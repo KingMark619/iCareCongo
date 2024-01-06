@@ -155,3 +155,9 @@ a {
 .collapsibleContent {
   margin-top: 10px; /* Adjust as needed */
 }
+.ellipsis {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

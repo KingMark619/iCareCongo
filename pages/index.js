@@ -14,6 +14,7 @@ import { useAuth } from './context/AuthContext'
 import Patient from './patientList'
 import AppointmentList from './components/AppointmentList/AppointmentList'
 import Cookies from 'js-cookie'
+import Title from './components/Title'
 
 // const mukta = Mukta({
 //   subsets:['latin'],
@@ -41,13 +42,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={mukta.className}>
+         <Title text="Overview" padding={10}/> 
+  
         <StatCard/>
         {/* <Card/> */}
-        <div>
-          
+        <div style={{marginTop:20}}>
           <Patient/>
-          {/* {role==='Management'?<Task/>:
-          <UpcomingSchedule/>} */}
         </div>
         <div style={{
           display:'flex',

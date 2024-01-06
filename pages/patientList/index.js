@@ -1,4 +1,4 @@
-import { filter, help, plus, reload, search } from '@/assets/icons'
+import { cross, filter, help, plus, reload, search } from '@/assets/icons'
 import Image from 'next/image'
 import React, { useEffect,useState } from 'react'
 import styles from './Patient.module.css'
@@ -20,7 +20,9 @@ const Patient = () => {
     const [patientList, setPatientList] = useState([])
     const [date, setDate] = useState([])
     const [totalPatients, setTotalPatients] = useState(0)
-    
+    const [searchOpen, setSearchOpen] = useState(false)
+
+    const [sortingType, setSortingType] = useState(true)
     useEffect(() => {
         // load patients from firestore
         getPatientList()
@@ -43,95 +45,177 @@ const Patient = () => {
         });
         setPatients(patientArray)
         // setPatientList(patientArray)
-        console.log(patients)
+        // console.log(patients)
         // set the array to the context for entire app use
-        
-
+        setSortedData(patientArray)
     }
     const setAppointment = (appointment) => {
         
     }
-    
+    const setSortedData = (data) => {
+        // console.log(...data)
+        // if (sortingType) {
+        //     return [...data].sort((a, b) => a.firstName.localeCompare(b.firstName));
+        //   } else if (sortingType === 'time-based') {
+        //     return [...patients].sort((a, b) => a.timestamp - b.timestamp);
+        //   }
+    }
     const reloadContent = () => {
         // loadPatients()
         console.log('reloading')
         router.push(router.asPath)
         // setPatientList(patients)
     }
-    const  Row =  ({patient}) => {
-        // const regexPattern = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})$/;
-        // const match =  patient?.appointment.search(regexPattern);
-        // console.log(match)
+    // const  Row =  ({patient}) => {
+    //     // const regexPattern = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})$/;
+    //     // const match =  patient?.appointment.search(regexPattern);
+    //     // console.log(match)
 
-        // if (match) {
-        // const date = match[1]; // 2023-06-30
-        // const time = match[2]; // 15:46:00
+    //     // if (match) {
+    //     // const date = match[1]; // 2023-06-30
+    //     // const time = match[2]; // 15:46:00
 
-        // console.log('Date:', date);
-        // console.log('Time:', time);
-        // } else {
-        // console.log('Invalid timestamp format');
-        // }
+    //     // console.log('Date:', date);
+    //     // console.log('Time:', time);
+    //     // } else {
+    //     // console.log('Invalid timestamp format');
+    //     // }
+    //     return(
+    //             <div style={{
+    //                 display:'flex',
+    //                 flexDirection:'row',
+    //                 justifyContent:'space-between',
+    //                 alignItems:'center',
+    //                 width:'100%',
+    //                 paddingBlockStart:10,
+    //                 marginBottom:10
+    //             }}>
+    //                 <p style={{
+    //                 flex:2,
+    //                 color:'black',
+    //                 fontSize:14,
+    //                 fontWeight:'400',
+    //                 marginBottom:0
+    //                 }}>{`${patient?.firstName} ${patient?.lastName}`}</p>
+    //                 <p style={{
+    //                 flex:1,
+    //                 color:'black',
+    //                 fontSize:14,
+    //                 fontWeight:'400',
+    //                 marginBottom:0
+    //                 }}>{patient?.medHistory}</p>
+    //                 <div style={{
+    //                     display:'flex',
+    //                     flexDirection:'row',
+    //                     justifyContent: 'start',
+    //                     alignItems:'start',
+    //                     flex:1
+    //                 }}>
+    //                     <p style={{
+    //                         color:'black',
+    //                         fontSize:14,
+    //                         fontWeight:'400',
+    //                     }}>{patient?.status}</p>
+    //                     <div style={{
+    //                         width:20,
+    //                         height: 20,
+    //                         backgroundColor:'green',
+    //                         borderRadius:'50%',
+    //                         marginLeft: '1rem'
+    //                     }}/>
+    //                 </div>        
+    //                 <p style={{
+    //                 flex:1,
+    //                 color:'black',
+    //                 fontSize:14,
+    //                 fontWeight:'400',
+    //                 marginBottom:0
+    //                 }}>{setAppointment(patient?.appointment)}</p>
+    //                 <p style={{
+    //                 flex:1,
+    //                 color:'black',
+    //                 fontSize:14,
+    //                 fontWeight:'400',
+    //                 marginBottom:0
+    //                 }}>. . .</p>         
+    //             </div>
+    //     )
+    // }
+    const SearchBox = () => {
         return(
-                <div style={{
-                    display:'flex',
-                    flexDirection:'row',
-                    justifyContent:'space-between',
-                    alignItems:'center',
-                    width:'100%',
-                    paddingBlockStart:10,
-                    marginBottom:10
+            <div className='card p-2' style={{
+                width:650,
+                height:'auto',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column'
                 }}>
-                    <p style={{
-                    flex:2,
-                    color:'black',
-                    fontSize:14,
-                    fontWeight:'400',
-                    marginBottom:0
-                    }}>{`${patient?.firstName} ${patient?.lastName}`}</p>
-                    <p style={{
-                    flex:1,
-                    color:'black',
-                    fontSize:14,
-                    fontWeight:'400',
-                    marginBottom:0
-                    }}>{patient?.medHistory}</p>
                     <div style={{
                         display:'flex',
                         flexDirection:'row',
-                        justifyContent: 'start',
-                        alignItems:'start',
-                        flex:1
+                        justifyContent: 'space-around',
+                        alignItems: 'center',
+                        width: '90%',
+                        marginBottom:10
                     }}>
-                        <p style={{
-                            color:'black',
-                            fontSize:14,
-                            fontWeight:'400',
-                        }}>{patient?.status}</p>
+                        <input
+                            placeholder='Search'
+                            style={{
+                                width:'80%',
+                                height:'40px',
+                                padding:'0 10px',
+                                borderRadius:8,
+                                border:'0.5px solid lightgray',   
+                            }}
+                        />
                         <div style={{
-                            width:20,
-                            height: 20,
-                            backgroundColor:'green',
-                            borderRadius:'50%',
-                            marginLeft: '1rem'
-                        }}/>
-                    </div>        
-                    <p style={{
-                    flex:1,
-                    color:'black',
-                    fontSize:14,
-                    fontWeight:'400',
-                    marginBottom:0
-                    }}>{setAppointment(patient?.appointment)}</p>
-                    <p style={{
-                    flex:1,
-                    color:'black',
-                    fontSize:14,
-                    fontWeight:'400',
-                    marginBottom:0
-                    }}>. . .</p>         
+                            border:'0.5px solid lightgray',
+                            borderRadius:8,
+                            width:40,
+                            height:40,
+                            display:'flex',
+                            justifyContent:'center',
+                            alignItems:'center'
+                        }}>
+                        <Image 
+                            src={cross}
+                            width={20}
+                            height={20}
+                            alt="filter"
+                        />  
+                        </div>
+                    </div>
+                    <button 
+                        type="button"
+                        style={{
+                            display:'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width:'25px',
+                            height:'25px',
+                            position:'absolute',
+                            top:10,
+                            right:10,
+                        }} class="btn btn-outline-danger">x</button>
+                
+                {/* results */}
+                <div style={{
+                    display:'flex',
+                    flexDirection:'row',
+                    justifyContent: 'space-around',
+                    alignItems: 'center',
+                    width:'80%',
+                    // borderBottom:'0.5px solid lightgray',
+                    }}>
+                    <p style={{marginBottom:0}}>Patient name</p>
+                    <p style={{marginBottom:0}}>Patient gender</p>
                 </div>
+            </div>
         )
+    }
+    const SearchResult = () => {
+         
     }
 
   return (
@@ -148,13 +232,7 @@ const Patient = () => {
             justifyContent:'space-between',
             alignItems:'center',
         }}>
-                {/* <p style={{
-                color:'black',
-                fontSize:14,
-                fontWeight:'400',
-                marginBottom:0
-                }}> All patients</p> */}
-                <h6>Patient list</h6>     
+                <h6>Patient Overview</h6>     
                 {/* Total Patients ({totalPatients})  */}
             <div style={{
                 display:'flex',
@@ -190,19 +268,23 @@ const Patient = () => {
                     justifyContent:'center',
                     alignItems:'center'
                 }}>
-                  <Image 
+                  <Image
                     src={search}
                     width={20}
                     height={20}
                     alt="search"
                     />  
                 </div>
-                <div style={{
+                
+                <div 
+                onClick={()=>setSortingType(!sortingType)}
+                style={{
                     border:'0.5px solid lightgray',
                     borderRadius:8,
                     width:40,
                     height:40,
                     display:'flex',
+                    flexDirection:'column',
                     justifyContent:'center',
                     alignItems:'center'
                 }}>
@@ -211,7 +293,11 @@ const Patient = () => {
                     width={20}
                     height={20}
                     alt="filter"
-                    />  
+                    />
+                    <p style={{
+                        fontSize:8,
+                        margin:0,
+                    }}>{sortingType ? '':'A - Z'}</p>
                 </div>
                 <div style={{
                     border:'0.5px solid lightgray',
@@ -228,9 +314,10 @@ const Patient = () => {
                     height={20}
                     alt="help"
                     onClick={()=>(reloadContent())}
-                   />  
+                   />
                 </div>
             </div>
+            {/* <SearchBox/> */}
         </div>
         {/* content row */}
         <table className="table">
@@ -238,9 +325,9 @@ const Patient = () => {
                 <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
-                <th scope="col">Diagnosis</th>
+                <th scope="col">Age</th>
+                <th scope="col">Gender</th>
                 <th scope="col">Status</th>
-                <th scope="col">Next Appointment</th>
                 <th scope="col">Options</th>
                 </tr>
             </thead>
@@ -250,81 +337,21 @@ const Patient = () => {
                     data["id"] = patient.id
                     return <tr key={index} onDoubleClick={()=>(
                             router.push({
-                                pathname: '../consultation',
+                                pathname: '../patientFile',
                                 query: data,
-                            }, '../consultation')
+                            }, '../patientFile')
                         )}>
                         <th scope="row">{index + 1}</th>
                         <td>{patient?.content?.firstName} {patient?.content?.lastName}</td>
-                        <td>{patient?.content?.medHistory}</td>
-                        <td>{patient?.content?.status}</td>
-                        <td>{patient?.content?.appointment? patient?.content?.appointment : '- - - -'}</td>
-                        <td>...</td>
+                        <td>{patient?.content?.age}</td>
+                        <td>{patient?.content?.sex}</td>
+                        <td>{patient?.content?.status? patient?.content?.status : 'Outpatient'}</td>
+                        <td>.  .  .</td>
                     </tr>
                 })}
             </tbody>
-            </table>
-        {/* <div style={{
-            width:'100%',
-            padding:10,
-            backgroundColor:'white',
-            display:'flex',
-            flexDirection:'column',
-            justifyContent:'space-between',
-            alignItems:'center',
-            maxHeight:'60vh',
-            overflow:'scroll',
-        }}>
-            <div className='contain' style={{
-                display:'flex',
-                flexDirection:'row',
-                justifyContent:'space-between',
-                alignItems:'center',
-                width:'100%',
-                paddingBottom:10,
-                borderBottom:'0.5px solid lightgray'
-            }}>
-                
-                <p style={{
-                flex:2,
-                color:'gray',
-                fontSize:14,
-                fontWeight:'400',
-                marginBottom:0
-                }}>Name</p>
-                <p style={{
-                flex:1,
-                color:'gray',
-                fontSize:14,
-                fontWeight:'400',
-                marginBottom:0
-                }}>Diagnosis</p>
-                <p style={{
-                flex:1,
-                color:'gray',
-                fontSize:14,
-                fontWeight:'400',
-                marginBottom:0
-                }}>Status</p>
-                <p style={{
-                flex:1,
-                color:'gray',
-                fontSize:14,
-                fontWeight:'400',
-                marginBottom:0
-                }}>Next Appointment</p>
-                <p style={{
-                flex:1,
-                color:'gray',
-                fontSize:14,
-                fontWeight:'400',
-                marginBottom:0
-                }}>Options</p>
-            </div>
-            {patients?.map((item,index)=>{      
-               return <Row patient={item} key={index}/>
-            })}
-        </div> */}
+        </table>
+        <SearchBox/>
     </div>
   )
 }

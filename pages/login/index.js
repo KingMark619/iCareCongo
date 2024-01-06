@@ -1,19 +1,15 @@
 'use client'
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { loginFunction, useStateContext } from '@/pages/context/StateContext'
-import jwt from 'jsonwebtoken'
-import userActions from '../helpers/userActions';
-import {UserContext} from '../context/UserContext';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
-import {signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import logo from '../../assets/logo/blue.png'
 import backgrd from '../../assets/background/abstract.jpg'
 import Image from 'next/image';
 import {useForm} from 'react-hook-form'
 import { initFirebase, initFirestore } from '@/firebase/clientApp';
-
-import { createUserWithEmailAndPassword,getAuth , signInWithEmailAndPassword, browserSessionPersistence, setPersistence} from "firebase/auth";
+import { getAuth , signInWithEmailAndPassword } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { doc, getDoc } from 'firebase/firestore';
 import Link from 'next/link';
@@ -41,59 +37,37 @@ export default function LoginPage() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    // console.log(auth)
-    // console.log(loading)
-    // console.log(user)
-  },[])
-
-
   const launchFire = () => {
-    
-    // createUserWithEmailAndPassword(auth, email, password)
-    //   .then((userCredential) => {
-    //     // Signed up 
-    //     const user = userCredential.user;
-    //     console.log(user)
-    //     // ...
-    //   })
-    //   .catch((error) => {
-    //     console.error(error)
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     // ..
-    //   });
-
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
+        setLoader(true)
         const user = userCredential.user;
+        // get user data from firebase
         pullUserData(user)
-        
-  
       })
       .catch((error) => {
-        console.log(error)
+        alert('Invalid credentials, please contact system  administrator')
+        // console.log(error)
       });
     
   }
-  // const setSession = (user) => {
-  //   const localUser = user
-  //   Cookies.set('user',JSON.stringify(localUser))
-  // }
   const pullUserData = async (user) => {
     const id = user?.uid
     const docRef = doc(db, "users", id);
     const docSnap = await getDoc(docRef);
 
+    // if user exist 
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
+      // console.log("Document data:", docSnap.data());
       setActiveUser(docSnap.data())
+      setLoader(false)
       // set Cookies 
       Cookies.set('cookie', JSON.stringify(docSnap.data()))
       setAuthenticated(true)
     } else {
-      console.log("No such document!");
+      // user doesnt exist
+      alert('Contact System Administrator');
     }
   }
 
@@ -119,40 +93,6 @@ export default function LoginPage() {
     }
       
   }
-// const  submit = async ()=>{
-//   const data = {
-//     email: 'gabriel@icloud.com',
-//     password: 'password'
-//   }
-//   try {
-//       const response = await fetch('/api/user', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(data),
-//       });
-//       const result = await response.json();
-//       console.log(result)
-//     } catch (error) {
-//       console.error('Error submitting data:', error);
-//     }
-//   };
-
-    // const matchedUser = users.find(user => user.email === email && user.password === password)
-    // if (matchedUser){
-    //   console.log(matchedUser)
-    //   setToken(matchedUser._id)
-    //   setAuthenticated(true)
-    //   setActiveUser(matchedUser)
-    //   // add animation for welcome and delay
-    //   alert('Welcome')
-    //   // setTimeout(router.push('/'), 2000)
-    //   router.push('/')
-    // }
-    // else{
-    //   console.log('Please check Email and Password')
-    // }
    
   return (
     <>

@@ -26,31 +26,11 @@ const Layout = ({children}) => {
       setIndex(childData)
       console.log(index)
   }
-  const addToDb = async () => {
-    // Profiles.map((profile,index) =>{
-    //    setDoc(doc(db, "users", profile.id), profile)
-    // })
-    
-    
-    // try {
-    //   const docRef = await addDoc(collection(db, "users"), {
-    //     first: "Ada",
-    //     last: "Lovelace",
-    //     born: 1815
-    //   });
-    //   console.log("Document written with ID: ", docRef.id);
-    // } catch (e) {
-    //   console.error("Error adding document: ", e);
-    // }
-  }
   
   useEffect(() =>{
-    // console.log(auth.currentUser)
     const user = Cookies.get('cookie');
     if (user) {
-      
       const userData = JSON.parse(user)
-      // console.log(userData)
       setAuthenticated(true);
       setActiveUser(userData)
       // User is authenticated
@@ -58,7 +38,6 @@ const Layout = ({children}) => {
       setLoggedInUser(false)
       // User is not authenticated
     }
-    // addToDb()  
   },[authenticated])
 
   return (

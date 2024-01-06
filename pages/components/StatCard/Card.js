@@ -2,18 +2,29 @@ import { clock3d,patientNew,patientFolder } from '@/assets/icons'
 import { useStateContext } from '@/pages/context/StateContext'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 const StatCard = () => {
+
+  const [newPatients, setNewPatients] = useState()
+  const [appointment, setAppointment] = useState()
+
   const { patients } = useStateContext()
+
+  const setData = async (data) => {
+    
+  }
+  useEffect(()=>{ 
+    // setData()
+  },[])
   return (
     <div className="px-2" style={{
-      display:'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    }}>
+        display:'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
       <div className="card p-2" style={{
         display:'flex',
         flexDirection:'row',

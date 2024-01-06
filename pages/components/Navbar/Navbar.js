@@ -19,6 +19,7 @@ import {
 import './Navbar.module.css'
 import Link from 'next/link';
 import { useAuth } from '@/pages/context/AuthContext';
+import Title from '../Title';
 
 const Navbar = ({parentCallback}) => {
     const { activeUser } = useAuth();
@@ -89,7 +90,7 @@ const Navbar = ({parentCallback}) => {
         height:"100%",
         width:'20%',
     }}>
-        <p style={{ color:'black'}}>Menu</p>
+        <Title text="Menu" padding={10}/>
         <div className="container">
             { navItems.map((item, index)=>{
                 return (

@@ -23,7 +23,7 @@ import arrowRight from './arrow-right-short.svg'
 import trash from './trash3.svg'
 
 import edit from './pencil-square.svg'
-import cross from './x-lg.svg'
+import cross from './cross.png'
 import pin from './geo-alt.svg'
 import clock from './clock.svg'
 import envelope from './envelope.svg'

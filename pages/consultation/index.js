@@ -50,6 +50,7 @@ const index = () => {
     const [isColapse3, setIsColapse3] = useState(false)
     const [isColapse4, setIsColapse4] = useState(false)
     const [isColapse5, setIsColapse5] = useState(false)
+    const [isColapse6, setIsColapse6] = useState(false)
 
     useEffect(()=>{
         console.log(router.query)
@@ -375,41 +376,157 @@ const index = () => {
         case 5:
             setIsColapse5(!isColapse5)
             break;
+        case 6:
+            setIsColapse6(!isColapse6)
+            break;
         default:
             break
     }
     
   }
   const ResultRow = (result) => {
-    // result name, status and content
-    // coordonate with the lab and the way it is brought back into the system
-    // Sample data (replace this with your dynamic data)
-    const data = [
-        { requested: 'Item 1', results: 'Result A', description: 'Description A' },
-        { requested: 'Item 2', results: 'Result B', description: 'Description B' },
-        { requested: 'Item 3', results: 'Result C', description: 'Description C' },
-        // Add more rows as needed
-    ];
+    const colors = [
+        {
+            name: 'green',
+            code:'#77dd77',
+            text: 'Normal'
+        },
+        {
+            name: 'yellow',
+            code:'#fff44f',
+            text:'Warning'
+        },
+        {
+            name: 'red',
+            code:'#e32636',
+            text:'Issue'
+        },
+    ]
     return(
-        <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingLeft:50,
-            width: '50%'
+        <table style={{
+            width:'100%',
         }}>
-            <p style={{
-                fontSize:13,
-                fontWeight: '600'
-            }}>X-Ray</p>
-            <p style={{
-                fontSize:13,
-                fontWeight: '600'
-            }}>Normal</p>
-        </div>
+            <thead>
+                <tr>
+                <th scope="col">
+                    <p style={{
+                        fontSize:13,
+                        fontWeight: '600',
+                        textDecoration: 'underline'
+                    }}>Requested</p>
+                </th>
+                <th scope="col">
+                    <p style={{
+                        fontSize:13,
+                        fontWeight: '600',
+                        textDecoration: 'underline',
+                        marginLeft:15
+                    }}>Result</p>
+                </th>
+                </tr>
+            </thead>
+            <tbody>  
+                <tr>
+                <td scope="row" style={{width:350}}>
+                    <p className="ellipsis" style={{
+                        fontSize:13,
+                        fontWeight: '400',
+                    }}>Chest X-Ray</p>
+                </td>
+                <td scope="row" style={{width:350}}>
+                    <p style={{
+                        fontSize:13,
+                        width:'fit-content',
+                        fontWeight: '400',
+                        padding:'0 10px',
+                        borderRadius:12,
+                        backgroundColor: colors[0].code
+                    }}>{colors[0].text}</p>
+                </td>
+                <td scope="row" >
+                    <p style={{
+                        fontSize:13,
+                        fontWeight: '400',
+                        textDecoration: 'underline',
+                        color: 'blue'
+                    }}>More</p>
+                </td>
+                </tr>
+            </tbody>
+        </table>
     )
-
+  }
+  const MedicationRow = (result) => {
+    const colors = [
+        {
+            name: 'green',
+            code:'#77dd77',
+            text: 'Normal'
+        },
+        {
+            name: 'yellow',
+            code:'#fff44f',
+            text:'Warning'
+        },
+        {
+            name: 'red',
+            code:'#e32636',
+            text:'Issue'
+        },
+    ]
+    return(
+        <table style={{
+            width:'100%',
+        }}>
+            <thead>
+                <tr>
+                <th scope="col">
+                    <p style={{
+                        fontSize:13,
+                        fontWeight: '600',
+                        textDecoration: 'underline'
+                    }}>Medication</p>
+                </th>
+                <th scope="col" >
+                    <p style={{
+                        fontSize:13,
+                        fontWeight: '600',
+                        textDecoration: 'underline',
+                        marginLeft:15
+                    }}>Dosage</p>
+                </th>
+                </tr>
+            </thead>
+            <tbody>  
+                <tr>
+                <td scope="row" style={{width:350}}>
+                    <p className="ellipsis" style={{
+                        fontSize:13,
+                        fontWeight: '400',
+                    }}>Paracetamol 500mg</p>
+                </td>
+                <td scope="row" >
+                    <p style={{
+                        fontSize:13,
+                        fontWeight: '400',
+                        marginLeft:20
+                    }}>3 x 1</p>
+                </td>
+                </tr>
+            </tbody>
+            <div>
+                <p style={{
+                        fontSize:13,
+                        fontWeight: '600',
+                        textDecoration: 'underline'
+                    }}>Allergies</p>
+                 <p style={{
+                        fontSize:13,
+                        fontWeight: '400',
+                    }}>Penicillin and related antibiotics</p>
+            </div>
+        </table>
+    )
   }
   return (
     <>
@@ -808,50 +925,24 @@ const index = () => {
                         classNames="fade"
                         unmountOnExit
                     >
-                        <div>
                         <div style={{
-                            paddingLeft: 50,
-                            marginBottom: 10,
-                            display:'flex',
-                            flexDirection:'row',
-                            justifyContent:'space-between',
-                            alignItems:'center',
-                            width:'65%'
+                            padding:'0 50px'
                         }}>
-                            {/* title row */}
-                        <div style={{
-                            display:'flex',
-                            flexDirection:'row',
-                            justifyContent:'space-between',
-                            alignItems:'start',
-                            width:'75%'
-                        }}>
-                            <p style={{
-                                marginBottom:0,
-                                fontSize:13,
-                                fontWeight:'600',
-                                textDecoration:'underline'
-                            }}>Requested</p>
-                            <p style={{
-                                marginBottom:0,
-                                fontSize:13,
-                                fontWeight:'600',
-                                textDecoration:'underline'
-                            }}>Result</p> 
-                        </div>
-                        </div>
+                        
                         <ResultRow/>
+                        
                         </div>
                     </CSSTransition>
                 </div>
-                <div>
-                    <p>hello</p>
-                    
-                </div>
-            
-                {/* lab and imaging */}
+                {/* Medication and allergies */}
 
                 <div style={{
+                    border:'0.5px solid lightgray',
+                    // borderRadius:8,
+                    padding:'10px 0',
+                    marginBlockEnd:20
+                }}>
+                    <div style={{
                         paddingLeft: 20,
                         // marginBottom: 10,
                         display:'flex',
@@ -864,8 +955,49 @@ const index = () => {
                         fontSize:18,
                         fontWeight:'300',
                         marginBottom:0,
+                        color:'#2f80ed'
+                    }}>Medication and Allergies</p>
+                    <Image
+                            src={!isColapse5?colapse:deploy}
+                            width={20}
+                            height={20}
+                            alt='Colapse'
+                            onClick={()=>toggleColapse(5)}
+                        />
+                    </div>
+                    <CSSTransition
+                        in={!isColapse5}
+                        timeout={300}
+                        classNames="fade"
+                        unmountOnExit
+                    >
+                        <div style={{
+                            padding:'0 50px'
+                        }}>    
+                            <MedicationRow/>
+                        </div>
+                    </CSSTransition>
+                </div>
+
+                {/* old */}
+                <div style={{
+                    border:'0.5px solid lightgray'
+                }}>
+                <div style={{
+                        paddingLeft: 20,
+                        // marginBottom: 10,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems: 'center',
+                        paddingRight:20,
+                    }}>
+                    <p style={{
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
                         color:'black'
-                    }}>Lab & Imaging</p>
+                    }}>Medication and Allergies</p>
                     <Image
                             src={!isColapse5?colapse:deploy}
                             width={20}
@@ -960,10 +1092,11 @@ const index = () => {
                     alignItems: 'center',
                     flexWrap:'wrap'
                 }}>
-                    {medResults!== undefined ?medResults.map((result,index)=>{
+                    {/* {medResults!== undefined ?medResults.map((result,index)=>{
                    return( <ResultMedCard item={result} key={index}/>)
-                }):''}
+                }):''} */}
                     
+                </div>
                 </div>
                 
                 <Divider/>
@@ -1064,46 +1197,66 @@ const index = () => {
                     alignItems: 'center',
                     flexWrap:'wrap'
                 }}>
-                    {labResults!== undefined ?labResults.map((result,index)=>{
+                    {/* {labResults!== undefined ?labResults.map((result,index)=>{
                    return( <ResultLabCard item={result} key={index}/>)
-                }):''}
+                }):''} */}
                     
                 </div>
                 
                 <Divider/>
-                {/* Doctor's notes */}
+                {/* Doctors note */}
                 <div style={{
-                       paddingLeft: 20,
-                       // marginBottom: 10,
-                       display:'flex',
-                       flexDirection:'row',
-                       justifyContent:'space-between',
-                       alignItems: 'center',
-                       paddingRight:20
+                    border:'0.5px solid lightgray',
+                    // borderRadius:8,
+                    padding:'10px 0',
+                    marginBlockEnd:20
+                }}>
+                    <div style={{
+                        paddingLeft: 20,
+                        // marginBottom: 10,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems: 'center',
+                        paddingRight:20
                     }}>
                     <p style={{
                         fontSize:18,
                         fontWeight:'300',
                         marginBottom:0,
-                        color:'black'
-                    }}>Doctor Note</p>
-                </div>
-                <div style={{
-                        paddingLeft: 50,
-                        marginBottom: 10,
-                    }}>
-                    <textarea 
-                        {...register('doctorNote')}
-                        // disabled={disabled}
-                        readOnly={disabled}
-                        defaultValue={'Note and observation'} 
-                        style={{
-                        border:'0.5px solid lightgray',
-                        padding:5,
-                        width:'80%',
-                        height:'200px'
-                    }}></textarea>
-                </div>
+                        color:'#2f80ed'
+                    }}>Doctor's Notes</p>
+                    <Image
+                            src={!isColapse5?colapse:deploy}
+                            width={20}
+                            height={20}
+                            alt='Colapse'
+                            onClick={()=>toggleColapse(6)}
+                        />
+                    </div>
+                    <CSSTransition
+                        in={!isColapse6}
+                        timeout={300}
+                        classNames="fade"
+                        unmountOnExit
+                    >
+                        <div style={{padding:'0 50px'}}>    
+                            <div style={{marginBottom: 10,paddingTop:10}}>
+                                <textarea 
+                                    {...register('doctorNote')}
+                                    // disabled={disabled}
+                                    readOnly={disabled}
+                                    defaultValue={'Notes and observation'} 
+                                    style={{
+                                    border:'0.5px solid lightgray',
+                                    padding:5,
+                                    width:'80%',
+                                    height:'150px'
+                                }}></textarea>
+                            </div>
+                        </div>
+                    </CSSTransition>
+                </div>                
                 
                 {/* button row */}
                 <div style={{

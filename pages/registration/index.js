@@ -8,6 +8,7 @@ import { app, initFirestore } from '@/firebase/clientApp'
 import { getAuth } from 'firebase/auth'
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const Register = () => {
     const db = initFirestore()
@@ -17,10 +18,38 @@ const Register = () => {
 
     const {register, handleSubmit} = useForm()
     const [data, setData] = useState()
+    const [date,setDate] = useState()
 
     const [weight,setWeight] = useState(0)
     const [height, setHeight] = useState(0)
     const [bmi, setBMI] = useState(0)
+
+    const [loader, setLoader] = useState(false)
+
+    
+    const setCalendar = (date) => {
+        // Define a regular expression to match the date components
+        const dateRegex = /^(\w{3}) (\w{3}) (\d{2}) (\d{4})/
+        // Use the exec method to extract the matched groups
+        const match = dateRegex.exec(date);
+
+        if (match) {
+            const day = match[1];    // Day (e.g., Sat)
+            const month = match[2];  // Month (e.g., Jan)
+            const date = match[3];   // Date (e.g., 06)
+            const year = match[4];   // Year (e.g., 2024)
+
+            // Concatenate the date components into a string
+            const calendar = `${date} ${month} ${year}`
+            setDate(calendar)
+        } else {
+        // console.log("No match found");
+        }
+    }
+    useEffect(()=>{
+        const currentDate = new Date();
+        setCalendar(currentDate)
+    },[])
 
     const checkData = () => {
         const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
@@ -50,15 +79,25 @@ const Register = () => {
         }
     }
     const submit = async (data) => {
-        try {
+        if(data.firstName !== '' && 
+        data.lastName !== '' && 
+        data.phone !== '' )
+        {
+            // setLoader(true)
+           try {
             await addDoc(collection(db, "patients",), {
+            date,
             ...data
           });
           alert('patient added successfully')
+        //   setLoader(false)
           router.push('/')
-        } catch (err) {
-            // console.log(err)
-        }
+            } catch (err) {
+                console.log(err)
+            } 
+        } else {
+            alert('Complete Patient Information')
+        } 
     }
     // const  submit = async (data)=>{
     //     // setData(data)
@@ -100,15 +139,23 @@ const Register = () => {
                     }}>
                         <div style={{
                             paddingLeft: 20,
-                            marginBottom: 10
+                            paddingRight:20,
+                            marginBottom: 10,
+                            display:'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
                         }}>
-                        <p style={{
+                            <p style={{
                                     fontSize:18,
                                     fontWeight:'400',
                                     marginBottom:0,
                                     color:'black'
                                 }}>Patient Information</p>
+                            <p>
+                                Date: {date}
+                            </p>
                         </div>
+                        
                         {/* Form Bellow */}
                         <div className="row">
                             <div className="col">
@@ -241,6 +288,12 @@ const Register = () => {
                         </div>
 
                         <Divider/>
+                        {/* Loader */}
+                        { loader?
+                            <div className="spinner-border text-primary" role="status">
+                            <span className="sr-only"></span>
+                            </div> : <></>
+                        }
                         {/* Symptoms */}
                         <div style={{
                             paddingLeft: 20,
@@ -315,15 +368,10 @@ const Register = () => {
                             <div className="col">
                                 <div className="form-outline">
                                 <label className="form-label" htmlFor="form8Example4">Doctor</label>
-                                <input disabled type="text" id="form8Example4" className="form-control" {...register('doctor')} />
+                                <input disabled type="text" id="form8Example4" className="form-control"/>
                                 </div>
                             </div>
-                            {/* <div className="col">
-                                <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example5">Status</label>
-                                <input type="text" id="form8Example5" className="form-control" {...register('status')} /> 
-                                </div>
-                            </div> */}
+                            
                         </div>
 
                         <div className="row">
@@ -331,9 +379,8 @@ const Register = () => {
                                 <div className="form-outline">
                                 <label className="form-label" htmlFor="form8Example3">Status</label>
                                 <select className="form-select" aria-label="Default select example" {...register('status')}>
-                                    <option value="in">In(awaiting doctor)</option>
-                                    <option value="discharged">Discharged</option>
                                     <option value="inpatient">Inpatient</option>
+                                    <option value="outpatient">Outpatient</option>
                                 </select>
                                 </div>
                             </div>
