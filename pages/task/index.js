@@ -59,20 +59,18 @@ const Task = () => {
         //   console.error("Error adding document: ", e);
         // } 
     }
-    const PrioritySelector = () => {
-      // State to track the selected priority
-      ;
+    const handleTaskOptions = (option,taskId) => {
+      console.log(option,taskId)
     }
       // Function to handle button selection
-      const handleSelect = (priority) => {
-        console.log(priority)
-        setSelectedPriority(priority); // Update selected priority
-      };
+    const handleSelect = (priority) => {
+      setSelectedPriority(priority); // Update selected priority
+    }
 
   return (
     <div className="gradient-custom" style={{width:'100%'}}>
       <div className="container py-4">
-    <div className="row d-flex justify-content-center align-items-center h-100">
+      <div className="row d-flex justify-content-center align-items-center h-100">
       <div>
         <div className="card">
           <div className="card-body p-4">
@@ -87,38 +85,58 @@ const Task = () => {
                   display: 'flex',
                   flexDirection:'row',
                   justifyContent: 'space-between',
-                  alignItems:"center",
-                  width:'100%'
+                  alignItems:"center", 
                   }}>
-                  <input
-                    style={{
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'flex-start',
+                      flexDirection:'column',
                       width:'40%'
-                    }}
-                    type="text" 
-                    id="form2"
-                    className="form-control" 
-                    onChange={(e) => setNewTask(e.target.value)} />
-                  <input
-                    style={{
-                      width:'20%',
-                    }}
-                    className='form-control'
-                    type="datetime-local" 
-                    id="tasktime" 
-                    name="tasktime"
-                    onChange={(e) => setTaskTime(e.target.value)}
-                  />
+                    }}>
+                      <p>Description</p>
+                      <input
+                        
+                        type="text" 
+                        id="form2"
+                        className="form-control" 
+                        onChange={(e) => setNewTask(e.target.value)} />
+                    </div>
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'flex-start',
+                      flexDirection:'column',
+                      width:'20%'
+                    }}>
+                      <p>Date</p>
+                      <input
+                        className='form-control'
+                        type="datetime-local" 
+                        id="tasktime" 
+                        name="tasktime"
+                        onChange={(e) => setTaskTime(e.target.value)}
+                      />
+                    </div>
                   {/* priority section */}
-                  <div style={{
+                    <div style={{
                     width:'30%',
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'row'
                   }}>
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'flex-start',
+                      flexDirection: 'column'
+                    }}>
+                      <p>Priority</p>
+                      <div>
                     <button 
                       type="submit" 
-                      className={`${selectedPriority === 'low' ? 'btn btn-success ms-2' : 'btn btn-outline-success ms-2'}`}
+                      className={`${selectedPriority === 'low' ? 'btn btn-success' : 'btn btn-outline-success'}`}
                       onClick={() => handleSelect('low')}
                       >Low
                     </button>
@@ -134,15 +152,13 @@ const Task = () => {
                       onClick={() => handleSelect('urgent')}
                       >Urgent
                     </button>
-                  </div>
-              <button type="submit" className="btn btn-primary ms-2">+</button>
-
+                    </div>
+                  </div>  
+                    </div>
+                  <button type="submit" className="btn btn-primary ms-2">Add</button>
                 </div>
-
-                {/* <label className="form-label" htmlFor="form2">New task...</label> */}
               </div>
             </form>
-
             {/* <!-- Tabs content --> */}
             <div className="tab-content" id="ex1-content">
               <div className="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel"
@@ -150,10 +166,37 @@ const Task = () => {
                 <ul className="list-group mb-0">
                   {tasks?.map((task,i) =>(
                     <li key={i} className="list-group-item d-flex align-items-center border-0 mb-2 rounded"
-                      style={{backgroundColor: '#f4f6f7'}}>
-                      <input className="form-check-input me-2" type="checkbox" value="" aria-label="..." />
-                      {task.title}
-                      {/* Show the task completion time here */}
+                      style={{
+                        display:'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        backgroundColor: '#f4f6f7'
+                      }}>
+                      <p style={{width:'50%'}}>{ task.title }</p>
+                      {/* time */}
+                      <p style={{width:'30%'}}>{ task?.date }</p>
+                      {/* status */}
+                      <div style={{width:'20%', justifySelf:'flex-end'}}>
+                        <button 
+                          type="submit" 
+                          className="btn btn-outline-success"
+                          onClick={() => handleTaskOptions(task,i)}
+                        >Done
+                        </button>
+                        <button 
+                          type="submit" 
+                          className="btn btn-outline-warning ms-2"
+                          onClick={() => handleTaskOptions(task,i)}
+                        >Hold
+                        </button>
+                        <button 
+                          type="submit"
+                          className="btn btn-outline-danger ms-2"
+                          onClick={() => handleTaskOptions(task,i)}
+                          >Delete
+                        </button>
+                      </div>
                     </li>
                   ))}
                 </ul>
