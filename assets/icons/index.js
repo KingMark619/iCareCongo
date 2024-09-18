@@ -9,6 +9,7 @@ import patient from './patient.png'
 import patientSelect from './patient-select.png'
 import profile from './user.png'
 import profileSelect from './user-select.png'
+import bed from './hospital-bed.png'
 
 import messages from './messages.svg'
 
@@ -85,6 +86,7 @@ export {
     face,
     attachment,
     send,
+    bed,
     clock3d,
     patientNew,
     patientFolder,

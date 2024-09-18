@@ -46,7 +46,7 @@ const Patient = () => {
         setPatients(patientArray)
         setAppointment() // set the appointment array
         // setPatientList(patientArray)
-        // console.log(patients)
+        console.log(patients)
     }
     const setAppointment = (appointment) => {
         // calculate number of total appointment 
@@ -69,8 +69,6 @@ const Patient = () => {
             setSortedData(patients)
             setSortingType(true)
         }
-        
-        
     }
     const reloadContent = () => {
         // loadPatients()
@@ -350,9 +348,9 @@ const Patient = () => {
                     data["id"] = patient.id
                     return <tr key={index} onDoubleClick={()=>(
                             router.push({
-                                pathname: '../patientFile',
+                                pathname: '../consultation',
                                 query: data,
-                            }, '../patientFile')
+                            }, '../consultation')
                         )}>
                         <th scope="row">{index + 1}</th>
                         <td>{patient?.content?.firstName} {patient?.content?.lastName}</td>
@@ -364,7 +362,7 @@ const Patient = () => {
                 })}
             </tbody>
         </table>
-        <SearchBox/>
+        {/* <SearchBox/> */}
     </div>
   )
 }

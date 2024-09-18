@@ -1,4 +1,4 @@
-import { clock3d,patientNew,patientFolder } from '@/assets/icons'
+import { clock3d,bed,patientFolder } from '@/assets/icons'
 import { useStateContext } from '@/pages/context/StateContext'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -42,7 +42,7 @@ const StatCard = () => {
           alignItems: 'start'
         }}>
           <h5>{patients?.length}</h5>
-          <p>New Patients</p>
+          <p>Total Patients</p>
         </div>
         </Link>
         <div style={{
@@ -51,7 +51,7 @@ const StatCard = () => {
           borderRadius:12
         }}>
           <Image
-            src={patientNew}
+            src={patientFolder}
             alt='logo'
             width={50}
             height={50}
@@ -66,7 +66,7 @@ const StatCard = () => {
         alignItems: 'start',
         width:'32%'
       }}>
-        <Link href="/patientList" style={{
+        <Link href="/" style={{
           color:'black'
         }}>
         <div style={{
@@ -75,8 +75,9 @@ const StatCard = () => {
           justifyContent: 'center',
           alignItems: 'start'
         }}>
-          <h5>{patients?.length}</h5>
-          <p>Total Patients</p>
+          {/* add available beds */}
+          <h5>5</h5>
+          <p>Available Beds</p>
         </div>
         </Link>
         <div style={{
@@ -85,7 +86,7 @@ const StatCard = () => {
           borderRadius:12
         }}>
           <Image
-            src={patientFolder}
+            src={bed}
             alt='logo'
             width={50}
             height={50}

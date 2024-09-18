@@ -52,6 +52,8 @@ const index = () => {
     const [isColapse5, setIsColapse5] = useState(false)
     const [isColapse6, setIsColapse6] = useState(false)
 
+    const [page, setPage] = useState(1)
+
     useEffect(()=>{
         console.log(router.query)
         setPatient(router.query)
@@ -528,13 +530,146 @@ const index = () => {
         </table>
     )
   }
+  const PageStatus = () => {
+    return (
+        <div className='card m-2 p-2' style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center'
+        }}>
+            <div style={{
+                width:'100%',
+                border:'0.5px solid lightgray',
+                padding: 10,
+                display:'flex',
+                flexDirection: 'column',
+                justifyContent:'center',
+                alignItems: 'center',
+                backgroundColor:page === 1?'rgb(47, 128, 237)':'white'
+            }}>
+                <div style={{
+                    marginBottom:0,
+                    marginTop:-23,
+                    display:'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor:'rgb(47, 128, 237)',
+                    borderRadius:'50%',
+                    width:25,
+                    height:25
+                }}><p style={{margin:0,fontSize:15,color:'white'}}>1</p></div>
+                <p style={{margin:0,fontSize:15,color:page !== 1?'black':'white'}}>Patient File</p>
+            </div>
+            {/* 2 */}
+            <div style={{
+                width:'100%',
+                border:'0.5px solid lightgray',
+                padding: 10,
+                display:'flex',
+                flexDirection: 'column',
+                justifyContent:'center',
+                alignItems: 'center',
+                backgroundColor:page !== 2?'#8EB6ED':'rgb(47, 128, 237)'
+            }}>
+                <div style={{
+                    marginBottom:0,
+                    marginTop:-23,
+                    display:'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor:'rgb(47, 128, 237)',
+                    borderRadius:'50%',
+                    width:25,
+                    height:25
+                }}><p style={{margin:0,fontSize:15,color:'white'}}>2</p></div>
+                <p style={{margin:0,fontSize:15,color:page !== 2?'black':'white'}}>Lab & Meds</p>
+            </div>
+            {/* 3 */}
+            <div style={{
+                width:'100%',
+                border:'0.5px solid lightgray',
+                padding: 10,
+                display:'flex',
+                flexDirection: 'column',
+                justifyContent:'center',
+                alignItems: 'center',
+                backgroundColor:page !== 3?'white':'rgb(47, 128, 237)'
+            }}>
+                <div style={{
+                    marginBottom:0,
+                    marginTop:-23,
+                    display:'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor:'rgb(47, 128, 237)',
+                    borderRadius:'50%',
+                    width:25,
+                    height:25
+                }}><p style={{margin:0,fontSize:15,color:'white'}}>3</p></div>
+                <p style={{margin:0,fontSize:15,color:page !== 3?'black':'white'}}>Bill & payment</p>
+            </div>
+            {/* 4 */}
+            <div style={{
+                width:'100%',
+                border:'0.5px solid lightgray',
+                padding: 10,
+                display:'flex',
+                flexDirection: 'column',
+                justifyContent:'center',
+                alignItems: 'center',
+                backgroundColor:page !== 4?'white':'rgb(47, 128, 237)'
+            }}>
+                <div style={{
+                    marginBottom:0,
+                    marginTop:-23,
+                    display:'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor:'rgb(47, 128, 237)',
+                    borderRadius:'50%',
+                    width:25,
+                    height:25
+                }}><p style={{margin:0,fontSize:15,color:'white'}}>4</p></div>
+                <p style={{margin:0,fontSize:15,color: page !== 4?'black':'white'}}>Appointment</p>
+            </div>
+            {/* 5 */}
+            <div style={{
+                width:'100%',
+                border:'0.5px solid lightgray',
+                padding: 10,
+                display:'flex',
+                flexDirection: 'column',
+                justifyContent:'center',
+                alignItems: 'center',
+                backgroundColor:page !== 5?'white':'rgb(47, 128, 237)'
+            }}>
+                <div style={{
+                    marginBottom:0,
+                    marginTop:-23,
+                    display:'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor:'rgb(47, 128, 237)',
+                    borderRadius:'50%',
+                    width:25,
+                    height:25
+                }}><p style={{margin:0,fontSize:15,color:'white'}}>5</p></div>
+                <p style={{margin:0,fontSize:15,color:page !== 5?'black':'white'}}>Submit</p>
+            </div>
+        </div>
+    )
+  }
   return (
     <>
+    {/* Page status */}
+    <PageStatus/>
     <div className="card m-2 p-2" style={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
     }}>
+        
         {/* content below */}
         <div style={{
             width: '100%',
@@ -542,6 +677,7 @@ const index = () => {
             backgroundColor: 'white'
         }}>
             {/* <Bill patient={patient}/> */}
+            
                 {/* form */}
             <form style={{padding:10}} onSubmit={handleSubmit(submit)}>
                 {/* first row */}
@@ -585,7 +721,6 @@ const index = () => {
                 </div>
                 </Link>
                 </div>
-             
                 </div>
                 {/* Header text */}
                 <div style={{
@@ -806,7 +941,6 @@ const index = () => {
                         </div>
                     </CSSTransition>
                 </div>
-                
                 {/* Medical history */}
                 <div style={{
                     border:'0.5px solid lightgray',
@@ -887,8 +1021,7 @@ const index = () => {
                         }}></textarea>
                     </div>
                     </CSSTransition>
-                </div>
-                
+                </div>     
                 {/* Lab and imaging */}
                 <div style={{
                     border:'0.5px solid lightgray',

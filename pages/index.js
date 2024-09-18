@@ -42,12 +42,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={mukta.className}>
-         <Title text="Overview" padding={10}/> 
-  
-        <StatCard/>
+         <Title text="Dashboard" padding={10}/> 
+         <StatCard/>
         {/* <Card/> */}
         <div style={{marginTop:20}}>
           <Patient/>
+        </div>
+        {/* Tasks, alerts and reminders */}
+        <div style={{marginTop:20}}>
+          <Task/>
+          
         </div>
         <div style={{
           display:'flex',

@@ -12,13 +12,14 @@ import { useStateContext } from '../context/StateContext';
 import { app, initFirestore } from '@/firebase/clientApp'
 import { getAuth } from 'firebase/auth'
 import { collection, addDoc, doc, setDoc, getDoc } from 'firebase/firestore'
+import Title from '../components/Title';
 
 
 const Task = () => {
   const db = initFirestore()
 
   const auth = getAuth(app)
-  const {activeUser } = useAuth()
+  const { activeUser } = useAuth()
 // const {token } = useAuth()
     const [selected,setSelected] = 'true'
     // get the data from the user ID.
@@ -27,6 +28,7 @@ const Task = () => {
     const [task, setTask] = useState()
     const [newTask, setNewTask] = useState()
     const [taskTime, setTaskTime] = useState()
+    const [selectedPriority, setSelectedPriority] = useState(null)
     const { tasks } = useStateContext()
     
     
@@ -57,14 +59,24 @@ const Task = () => {
         //   console.error("Error adding document: ", e);
         // } 
     }
+    const PrioritySelector = () => {
+      // State to track the selected priority
+      ;
+    }
+      // Function to handle button selection
+      const handleSelect = (priority) => {
+        console.log(priority)
+        setSelectedPriority(priority); // Update selected priority
+      };
 
   return (
-    <div className="gradient-custom" style={{width:'50%'}}>
+    <div className="gradient-custom" style={{width:'100%'}}>
       <div className="container py-4">
     <div className="row d-flex justify-content-center align-items-center h-100">
       <div>
         <div className="card">
           <div className="card-body p-4">
+          <Title text="Tasks and reminder"/>
             <form onSubmit={handleNewTask} className="mb-4" style={{
               display: 'flex',
               justifyContent: 'center',
@@ -80,7 +92,7 @@ const Task = () => {
                   }}>
                   <input
                     style={{
-                      width:'60%'
+                      width:'40%'
                     }}
                     type="text" 
                     id="form2"
@@ -88,7 +100,7 @@ const Task = () => {
                     onChange={(e) => setNewTask(e.target.value)} />
                   <input
                     style={{
-                      width:'38%',
+                      width:'20%',
                     }}
                     className='form-control'
                     type="datetime-local" 
@@ -96,29 +108,40 @@ const Task = () => {
                     name="tasktime"
                     onChange={(e) => setTaskTime(e.target.value)}
                   />
-                </div>
-                <label className="form-label" htmlFor="form2">New task...</label>
-              </div>
-              <button type="submit" className="btn btn-primary ms-2">Add</button>
-            </form>
+                  {/* priority section */}
+                  <div style={{
+                    width:'30%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'row'
+                  }}>
+                    <button 
+                      type="submit" 
+                      className={`${selectedPriority === 'low' ? 'btn btn-success ms-2' : 'btn btn-outline-success ms-2'}`}
+                      onClick={() => handleSelect('low')}
+                      >Low
+                    </button>
+                    <button 
+                      type="submit" 
+                      className={`${selectedPriority === 'medium' ? 'btn btn-warning ms-2' : 'btn btn-outline-warning ms-2'}`}
+                      onClick={() => handleSelect('medium')}
+                      >Medium
+                    </button>
+                    <button 
+                      type="submit" 
+                      className={`${selectedPriority === 'urgent' ? 'btn btn-danger ms-2' : 'btn btn-outline-danger ms-2'}`}
+                      onClick={() => handleSelect('urgent')}
+                      >Urgent
+                    </button>
+                  </div>
+              <button type="submit" className="btn btn-primary ms-2">+</button>
 
-            {/* <!-- Tabs navs --> */}
-            
-            {/* <ul className="nav nav-tabs mb-4 pb-2" id="ex1" role="tablist">
-              <li className="nav-item" role="presentation">
-                <a className="nav-link active" id="ex1-tab-1" data-mdb-toggle="tab" href="#ex1-tabs-1" role="tab"
-                  aria-controls="ex1-tabs-1" aria-selected="true">All</a>
-              </li>
-              <li className="nav-item" role="presentation">
-                <a className="nav-link" id="ex1-tab-2" data-mdb-toggle="tab" href="#ex1-tabs-2" role="tab"
-                  aria-controls="ex1-tabs-2" aria-selected="false">Active</a>
-              </li>
-              <li className="nav-item" role="presentation">
-                <a className="nav-link" id="ex1-tab-3" data-mdb-toggle="tab" href="#ex1-tabs-3" role="tab"
-                  aria-controls="ex1-tabs-3" aria-selected="false">Completed</a>
-              </li>
-            </ul> */}
-            {/* <!-- Tabs navs --> */}
+                </div>
+
+                {/* <label className="form-label" htmlFor="form2">New task...</label> */}
+              </div>
+            </form>
 
             {/* <!-- Tabs content --> */}
             <div className="tab-content" id="ex1-content">
@@ -135,46 +158,9 @@ const Task = () => {
                   ))}
                 </ul>
               </div>
-              {/* diffrernt tab */}
-              <div className="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
-                <ul className="list-group mb-0">
-                  <li className="list-group-item d-flex align-items-center border-0 mb-2 rounded"
-                    style={{backgroundColor: '#f4f6f7'}}>
-                    <input className="form-check-input me-2" type="checkbox" value="" aria-label="..." />
-                    Morbi leo risus
-                  </li>
-                  <li className="list-group-item d-flex align-items-center border-0 mb-2 rounded"
-                    style={{backgroundColor: '#f4f6f7'}}>
-                    <input className="form-check-input me-2" type="checkbox" value="" aria-label="..." />
-                    Porta ac consectetur ac
-                  </li>
-                  <li className="list-group-item d-flex align-items-center border-0 mb-0 rounded"
-                    style={{backgroundColor: '#f4f6f7'}}>
-                    <input className="form-check-input me-2" type="checkbox" value="" aria-label="..." />
-                    Vestibulum at eros
-                  </li>
-                </ul>
-              </div>
-              <div className="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-                <ul className="list-group mb-0">
-                  <li className="list-group-item d-flex align-items-center border-0 mb-2 rounded"
-                    style={{backgroundColor: '#f4f6f7'}}>
-                    <input className="form-check-input me-2" type="checkbox" value="" aria-label="..." defaultChecked />
-                    <s>Cras justo odio</s>
-                  </li>
-                  <li className="list-group-item d-flex align-items-center border-0 mb-2 rounded"
-                    style={{backgroundColor: '#f4f6f7'}}>
-                    <input className="form-check-input me-2" type="checkbox" value="" aria-label="..." defaultChecked />
-                    <s>Dapibus ac facilisis in</s>
-                  </li>
-                </ul>
-              </div>
             </div>
-            {/* <!-- Tabs content --> */}
-
           </div>
         </div>
-
       </div>
     </div>
   </div>
