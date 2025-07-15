@@ -52,7 +52,11 @@ const index = () => {
     const [isColapse5, setIsColapse5] = useState(false)
     const [isColapse6, setIsColapse6] = useState(false)
 
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(4)
+    const steps = [
+        1,2,3,4,5,6
+    ];
+
 
     useEffect(()=>{
         console.log(router.query)
@@ -531,13 +535,37 @@ const index = () => {
     )
   }
   const PageStatus = () => {
+
+    const [currentStep, setCurrentStep] = useState(1);
+
+    const nextStep = () => {
+        
+    if (currentStep < steps.length - 1) setCurrentStep((prev) => prev + 1);
+    };
+
+    const prevStep = () => {
+    if (currentStep > 2) setCurrentStep((prev) => prev - 1);
+    };
+
+    let bgColor = '';
+
+    if (steps === currentStep) {
+        bgColor = 'rgb(47, 128, 237)';
+    } else if (steps < currentStep) {
+        bgColor = '#8EB6ED';
+    } else {
+        bgColor = 'white';
+    }
+
     return (
+        <>
         <div className='card m-2 p-2' style={{
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-evenly',
             alignItems: 'center'
         }}>
+            
             <div style={{
                 width:'100%',
                 border:'0.5px solid lightgray',
@@ -546,7 +574,7 @@ const index = () => {
                 flexDirection: 'column',
                 justifyContent:'center',
                 alignItems: 'center',
-                backgroundColor:page === 1?'rgb(47, 128, 237)':'white'
+                backgroundColor:currentStep >=1?'rgb(47, 128, 237)':'white'
             }}>
                 <div style={{
                     marginBottom:0,
@@ -559,7 +587,7 @@ const index = () => {
                     width:25,
                     height:25
                 }}><p style={{margin:0,fontSize:15,color:'white'}}>1</p></div>
-                <p style={{margin:0,fontSize:15,color:page !== 1?'black':'white'}}>Patient File</p>
+                <p style={{margin:0,fontSize:15,color:currentStep >=1?'white':'#2f80ed'}}>Patient File</p>
             </div>
             {/* 2 */}
             <div style={{
@@ -570,7 +598,7 @@ const index = () => {
                 flexDirection: 'column',
                 justifyContent:'center',
                 alignItems: 'center',
-                backgroundColor:page !== 2?'#8EB6ED':'rgb(47, 128, 237)'
+                backgroundColor:currentStep >2?'rgb(47, 128, 237)':'white'
             }}>
                 <div style={{
                     marginBottom:0,
@@ -583,7 +611,7 @@ const index = () => {
                     width:25,
                     height:25
                 }}><p style={{margin:0,fontSize:15,color:'white'}}>2</p></div>
-                <p style={{margin:0,fontSize:15,color:page !== 2?'black':'white'}}>Lab & Meds</p>
+                <p style={{margin:0,fontSize:15,color:currentStep >2?'white':'#2f80ed'}}>Lab & Meds</p>
             </div>
             {/* 3 */}
             <div style={{
@@ -594,7 +622,7 @@ const index = () => {
                 flexDirection: 'column',
                 justifyContent:'center',
                 alignItems: 'center',
-                backgroundColor:page !== 3?'white':'rgb(47, 128, 237)'
+                backgroundColor:currentStep >3?'rgb(47, 128, 237)':'white'
             }}>
                 <div style={{
                     marginBottom:0,
@@ -607,7 +635,7 @@ const index = () => {
                     width:25,
                     height:25
                 }}><p style={{margin:0,fontSize:15,color:'white'}}>3</p></div>
-                <p style={{margin:0,fontSize:15,color:page !== 3?'black':'white'}}>Bill & payment</p>
+                <p style={{margin:0,fontSize:15,color:currentStep >3?'white':'#2f80ed'}}>Bill & payment</p>
             </div>
             {/* 4 */}
             <div style={{
@@ -618,7 +646,7 @@ const index = () => {
                 flexDirection: 'column',
                 justifyContent:'center',
                 alignItems: 'center',
-                backgroundColor:page !== 4?'white':'rgb(47, 128, 237)'
+                backgroundColor:currentStep >4?'rgb(47, 128, 237)':'white'
             }}>
                 <div style={{
                     marginBottom:0,
@@ -631,7 +659,7 @@ const index = () => {
                     width:25,
                     height:25
                 }}><p style={{margin:0,fontSize:15,color:'white'}}>4</p></div>
-                <p style={{margin:0,fontSize:15,color: page !== 4?'black':'white'}}>Appointment</p>
+                <p style={{margin:0,fontSize:15,color: currentStep >4?'white':'#2f80ed'}}>Appointment</p>
             </div>
             {/* 5 */}
             <div style={{
@@ -642,7 +670,7 @@ const index = () => {
                 flexDirection: 'column',
                 justifyContent:'center',
                 alignItems: 'center',
-                backgroundColor:page !== 5?'white':'rgb(47, 128, 237)'
+                backgroundColor:currentStep >5?'rgb(47, 128, 237)':'white'
             }}>
                 <div style={{
                     marginBottom:0,
@@ -655,9 +683,14 @@ const index = () => {
                     width:25,
                     height:25
                 }}><p style={{margin:0,fontSize:15,color:'white'}}>5</p></div>
-                <p style={{margin:0,fontSize:15,color:page !== 5?'black':'white'}}>Submit</p>
+                <p style={{margin:0,fontSize:15,color:currentStep >5?'white':'#2f80ed'}}>Submit</p>
             </div>
         </div>
+        <div>
+            <button onClick={nextStep}>next</button>
+            <button onClick={prevStep}>prev</button>
+        </div>
+        </>
     )
   }
   return (
