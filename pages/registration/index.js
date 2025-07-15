@@ -210,6 +210,33 @@ const Register = () => {
                             </div>
                         </div>
 
+                        <div className="row">
+                            <div className="col">
+                                {/* <!-- emergency phone input --> */}
+                                <div className="col">
+                                {/* <!-- Phone input --> */}
+                                <div className="form-outline">
+                                    <label className="form-label" htmlFor="form8Example4">Emergency Phone</label>
+                                    <input type="text" id="form8Example4" className="form-control" {...register('emergencyPhone')} /> 
+                                </div>
+                            </div>
+                            </div>
+                            <div className="col">
+                                {/* <!-- ID input --> */}
+                                <div className="form-outline">
+                                    <label className="form-label" htmlFor="form8Example3">ID Number</label>
+                                    <input type="text" id="form8Example3" className="form-control" {...register('idNumber')} />
+                                </div>
+                            </div>
+                            <div className="col">
+                                {/* <!-- Insurance input --> */}
+                                <div className="form-outline">
+                                    <label className="form-label" htmlFor="form8Example4">Insurance</label>
+                                    <input type="text" id="form8Example4" className="form-control" {...register('insurance')} /> 
+                                </div>
+                            </div>
+                        </div>
+
                         <Divider/>
 
                         <div style={{
@@ -227,41 +254,20 @@ const Register = () => {
                         <div className="row">
                             <div className="col">
                                 <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example3">BP</label>
-                                <input type="number" id="form8Example3" className="form-control" {...register('bloodPressure')} />
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example4">Pulse</label>
-                                <input type="number" id="form8Example4" className="form-control" {...register('pulse')} />
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example5">Temperature</label>
-                                <input type="number" id="form8Example5" className="form-control" {...register('temperature')} />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example3">Height (cm)</label>
+                                <label className="form-label" htmlFor="form8Example3">Height</label>
                                 <input type="number" id="form8Example3" className="form-control" {...register('height')} />
                                 </div>
                             </div>
                             <div className="col">
                                 <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example4">Weight (kg)</label>
-                                <input type="number" id="form8Example4" className="form-control" {...register('weight')}  />
+                                <label className="form-label" htmlFor="form8Example4">Weight</label>
+                                <input type="number" id="form8Example4" className="form-control" {...register('weight')} />
                                 </div>
                             </div>
                             <div className="col">
                                 <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example5">BMI</label>
-                                <input type="text" id="form8Example5" className="form-control" {...register('bmi')} value={bmi} /> 
+                                <label className="form-label" htmlFor="form8Example5">Temperature</label>
+                                <input type="text" id="form8Example5" className="form-control" {...register('temperature')} />
                                 </div>
                             </div>
                         </div>
@@ -269,16 +275,44 @@ const Register = () => {
                         <div className="row">
                             <div className="col">
                                 <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example3">Blood Oxygen</label>
-                                <input type="number" id="form8Example3" className="form-control" {...register('bloodOxygen')} />
+                                <label className="form-label" htmlFor="form8Example3">BP Dys</label>
+                                <input type="number" id="form8Example3" className="form-control" {...register('bp/dys')} />
                                 </div>
                             </div>
                             <div className="col">
                                 <div className="form-outline">
-                                <label className="form-label" htmlFor="form8Example4">General Conditions</label>
-                                <input type="text" id="form8Example4" className="form-control" {...register('generalCondition')}/>
+                                <label className="form-label" htmlFor="form8Example4">BP Sys</label>
+                                <input type="number" id="form8Example4" className="form-control" {...register('bp/sys')}  />
                                 </div>
                             </div>
+                            <div className="col">
+                                <div className="col">
+                                <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example3">Blood Oxygen</label>
+                                <input type="number" id="form8Example3" className="form-control" {...register('bloodOxygen')} />
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div className="row">
+                            
+                            <div className="form-outline">
+                                <label className="form-label" htmlFor="form8Example5">General Condition</label>
+                                <select id="form8Example5" name="number" className="form-control" {...register('bmi')}>
+                                    <option value="">-- Select --</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                </div>
                             {/* <div className="col">
                                 <div className="form-outline">
                                 <label className="form-label" htmlFor="form8Example5">BMI</label>
@@ -336,6 +370,21 @@ const Register = () => {
                                 <div className="form-outline">
                                     <label className="form-label" htmlFor="form8Example4">Anamnesis morbi</label>
                                     <textarea type="text" className="form-control" {...register('anamnesisMorbi')}/>
+                                </div>
+                            </div>
+                        </div>
+                                {/* allergies and meds */}
+                        <div className="row">
+                            <div className='col'>
+                                <div className="form-outline">
+                                    <label className="form-label" htmlFor="form8Example4">Allergies</label>
+                                    <textarea type="text" className="form-control" {...register('allergies')}/>
+                                </div>
+                            </div>
+                            <div className='col'>
+                                <div className="form-outline">
+                                    <label className="form-label" htmlFor="form8Example4">Current medications</label>
+                                    <textarea type="text" className="form-control" {...register('currentMedications')}/>
                                 </div>
                             </div>
                         </div>

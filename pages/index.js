@@ -16,11 +16,6 @@ import AppointmentList from './components/AppointmentList/AppointmentList'
 import Cookies from 'js-cookie'
 import Title from './components/Title'
 
-// const mukta = Mukta({
-//   subsets:['latin'],
-//   weight:['400','700']
-// })
-
 const mukta = localFont({
   src:'../assets/Mukta/Mukta-Light.ttf'
 })
@@ -31,7 +26,7 @@ export default function Home() {
   const localUser = Cookies.get('cookie')
   useEffect(()=>{
     setRole(activeUser?.role)
-    // console.log(activeUser)
+    console.log(activeUser)
   },[])
   return (
     <>
@@ -50,7 +45,7 @@ export default function Home() {
         </div>
         {/* Tasks, alerts and reminders */}
         <div style={{marginTop:20}}>
-          <Task/>
+          {/* <Task/> */}
           
         </div>
         <div style={{

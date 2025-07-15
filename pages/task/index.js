@@ -165,7 +165,7 @@ const Task = () => {
                 aria-labelledby="ex1-tab-1">
                 <ul className="list-group mb-0">
                   {tasks?.map((task,i) =>(
-                    <li key={i} className="list-group-item d-flex align-items-center border-0 mb-2 rounded"
+                    <li key={i} className="list-group-item border-0 mb-2 rounded"
                       style={{
                         display:'flex',
                         justifyContent: 'space-between',

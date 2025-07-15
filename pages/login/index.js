@@ -31,6 +31,7 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role,setRole] = useState('');
  
   const [error, setError] = useState('');
   const [loader,setLoader] = useState(false);
@@ -62,7 +63,7 @@ export default function LoginPage() {
       // console.log("Document data:", docSnap.data());
       setActiveUser(docSnap.data())
       setLoader(false)
-      // set Cookies 
+      // set Cookies to maintain login status
       Cookies.set('cookie', JSON.stringify(docSnap.data()))
       setAuthenticated(true)
     } else {
@@ -111,7 +112,6 @@ export default function LoginPage() {
       // style={{objectFit:'cover'}}
     />
     </div>
-    
     <div style={{
       display:'flex',
       justifyContent:'center',
@@ -120,8 +120,9 @@ export default function LoginPage() {
       // zIndex:1,
       // position:'relative',
     }}>
-<div className="card p-5 m-2" style={{width:'70%'}}>
-<div style={{
+    <div className="card p-5 m-2" style={{width:'70%'}}>
+    {/* logo & header */}
+    <div style={{
       display:'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -136,8 +137,7 @@ export default function LoginPage() {
                   alignItems:'center',
                   width: '60%',
                   marginBottom:20
-                }}>
-                  
+                }}> 
                   <Image
                     src={logo} 
                     alt="Logo" 
@@ -188,13 +188,12 @@ export default function LoginPage() {
       onChange={(e) => setEmail(e.target.value)}
     />
   </div>
+  {/* loader */}
   { loader?
     <div className="spinner-border text-primary" role="status">
       <span className="sr-only"></span>
     </div> : <></>
   }
-  
-
   {/* <!-- Password input --> */}
   <div className="form-outline mb-4" style={{width:"70%"}}>
   <label className="form-label" htmlFor="form2Example2">Password</label>
@@ -205,6 +204,20 @@ export default function LoginPage() {
       value={password}
       onChange={(e) => setPassword(e.target.value)}
     />
+  </div>
+  {/* Role selection */}
+  <div className="form-outline mb-4" style={{width:"70%"}}>
+  <label className="form-label" htmlFor="form2Example2">Role</label>
+    <select 
+      name="language" 
+      id="form2Example2" 
+      className="form-control"
+      onChange={(e) => setRole(e.target.value)}
+      >
+      <option value="doctor">Doctor</option>
+      <option value="nurse">Nurse</option>
+      <option value="admin">Admin</option>
+    </select>
   </div>
 
   {/* <!-- 2 column grid layout htmlFor inline styling --> */}
@@ -227,14 +240,9 @@ export default function LoginPage() {
   {/* <!-- Submit button --> */}
   <button type="submit" className="btn btn-primary btn-block mb-4" style={{backgroundColor:'#2f80ed'}}>Sign in</button>
 
-  {/* <!-- Register buttons --> */}
-  {/* <div className="text-center">
-    <p>Not a member? <a href="#!">Contact Administrator</a></p>
-  </div> */}
-</form>
-</div>
+    </form>
     </div>
-    
-</>
+    </div>    
+  </>
   );
 }
