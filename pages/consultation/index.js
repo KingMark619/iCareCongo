@@ -56,6 +56,7 @@ const index = () => {
     const steps = [
         1,2,3,4,5,6
     ];
+    const [currentStep, setCurrentStep] = useState(1);
 
 
     useEffect(()=>{
@@ -534,28 +535,17 @@ const index = () => {
         </table>
     )
   }
-  const PageStatus = () => {
 
-    const [currentStep, setCurrentStep] = useState(1);
-
-    const nextStep = () => {
-        
+  const nextStep = () => {
+        // handles page progression 
     if (currentStep < steps.length - 1) setCurrentStep((prev) => prev + 1);
     };
 
-    const prevStep = () => {
-    if (currentStep > 2) setCurrentStep((prev) => prev - 1);
+  const prevStep = () => {
+         // handles page progression
+    if (currentStep > 1) setCurrentStep((prev) => prev - 1);
     };
-
-    let bgColor = '';
-
-    if (steps === currentStep) {
-        bgColor = 'rgb(47, 128, 237)';
-    } else if (steps < currentStep) {
-        bgColor = '#8EB6ED';
-    } else {
-        bgColor = 'white';
-    }
+  const PageStatus = () => {
 
     return (
         <>
@@ -686,22 +676,442 @@ const index = () => {
                 <p style={{margin:0,fontSize:15,color:currentStep >5?'white':'#2f80ed'}}>Submit</p>
             </div>
         </div>
-        <div>
-            <button onClick={nextStep}>next</button>
-            <button onClick={prevStep}>prev</button>
-        </div>
         </>
     )
   }
-  return (
-    <>
-    {/* Page status */}
-    <PageStatus/>
-    <div className="card m-2 p-2" style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }}>
+   //   create different pages that will display according to page status
+  const Lab = () => {
+    return (
+        <>
+            <div className="card m-2 p-2" style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                {/* old */}
+                
+                <div style={{
+                    width:'100%',
+                    height:'100%',
+                    border:'0.5px solid lightgray'
+                }}>
+                    <form style={{padding:10}} onSubmit={handleSubmit(submit)}>
+                {/* first row */}
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center', 
+                    alignContent:'center'
+                }}>
+                    {/* Brand logo */}
+                <div>
+                    <Link className="navbar-brand" href="/">
+                    <div style={{
+                        flex:1,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems:'center'
+                        }}>
+                    <Image src={logo} alt="Logo" width="50" height="50" style={{borderRadius:100, border:'0.5px solid #2c70f4', padding:2}}/>
+                    <div style={{
+                        display:'flex',
+                        flexDirection:'column',
+                        justifyContent:'center',
+                        alignItems:'start',
+                        paddingLeft:10
+                    }}>
+                        <p style={{
+                        marginBottom:0,
+                        color:'#2f80ed',
+                        fontSize:15,
+                        fontWeight:'400'
+                        }}>iCare Congo</p>
+                        <p style={{
+                        marginBottom:0,
+                        color:'red',
+                        fontSize:12,
+                        fontWeight:'400'
+                        }}>Health the modern way</p>
+                    </div>
+                </div>
+                </Link>
+                </div>
+                </div>
+                {/* Header text */}
+                <div style={{
+                    display:'flex',
+                    flexDirection:'column',
+                    justifyContent:'center',
+                    alignItems:'center',
+                    marginTop:20
+                }}>
+                    {/* <p style={{
+                        fontSize:22,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'black',
+                    }}>Jaynet Clinic</p> */}
+                    <p style={{
+                        marginTop:10,
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'black',
+                        textDecoration:'underline'
+                    }}>Lab & Prescription</p>
+                </div>
+                <Divider/>
+                </form>
+                {/* content */}
+                <div style={{
+                        paddingLeft: 20,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems: 'center',
+                        paddingRight:20,
+                    }}>
+                    <p style={{
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'#2f80ed'
+                    }}>Medication and Allergies</p>
+                    <Image
+                        src={!isColapse5?colapse:deploy}
+                        width={20}
+                        height={20}
+                        alt='Colapse'
+                        onClick={()=>toggleColapse(5)}
+                    />
+                </div>
+                <CSSTransition
+                    in={!isColapse5}
+                    timeout={300}
+                    classNames="fade"
+                    unmountOnExit
+                >
+                    <div style={{
+                        paddingLeft: 20,
+                        marginBottom: 10
+                    }}>
+                            <div className="d-flex" style={{paddingLeft:30,marginBottom:10}}>
+                                <input 
+                                    className="form-control me-2"
+                                    type="search" 
+                                    placeholder="Search" 
+                                    aria-label="Search"
+                                    style={{
+                                        width:'50%'
+                                    }}
+                                    value={labSearchTerm}
+                                    onChange={e => handleLabSearchInputChange(e.target.value)}
+                                />
+                                <button className="btn btn-outline-success" type='button'>+</button>
+                            </div>
+                            
+                        {isOpenLab === true? (
+                            <ul>
+                            <div className="card p-2" style={{
+                                display: 'flex',
+                                flexDirection:'row',
+                                flexWrap:'wrap',
+                                width:'90%',
+                                height:'auto',
+                                overflow:'scroll'
+                            }}>
+                                <button 
+                                    onClick={()=>(setIsOpenLab(false))}
+                                    className="btn btn-outline-danger" 
+                                    type='button'
+                                    style={{
+                                        width:25,
+                                        height:25,
+                                        display:'flex',
+                                        flexDirection:'column',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        position:'absolute',
+                                        top:5,
+                                        right:5,
+                                        fontSize:10
+                                }}>x</button>
+                            {labSearchResults.map((result, index) => (
+                                <div 
+                                    key={index} 
+                                    className='m-2'
+                                    style={{
+                                    display:'flex',
+                                    flexDirection:'row',
+                                    justifyContent:'space-between',
+                                    alignItems:'center',
+                                    width:'30%',
+                                    padding:'10px 0',
+                                    borderBottom:'0.5px solid lightgray',
+                                }}>
+                                <p style={{
+                                    fontSize:15,
+                                    fontWeight:'300',
+                                    marginBottom:0,
+                                    color:'black'
+                                }} key={index}>{result}</p>
+                                <div className="btn btn-outline-success" onClick={()=>addMedItem(result)}>+</div>
+                                </div>
+                            ))}
+                            </div>
+                            </ul>
+                        ):''}
+                    </div>
+                </CSSTransition>
+                {/* results */}
+                <div style={{
+                    display:'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexWrap:'wrap'
+                }}>
+                    {/* {medResults!== undefined ?medResults.map((result,index)=>{
+                   return( <ResultMedCard item={result} key={index}/>)
+                }):''} */}
+                    
+                </div>
+                </div>
+                
+                <Divider/>
+                
+                {/* Pharmacy */}
+                <div style={{
+                        paddingLeft: 20,
+                        // marginBottom: 10,
+                        display:'flex',
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems: 'center',
+                        paddingRight:20
+                    }}>
+                    <p style={{
+                        fontSize:18,
+                        fontWeight:'300',
+                        marginBottom:0,
+                        color:'black'
+                    }}>Pharmacy</p>
+                </div>
+                <div style={{
+                        paddingLeft: 20,
+                        marginBottom: 10
+                    }}>
+                        <div className="d-flex" style={{paddingLeft:30,marginBottom:10}}>
+                            <input 
+                                className="form-control me-2"
+                                type="search" 
+                                placeholder="Search" 
+                                aria-label="Search"
+                                style={{
+                                    width:'50%'
+                                }}
+                                value={pharmaSearchTerm}
+                                onChange={e =>handlePharmaSearchInputChange(e.target.value)}
+                            />
+                            <button className="btn btn-outline-success" type='button'>+</button>
+                        </div>
+                        
+                    {isOpenPharma && (
+                        <ul>
+                        <div className="card p-2" style={{
+                            display: 'flex',
+                            flexDirection:'row',
+                            flexWrap:'wrap',
+                            width:'90%',
+                            height:'auto',
+                            overflow:'scroll'
+                        }} >
+                            <button 
+                                onClick={()=>(setIsOpenPharma(false))}
+                                className="btn btn-outline-danger" 
+                                type='button'
+                                style={{
+                                    width:25,
+                                    height:25,
+                                    display:'flex',
+                                    flexDirection:'column',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    position:'absolute',
+                                    top:5,
+                                    right:5,
+                                    fontSize:10
+                            }}>x</button>
+                        {pharmaSearchResults.map((result, index) => (
+                            <div 
+                                key={index} 
+                                className='m-2'
+                                style={{
+                                display:'flex',
+                                flexDirection:'row',
+                                justifyContent:'space-between',
+                                alignItems:'center',
+                                width:'30%',
+                                padding:'10px 0',
+                                borderBottom:'0.5px solid lightgray',
+                                }}>
+                                <p style={{
+                                    fontSize:15,
+                                    fontWeight:'300',
+                                    marginBottom:0,
+                                    color:'black'
+                                }} key={index}>{result}</p>
+                                <div className="btn btn-outline-success" onClick={()=>addLabItem(result)}>+</div>
+                            </div>
+                        ))}
+                        </div>
+                        </ul>
+                    )}
+                </div>
+                {/* results */}
+                <div style={{
+                    display:'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    flexWrap:'wrap'
+                }}>
+                    {/* {labResults!== undefined ?labResults.map((result,index)=>{
+                   return( <ResultLabCard item={result} key={index}/>)
+                }):''} */}
+                    
+                </div>
+
+                {/* buttons */}
+                <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end',
+                            alignItems:'center',
+                            marginTop:50
+                        }}>
+                            <button style={{
+                                width:'auto',
+                                height:40,
+                                color:'black',
+                                fontSize:12,
+                                padding:10,
+                                fontWeight:'400',
+                                border:'none',
+                                marginInlineEnd:15,
+                                backgroundColor:'#FFFFFF',
+                                border:'0.5px solid lightgray',
+                                borderRadius:4,
+                            }} onClick={prevStep}>Previous</button>
+                            <button style={{
+                                width:'auto',
+                                height:40,
+                                color:'white',
+                                fontSize:12,
+                                padding:10,
+                                fontWeight:'400',
+                                border:'none',
+                                marginInlineEnd:15,
+                                backgroundColor:'rgb(47, 128, 237)',
+                                border:'0.5px solid lightgray',
+                                borderRadius:4,
+                            }} onClick={nextStep}>Next</button>
+                </div>
+            </div>
+        </>
+    )
+  }
+  const Payment = () => {
+    return (
+        <>
+            <p>payment</p>
+            <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end',
+                            alignItems:'center',
+                            marginTop:50
+                        }}>
+                            <button style={{
+                                width:'auto',
+                                height:40,
+                                color:'black',
+                                fontSize:12,
+                                padding:10,
+                                fontWeight:'400',
+                                border:'none',
+                                marginInlineEnd:15,
+                                backgroundColor:'#FFFFFF',
+                                border:'0.5px solid lightgray',
+                                borderRadius:4,
+                            }} onClick={prevStep}>Previous</button>
+                            <button style={{
+                                width:'auto',
+                                height:40,
+                                color:'white',
+                                fontSize:12,
+                                padding:10,
+                                fontWeight:'400',
+                                border:'none',
+                                marginInlineEnd:15,
+                                backgroundColor:'rgb(47, 128, 237)',
+                                border:'0.5px solid lightgray',
+                                borderRadius:4,
+                            }} onClick={nextStep}>Next</button>
+                </div>
+        </>
+    )
+  }
+  const AppointmentPage = () => {
+    return (
+        <>
+            <p>Appointment</p>
+            <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'flex-end',
+                            alignItems:'center',
+                            marginTop:50
+                        }}>
+                            <button style={{
+                                width:'auto',
+                                height:40,
+                                color:'black',
+                                fontSize:12,
+                                padding:10,
+                                fontWeight:'400',
+                                border:'none',
+                                marginInlineEnd:15,
+                                backgroundColor:'#FFFFFF',
+                                border:'0.5px solid lightgray',
+                                borderRadius:4,
+                            }} onClick={prevStep}>Previous</button>
+                            <button style={{
+                                width:'auto',
+                                height:40,
+                                color:'white',
+                                fontSize:12,
+                                padding:10,
+                                fontWeight:'400',
+                                border:'none',
+                                marginInlineEnd:15,
+                                backgroundColor:'rgb(47, 128, 237)',
+                                border:'0.5px solid lightgray',
+                                borderRadius:4,
+                            }} onClick={nextStep}>Next</button>
+                </div>
+        </>
+    )
+  }
+  const PatientFile = () => {
+    return (
+        <>
+        <div className="card m-2 p-2" style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }}>
         
         {/* content below */}
         <div style={{
@@ -1145,229 +1555,7 @@ const index = () => {
                     </CSSTransition>
                 </div>
 
-                {/* old */}
-                <div style={{
-                    border:'0.5px solid lightgray'
-                }}>
-                <div style={{
-                        paddingLeft: 20,
-                        // marginBottom: 10,
-                        display:'flex',
-                        flexDirection:'row',
-                        justifyContent:'space-between',
-                        alignItems: 'center',
-                        paddingRight:20,
-                    }}>
-                    <p style={{
-                        fontSize:18,
-                        fontWeight:'300',
-                        marginBottom:0,
-                        color:'black'
-                    }}>Medication and Allergies</p>
-                    <Image
-                            src={!isColapse5?colapse:deploy}
-                            width={20}
-                            height={20}
-                            alt='Colapse'
-                            onClick={()=>toggleColapse(5)}
-                        />
-                </div>
-                <CSSTransition
-                        in={!isColapse5}
-                        timeout={300}
-                        classNames="fade"
-                        unmountOnExit
-                    >
-                    <div style={{
-                            paddingLeft: 20,
-                            marginBottom: 10
-                        }}>
-                            <div className="d-flex" style={{paddingLeft:30,marginBottom:10}}>
-                                <input 
-                                    className="form-control me-2"
-                                    type="search" 
-                                    placeholder="Search" 
-                                    aria-label="Search"
-                                    style={{
-                                        width:'50%'
-                                    }}
-                                    value={labSearchTerm}
-                                    onChange={e => handleLabSearchInputChange(e.target.value)}
-                                />
-                                <button className="btn btn-outline-success" type='button'>+</button>
-                            </div>
-                            
-                        {isOpenLab === true? (
-                            <ul>
-                            <div className="card p-2" style={{
-                                display: 'flex',
-                                flexDirection:'row',
-                                flexWrap:'wrap',
-                                width:'90%',
-                                height:'auto',
-                                overflow:'scroll'
-                            }}>
-                                <button 
-                                    onClick={()=>(setIsOpenLab(false))}
-                                    className="btn btn-outline-danger" 
-                                    type='button'
-                                    style={{
-                                        width:25,
-                                        height:25,
-                                        display:'flex',
-                                        flexDirection:'column',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        position:'absolute',
-                                        top:5,
-                                        right:5,
-                                        fontSize:10
-                                }}>x</button>
-                            {labSearchResults.map((result, index) => (
-                                <div 
-                                    key={index} 
-                                    className='m-2'
-                                    style={{
-                                    display:'flex',
-                                    flexDirection:'row',
-                                    justifyContent:'space-between',
-                                    alignItems:'center',
-                                    width:'30%',
-                                    padding:'10px 0',
-                                    borderBottom:'0.5px solid lightgray',
-                                }}>
-                                <p style={{
-                                    fontSize:15,
-                                    fontWeight:'300',
-                                    marginBottom:0,
-                                    color:'black'
-                                }} key={index}>{result}</p>
-                                <div className="btn btn-outline-success" onClick={()=>addMedItem(result)}>+</div>
-                                </div>
-                            ))}
-                            </div>
-                            </ul>
-                        ):''}
-                    </div>
-                </CSSTransition>
-                {/* results */}
-                <div style={{
-                    display:'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    flexWrap:'wrap'
-                }}>
-                    {/* {medResults!== undefined ?medResults.map((result,index)=>{
-                   return( <ResultMedCard item={result} key={index}/>)
-                }):''} */}
-                    
-                </div>
-                </div>
                 
-                <Divider/>
-                
-                {/* Pharmacy */}
-                <div style={{
-                        paddingLeft: 20,
-                        // marginBottom: 10,
-                        display:'flex',
-                        flexDirection:'row',
-                        justifyContent:'space-between',
-                        alignItems: 'center',
-                        paddingRight:20
-                    }}>
-                    <p style={{
-                        fontSize:18,
-                        fontWeight:'300',
-                        marginBottom:0,
-                        color:'black'
-                    }}>Pharmacy</p>
-                </div>
-                <div style={{
-                        paddingLeft: 20,
-                        marginBottom: 10
-                    }}>
-                        <div className="d-flex" style={{paddingLeft:30,marginBottom:10}}>
-                            <input 
-                                className="form-control me-2"
-                                type="search" 
-                                placeholder="Search" 
-                                aria-label="Search"
-                                style={{
-                                    width:'50%'
-                                }}
-                                value={pharmaSearchTerm}
-                                onChange={e =>handlePharmaSearchInputChange(e.target.value)}
-                            />
-                            <button className="btn btn-outline-success" type='button'>+</button>
-                        </div>
-                        
-                    {isOpenPharma && (
-                        <ul>
-                        <div className="card p-2" style={{
-                            display: 'flex',
-                            flexDirection:'row',
-                            flexWrap:'wrap',
-                            width:'90%',
-                            height:'auto',
-                            overflow:'scroll'
-                        }} >
-                            <button 
-                                onClick={()=>(setIsOpenPharma(false))}
-                                className="btn btn-outline-danger" 
-                                type='button'
-                                style={{
-                                    width:25,
-                                    height:25,
-                                    display:'flex',
-                                    flexDirection:'column',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    position:'absolute',
-                                    top:5,
-                                    right:5,
-                                    fontSize:10
-                            }}>x</button>
-                        {pharmaSearchResults.map((result, index) => (
-                            <div 
-                                key={index} 
-                                className='m-2'
-                                style={{
-                                display:'flex',
-                                flexDirection:'row',
-                                justifyContent:'space-between',
-                                alignItems:'center',
-                                width:'30%',
-                                padding:'10px 0',
-                                borderBottom:'0.5px solid lightgray',
-                                }}>
-                                <p style={{
-                                    fontSize:15,
-                                    fontWeight:'300',
-                                    marginBottom:0,
-                                    color:'black'
-                                }} key={index}>{result}</p>
-                                <div className="btn btn-outline-success" onClick={()=>addLabItem(result)}>+</div>
-                            </div>
-                        ))}
-                        </div>
-                        </ul>
-                    )}
-                </div>
-                {/* results */}
-                <div style={{
-                    display:'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    flexWrap:'wrap'
-                }}>
-                    {/* {labResults!== undefined ?labResults.map((result,index)=>{
-                   return( <ResultLabCard item={result} key={index}/>)
-                }):''} */}
-                    
-                </div>
                 
                 <Divider/>
                 {/* Doctors note */}
@@ -1444,31 +1632,36 @@ const index = () => {
                                 backgroundColor:'#FFFFFF',
                                 border:'0.5px solid lightgray',
                                 borderRadius:4,
-                            }} onClick={(e)=>{
-                                // router.back()
-                                setDisabled(!disabled)
-                                e.preventDefault()
-                            }}>{disabled?'Edit':'Cancel'}</button>
-
-                            <input 
-                                disabled={disabled}
-                                type="submit" 
-                                style={{
+                            }} onClick={prevStep}>Previous</button>
+                            <button style={{
                                 width:'auto',
                                 height:40,
-                                color:disabled?'lightgray':'#0000AC',
+                                color:'white',
                                 fontSize:12,
                                 padding:10,
                                 fontWeight:'400',
-                                backgroundColor:'white',
-                                border:disabled?'0.5px solid lightgray':'0.5px solid #0000AC',
-                                borderRadius:4,
+                                border:'none',
                                 marginInlineEnd:15,
-                            }} />
+                                backgroundColor:'rgb(47, 128, 237)',
+                                border:'0.5px solid lightgray',
+                                borderRadius:4,
+                            }} onClick={nextStep}>Next</button>
                 </div>
             </form>
         </div>
     </div>
+        </>
+    )
+  }
+  return (
+    <>
+    {/* Page status */}
+    <PageStatus/>
+    {currentStep === 1?<PatientFile/>:<></>}
+    {currentStep ===2?<Lab/>:<></>}
+    {currentStep ===3?<Payment/>:<></>}
+    {currentStep ===4?<AppointmentPage/>:<></>}
+    
 </>
   )
 }
